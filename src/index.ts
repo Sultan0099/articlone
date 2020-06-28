@@ -10,6 +10,10 @@ app.get('/', async (req, res) => {
     res.send("hello world")
 })
 
+app.get('/new', async (req, res) => {
+    res.send("hello world")
+})
+
 
 app.listen(PORT, () => console.log(`server is up and running at :  \nhttp://localhost:${PORT}`));
 
