@@ -1,14 +1,14 @@
 {
   "name": "articlone",
   "version": "1.0.0",
-  "description": "Article Writting Application with service of API sharing",
+  "description": "Article Writing Application with service of API sharing",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev-server": " ts-node-dev  --transpileOnly  ./src/index.ts & SET NODE_ENV=development",
+    "server": " ts-node-dev  --transpileOnly  ./src/index.ts & SET NODE_ENV=development",
     "start": "SET NODE_ENV=production & node ./dist/index.js",
-    "start-client": "npm start --prefix ../socio-web",
-    "dev": "concurrently \"npm run dev-server\"  \"npm run start-client\" "
+    "client": "npm start --prefix ./client",
+    "both": "concurrently \"npm run server\"  \"npm run client\" "
   },
   "author": "Sultan Ali",
   "license": "ISC",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
     "@types/express": "^4.17.6",
+    "concurrently": "^5.2.0",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.49",
     "typescript": "^3.9.5"
