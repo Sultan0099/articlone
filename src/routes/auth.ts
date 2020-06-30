@@ -1,24 +1,22 @@
 import express from 'express';
 
+import { authController } from '../controllers';
+
 const router = express.Router();
 
 /* 
 SECTION  Login
-Des : Login Route
-path : '/api/v1/login'
+@Des : Login Route
+@path : '/api/v1/login'
 */
-router.get('/login', async (req, res) => {
-    res.send('hey i am login')
-})
+router.post('/login', authController.login)
 
 /* 
 SECTION  Register
-Des : Register Route
-path : '/api/v1/register'
+@Des : Register Route
+@path : '/api/v1/register'
 */
-router.get('/register', async (req, res) => {
-    res.send('hey i am register')
-})
+router.post('/register', authController.register);
 
 
 export default router;

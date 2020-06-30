@@ -1,6 +1,5 @@
 node_modules
 
-/src/config/dev.ts
 
 # dependencies
 client/.pnp

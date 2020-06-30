@@ -1,9 +1,14 @@
-import express from 'express';
+import express, { Application } from 'express';
 import bodyParser from "body-parser";
 
-import routes from './routes/index';
+import dbConnection from "./config/db";
 
-const app = express();
+// SECTION : Setting up database 
+dbConnection();
+
+import * as routes from './routes';
+
+const app: Application = express();
 const PORT = 3001 || process.env.PORT;
 
 // middleware 
