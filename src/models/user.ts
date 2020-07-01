@@ -15,19 +15,20 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    isValid: {
+        type: Boolean,
+        default: false
     }
-
 }, { timestamps: true });
 
 userSchema.path("username").validate(async function (username: string) {
-    console.log("validates runs", username);
     return (await User.countDocuments({ username })) === 0;
 }, "username already taken");
 
 userSchema.path("email").validate(async function (email: string) {
-    console.log("validates runs", email);
     return (await User.countDocuments({ email })) === 0;
-}, "This email already register");
+}, "email already register");
 
 
 const User = mongoose.model<IUser>('user', userSchema, 'users');

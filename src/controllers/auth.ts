@@ -1,9 +1,11 @@
 import { User } from "../models";
 import { AuthControllerType } from "../types";
-import { registerValidator } from "../utils";
+import { registerValidator, EmailService } from "../utils";
+
+const emailService = new EmailService();
 
 const authController: AuthControllerType = {
-    // SECTION : Register Controller 
+    // SECTION  Register Controller 
     register: async (req, res) => {
         try {
             const { username, email, password } = req.body;
@@ -16,24 +18,38 @@ const authController: AuthControllerType = {
             }
 
             const createdUser = await User.create({ username, email, password });
-            res.status(200).json({ success: true, user: { id: createdUser._id, username: createdUser.username, email: createdUser.email } })
+            const emailResponse = await emailService.sendMail(createdUser.email, "Email Verification", '<h1> hello from articlone </h1>');
+            console.log("email response", emailResponse)
+            res.status(200).json({ success: true, msg: "Sign up successful" })
         } catch (err) {
-            if (err.message !== undefined) /*Checking if err consist of message property*/ {
+            if (err.message !== undefined) /* Checking if err consist of message property */ {
                 const errMsg: string = err.message.split(':').pop();
                 return res.status(403).json({ success: false, errors: { err: errMsg } })
             } else {
-                return res.status(500).json({ success: false, errors: { err: "Error from Server" } });
+                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
             }
+        }
+    },
+    // SECTION : Email Verification 
+    emailConfirm: async (req, res) => {
+        try {
+            const { token } = req.body;
+        } catch (err) {
+            console.log(err)
         }
     },
 
     // SECTION : Login Controller 
     login: async (req, res) => {
-        const { usernameOrEmail } = req.body;
-        console.log(usernameOrEmail)
-        const user = await User.find().or([{ email: usernameOrEmail }, { username: usernameOrEmail }]);
+        try {
+            const { usernameOrEmail } = req.body;
+            console.log(usernameOrEmail)
+            const user = await User.find().or([{ email: usernameOrEmail }, { username: usernameOrEmail }]);
 
-        res.json({ success: true, user })
+            res.json({ success: true, user })
+        } catch (err) {
+            console.log(err)
+        }
     }
 }
 

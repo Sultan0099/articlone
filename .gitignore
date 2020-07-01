@@ -1,6 +1,7 @@
 node_modules
-
-
+/template
+/dist
+.vscode
 # dependencies
 client/.pnp
 client.pnp.js

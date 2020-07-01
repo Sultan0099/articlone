@@ -20,10 +20,20 @@ export type UserErrType = {
     password?: string
 }
 
+export type EmailConfirmType = {
+    token: string
+}
+
+export type ExpressResponse = Response;
+
+export interface ExpressRequest<T> extends Request {
+    body: T
+}
 
 export type AuthControllerType = {
     register: (req: ExpressRequest<RegisterType>, res: ExpressResponse) => {},
     login: (req: ExpressRequest<LoginType>, res: ExpressResponse) => {},
+    emailConfirm: (req: ExpressRequest<EmailConfirmType>, res: ExpressResponse) => {}
 }
 
 export interface IUser extends mongoose.Document {
@@ -33,8 +43,11 @@ export interface IUser extends mongoose.Document {
 }
 
 
-export type ExpressResponse = Response;
-
-export interface ExpressRequest<T> extends Request {
-    body: T
+export type KeysType = {
+    MONGO_URI: string,
+    JWT_SECRET: string,
+    mailgunOptions: {
+        api_key: string,
+        domain: string,
+    }
 }

@@ -1,4 +1,4 @@
-import { UserErrType } from '../types';
+import { UserErrType } from '../../types';
 
 const registerValidator = (
     username: String,
