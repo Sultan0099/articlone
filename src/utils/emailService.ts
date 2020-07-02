@@ -16,7 +16,7 @@ export default class EmailService {
             from: 'Articlone@articlone.com',
             to,
             subject,
-            text: content
+            html: content
         }
 
         return new Promise<void>(

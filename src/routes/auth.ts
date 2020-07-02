@@ -23,9 +23,14 @@ SECTION  Confirm Email
 @Des : Confirm Email Route
 @path : '/api/v1/confirmEmail'
 */
-router.post('/confirmEmail', authController.emailConfirm)
+router.post('/confirm-email', authController.emailConfirm);
 
-
+/* 
+SECTION  resend Email
+@Des : resend Email Route
+@path : '/api/v1/resend-mail'
+*/
+router.post("/resend-mail", authController.resend);
 
 export default router;
 

@@ -16,8 +16,10 @@ const app: Application = express();
 const PORT = 3001 || process.env.PORT;
 
 // SECTION middleware 
+if (process.env.NODE_ENV != 'production') {
+    app.use(morgan('dev'));
+}
 
-app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

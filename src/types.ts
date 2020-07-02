@@ -20,9 +20,8 @@ export type UserErrType = {
     password?: string
 }
 
-export type EmailConfirmType = {
-    token: string
-}
+export type EmailConfirmType = { token: string }
+export type ResendMailType = { email: string }
 
 export type ExpressResponse = Response;
 
@@ -34,20 +33,28 @@ export type AuthControllerType = {
     register: (req: ExpressRequest<RegisterType>, res: ExpressResponse) => {},
     login: (req: ExpressRequest<LoginType>, res: ExpressResponse) => {},
     emailConfirm: (req: ExpressRequest<EmailConfirmType>, res: ExpressResponse) => {}
+    resend: (req: ExpressRequest<ResendMailType>, res: ExpressResponse) => {}
 }
 
 export interface IUser extends mongoose.Document {
     username: string,
     email: string,
     password: string,
+    isVerified?: boolean,
+    isActive?: boolean
+
+}
+
+export interface IToken extends mongoose.Document {
+    userId: string,
+    token: string
 }
 
 
-export type KeysType = {
-    MONGO_URI: string,
-    JWT_SECRET: string,
-    mailgunOptions: {
-        api_key: string,
-        domain: string,
-    }
+export type JWTType = {
+    payload: string,
+    iat: number,
+    exp: number,
+    iss: string
+
 }

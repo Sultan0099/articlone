@@ -16,7 +16,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    isValid: {
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    isActive: {
         type: Boolean,
         default: false
     }
@@ -31,6 +35,6 @@ userSchema.path("email").validate(async function (email: string) {
 }, "email already register");
 
 
-const User = mongoose.model<IUser>('user', userSchema, 'users');
+const User = mongoose.model<IUser>('User', userSchema, 'users');
 
 export default User; 
