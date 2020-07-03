@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+
 import { IUser } from "../types";
 
 const Schema = mongoose.Schema;
@@ -34,6 +36,25 @@ userSchema.path("email").validate(async function (email: string) {
     return (await User.countDocuments({ email })) === 0;
 }, "email already register");
 
+userSchema.pre<IUser>('save', async function (next) {
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(this.password, salt);
+        this.password = hash;
+        next();
+    } catch (err) {
+        throw new Error("err")
+    }
+})
+
+
+userSchema.methods.isValidPassword = async function (newPassword: string) {
+    try {
+        return bcrypt.compare(newPassword, this.password);
+    } catch (err) {
+        throw new Error(err);
+    }
+};
 
 const User = mongoose.model<IUser>('User', userSchema, 'users');
 

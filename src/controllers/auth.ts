@@ -112,13 +112,39 @@ const authController: AuthControllerType = {
     // SECTION : Login Controller 
     login: async (req, res) => {
         try {
-            const { usernameOrEmail } = req.body;
-            console.log(usernameOrEmail)
-            const user = await User.find().or([{ email: usernameOrEmail }, { username: usernameOrEmail }]);
-
-            res.json({ success: true, user })
+            const { email, username, isActive, _id } = req.user;
+            res.status(200).json({ success: true, data: { user: { email, username, isActive, _id } } })
         } catch (err) {
-
+            if (err.message !== undefined) /* Checking if err consist of message property */ {
+                const errMsg: string = err.message.split(':').pop();
+                return res.status(403).json({ success: false, errors: { err: errMsg } })
+            } else {
+                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
+            }
+        }
+    },
+    // SECTION Logout
+    logout: async (req, res) => {
+        try {
+            req.logout();
+            res.status(200).json({ success: true, data: { msg: 'logout successful' } })
+        } catch (err) {
+            if (err.message !== undefined) /* Checking if err consist of message property */ {
+                const errMsg: string = err.message.split(':').pop();
+                return res.status(403).json({ success: false, errors: { err: errMsg } })
+            } else {
+                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
+            }
+        }
+    },
+    // SECTION Get Login user
+    getUser: async (req, res) => {
+        const user = req.user;
+        if (user) {
+            const { email, username, isActive, _id } = user;
+            res.status(200).json({ success: true, data: { user: { email, username, isActive, _id } } })
+        } else {
+            res.status(401).json({ success: false, errors: { err: 'Please login' } })
         }
     }
 }

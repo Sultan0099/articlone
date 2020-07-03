@@ -8,8 +8,16 @@ declare global {
             JWT_SECRET: string,
             JWT_ACC_ACTIVE: string,
         }
+    };
+
+    namespace Express {
+        interface Request {
+            session: any,
+            user: { email: string, username: string, _id: string, isActive: boolean }
+        }
     }
 }
+
 
 // If this file has no import/export statements (i.e. is a script)
 // convert it into a module by adding an empty export statement.
