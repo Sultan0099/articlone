@@ -2,14 +2,22 @@ import jwt from "jsonwebtoken";
 
 import keys from '../config/keys';
 
-function assignToken(payload: string | object, secret: string, options: object): string | null {
-    let token: string | null = null;
-    jwt.sign(payload, secret, options, function (err, jwtToken) {
-        if (err) return console.log(err)
-        if (jwtToken) token = jwtToken;
-    });
 
-    return token;
+async function assignUserToken(payload: string | object) {
+    try {
+        return await jwt.sign(payload, keys.JWT_SECRET, {
+            issuer: "Articlone",
+            expiresIn: '12h'
+        })
+    } catch (err) {
+        throw new Error("JWT error : can't able to assign token ");
+    }
+}
+
+async function verifyUserToken(token: string) {
+    try {
+        return await jwt.verify(token, keys.JWT_SECRET);
+    } catch (err) { throw new Error("JWT error") }
 }
 
 async function assignEmailActivationToken(payload: string | object | Buffer): Promise<string> {
@@ -19,7 +27,7 @@ async function assignEmailActivationToken(payload: string | object | Buffer): Pr
             expiresIn: '12h',
         })
     } catch (err) {
-        throw new Error("JWT error : can't able to assign token ")
+        throw new Error("JWT error : can't able to assign token ");
     }
 
 }
@@ -32,4 +40,4 @@ async function verifyEmailActivationToken(token: string) {
     } catch (err) { throw new Error("JWT error") }
 }
 
-export default { assignEmailActivationToken, verifyEmailActivationToken }
+export default { assignEmailActivationToken, verifyEmailActivationToken, assignUserToken, verifyUserToken }

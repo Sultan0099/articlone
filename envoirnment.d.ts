@@ -13,7 +13,7 @@ declare global {
     namespace Express {
         interface Request {
             session: any,
-            user: { email: string, username: string, _id: string, isActive: boolean }
+            user: { email: string, username: string, _id: string, isActive: boolean, token: string }
         }
     }
 }

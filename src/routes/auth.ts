@@ -49,7 +49,7 @@ SECTION  logout User
 
 router.post('/logout', authController.logout);
 
-router.get('/get-user', authController.getUser);
+router.get('/get-user', authController.getLogInUser);
 export default router;
 
 

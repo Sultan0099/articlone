@@ -36,7 +36,7 @@ export type AuthControllerType = {
     emailConfirm: (req: ExpressRequest<EmailConfirmType>, res: ExpressResponse) => {}
     resend: (req: ExpressRequest<ResendMailType>, res: ExpressResponse) => {},
     logout: (req: ExpressRequest<any>, res: ExpressResponse) => {},
-    getUser: (req: ExpressRequest<any>, res: ExpressResponse) => {}
+    getLogInUser: (req: ExpressRequest<any>, res: ExpressResponse) => {}
 }
 
 export interface IUser extends mongoose.Document {

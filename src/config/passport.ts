@@ -3,6 +3,8 @@ import passportLocal from "passport-local";
 
 import { User } from '../models';
 
+import { encrypt } from "../utils";
+
 const LocalStrategy = passportLocal.Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
@@ -10,8 +12,8 @@ passport.serializeUser<any, any>((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-        done(err, user);
+    User.findById(id, async (err, dbUser) => {
+        done(err, dbUser);
     });
 });
 

@@ -60,8 +60,11 @@ const authController: AuthControllerType = {
             await user.updateOne(user);
 
             await tokenData.deleteOne()
-
-            res.status(200).json({ success: true, data: { email: user.email, username: user.username } })
+            req.login(user, (err) => {
+                if (err) { return res.status(401).json({ success: false, errors: { err } }) };
+                return res.status(200).json({ success: true, data: { msg: 'email confirmed successful' } })
+            });
+            // res.status(200).json({ success: true, data: { user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
 
         } catch (err) {
             if (err.message !== undefined) /* Checking if err consist of message property */ {
@@ -112,8 +115,18 @@ const authController: AuthControllerType = {
     // SECTION : Login Controller 
     login: async (req, res) => {
         try {
-            const { email, username, isActive, _id } = req.user;
-            res.status(200).json({ success: true, data: { user: { email, username, isActive, _id } } })
+            const logInUser = req.user;
+            if (!logInUser) return res.status(403).json({ success: false, errors: { err: 'please login in' } });
+
+            const user = await User.findOne({ _id: logInUser._id });
+
+            if (user) {
+                user.isActive = true;
+                await user.updateOne(user);
+                return res.status(200).json({ success: true, data: { msg: "Sign in Successful" } })
+            } else {
+                return res.status(403).json({ success: false, errors: { err: "Please Log in" } })
+            }
         } catch (err) {
             if (err.message !== undefined) /* Checking if err consist of message property */ {
                 const errMsg: string = err.message.split(':').pop();
@@ -126,8 +139,22 @@ const authController: AuthControllerType = {
     // SECTION Logout
     logout: async (req, res) => {
         try {
-            req.logout();
-            res.status(200).json({ success: true, data: { msg: 'logout successful' } })
+            const logInUser = req.user;
+            if (!logInUser) return res.status(403).json({ success: false, errors: { err: 'please login in' } });
+
+            const user = await User.findOne({ _id: logInUser._id });
+
+            if (user) {
+
+                user.isActive = false;
+                await user.updateOne(user);
+                req.logout();
+                return res.status(200).json({ success: true, data: { msg: 'logout successful' } })
+            } else {
+                res.status(403).json({ success: false, errors: { err: "Please log in" } });
+            }
+
+
         } catch (err) {
             if (err.message !== undefined) /* Checking if err consist of message property */ {
                 const errMsg: string = err.message.split(':').pop();
@@ -138,11 +165,12 @@ const authController: AuthControllerType = {
         }
     },
     // SECTION Get Login user
-    getUser: async (req, res) => {
+    getLogInUser: async (req, res) => {
         const user = req.user;
         if (user) {
             const { email, username, isActive, _id } = user;
-            res.status(200).json({ success: true, data: { user: { email, username, isActive, _id } } })
+            const token = await encrypt.assignUserToken({ payload: _id })
+            res.status(200).json({ success: true, data: { user: { email, username, isActive, _id, token } } })
         } else {
             res.status(401).json({ success: false, errors: { err: 'Please login' } })
         }
