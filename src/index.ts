@@ -11,6 +11,7 @@ import passport from "passport";
 
 import dbConnection from "./config/db";
 import keys from "./config/keys";
+import { ExpressRequest, ExpressResponse, ExpressError, ExpressNextFunction } from "./types";
 
 // SECTION  Setting up database 
 dbConnection();
@@ -38,7 +39,7 @@ app.use(session({
     saveUninitialized: true,
     store: new MongoStore({ url: keys.MONGO_URI, mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true } }),
     cookie: {
-        maxAge: 10000 * 60 * 60 * 12
+        maxAge: 900000
     }
 }));
 
@@ -47,6 +48,11 @@ app.use(passport.session());
 
 // SECTION : ROUTES 
 app.use('/api/v1', routes.auth);
+
+// SECTION Error handler
+app.use((err: ExpressError, req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => {
+    res.status(err.status || 500).json({ success: false, error: { status: err.status || 500, message: err.message } })
+})
 
 
 app.listen(PORT, () => console.log(`server is up and running at :\nhttp://localhost:${PORT}`));

@@ -7,6 +7,7 @@ declare global {
             MONGO_URI: string,
             JWT_SECRET: string,
             JWT_ACC_ACTIVE: string,
+            SESSION_SECRET: string,
         }
     };
 

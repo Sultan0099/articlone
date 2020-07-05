@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 
 
 export type UserType = {
@@ -28,6 +28,11 @@ export type ExpressNextFunction = NextFunction;
 
 export interface ExpressRequest<T> extends Request {
     body: T;
+}
+
+export interface ExpressError extends ErrorRequestHandler {
+    status: number,
+    message: string
 }
 
 export type AuthControllerType = {

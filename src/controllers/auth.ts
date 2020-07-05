@@ -81,7 +81,7 @@ const authController: AuthControllerType = {
             const { email } = req.body;
 
             const user = await User.findOne({ email });
-            if (!user) return res.status(400).json({ success: false, errors: { err: "Email is not exist : Try Registration" } });
+            if (!user) return res.status(400).json({ success: false, errors: { err: "Email does't  exist : Try Registration" } });
 
             if (user.isVerified) return res.status(403).json({ success: false, errors: { err: 'Email is already verified' } })
 

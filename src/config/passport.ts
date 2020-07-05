@@ -3,7 +3,6 @@ import passportLocal from "passport-local";
 
 import { User } from '../models';
 
-import { encrypt } from "../utils";
 
 const LocalStrategy = passportLocal.Strategy;
 
@@ -40,7 +39,5 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
     } catch (err) {
         throw new Error(err)
     }
-
-
 }));
 
