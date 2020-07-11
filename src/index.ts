@@ -1,27 +1,30 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
 
 import express, { Application } from 'express';
 import bodyParser from "body-parser";
 import morgan from 'morgan';
 import session from 'express-session';
-import connectMongo from "connect-mongo";
 import passport from "passport";
+import connectMongo from "connect-mongo";
 
-
-import dbConnection from "./config/db";
+import db from "./config/db";
 import keys from "./config/keys";
 import { ExpressRequest, ExpressResponse, ExpressError, ExpressNextFunction } from "./types";
-
-// SECTION  Setting up database 
-dbConnection();
-
+import "./config/passport";
 import * as routes from './routes';
+
+if (process.env.NODE_ENV != "production") {
+    dotenv.config();
+}
 
 const app: Application = express();
 const PORT = 3001 || process.env.PORT;
 
+
+// SECTION  Setting up database 
+db.dbConnection().then(() => console.log("database is connected")).catch(err => console.log(err));
 const MongoStore = connectMongo(session);
+const sessionStore = new MongoStore({ mongooseConnection: db.sessionDbConnection(), collection: "articlone-session" });
 
 
 // SECTION middleware 
@@ -33,18 +36,22 @@ if (process.env.NODE_ENV != 'production') {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
 app.use(session({
-    secret: 'my secret',
+    secret: keys.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
-    store: new MongoStore({ url: keys.MONGO_URI, mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true } }),
+    rolling: true,
+    saveUninitialized: false,
+    store: sessionStore,
     cookie: {
-        maxAge: 900000
+        secure: process.env.NODE_ENV == 'production' ? true : false,
+        maxAge: 1000 * 60 * 60 * 12
     }
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // SECTION : ROUTES 
 app.use('/api/v1', routes.auth);

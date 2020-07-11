@@ -33,7 +33,7 @@ userSchema.path("username").validate(async function (username: string) {
 }, "username already taken");
 
 userSchema.path("email").validate(async function (email: string) {
-    return (await User.countDocuments({ email })) === 0;
+    return (await User.countDocuments({ email: email.toLowerCase() })) === 0;
 }, "email already register");
 
 userSchema.pre<IUser>('save', async function (next) {

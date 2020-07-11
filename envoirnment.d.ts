@@ -8,13 +8,18 @@ declare global {
             JWT_SECRET: string,
             JWT_ACC_ACTIVE: string,
             SESSION_SECRET: string,
+            MONGO_URI_SESSION_STORE: string,
+            JWT_FORGET_PASS: string,
         }
     };
 
     namespace Express {
         interface Request {
             session: any,
-            user: { email: string, username: string, _id: string, isActive: boolean, token: string }
+            user: { email: string, username: string, _id: string, isActive: boolean, token: string },
+            sessionStore: string,
+            sessionID: string,
+            session: string
         }
     }
 }

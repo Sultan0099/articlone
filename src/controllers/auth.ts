@@ -1,59 +1,55 @@
+import createError from "http-errors";
+import mongoose from "mongoose";
+
 import { User, Token } from "../models";
 import { AuthControllerType } from "../types";
-import { registerValidator, EmailService, encrypt } from "../utils";
+import { authValidator, EmailService, encrypt } from "../utils";
+
 
 const emailService = new EmailService();
 
 const authController: AuthControllerType = {
     // SECTION  Register Controller 
-    register: async (req, res) => {
+    register: async (req, res, next) => {
         try {
             const { username, email, password } = req.body;
 
+            const result = await authValidator.registerValidator.validateAsync({ username, email, password });
+            if (result) {
 
-            const { isValid, errors } = registerValidator(username, email, password);
+                const user = await User.create({ username: result.username, email: result.email, password: result.password });
 
-            if (!isValid) {
-                return res.status(400).json({ success: false, errors });
+                const emailVerificationToken = await encrypt.assignEmailActivationToken({ payload: user._id });
+                if (emailVerificationToken) await Token.create({ userId: user._id, token: emailVerificationToken });
+
+                const emailContent = `
+                <h1> Email Verification</h1>
+                <p>${emailVerificationToken}</p>
+                `;
+                await emailService.sendMail(user.email, "Email Verification", emailContent);
+                res.status(200).json({ success: true, msg: "Sign up successful" })
             }
 
-            const user = await User.create({ username, email, password });
 
-            const emailVerificationToken = await encrypt.assignEmailActivationToken({ payload: user._id });
-            if (emailVerificationToken) await Token.create({ userId: user._id, token: emailVerificationToken });
-
-            const emailContent = `
-            <h1> Email Verification</h1>
-            <p>${emailVerificationToken}</p>
-            `;
-            await emailService.sendMail(user.email, "Email Verification", emailContent);
-
-
-            res.status(200).json({ success: true, msg: "Sign up successful" })
         } catch (err) {
-            if (err.message !== undefined) /* Checking if err consist of message property */ {
-                const errMsg: string = err.message.split(':').pop();
-                return res.status(403).json({ success: false, errors: { err: errMsg } })
-            } else {
-                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
-            }
+            next(createError(403, err));
         }
     },
     // SECTION : Email Verification 
-    emailConfirm: async (req, res) => {
+    emailConfirm: async (req, res, next) => {
         try {
             const { token } = req.body;
             const tokenData = await Token.findOne({ token });
 
-            if (!tokenData) return res.status(400).json({ success: false, errors: { err: "Invalid/Expire token" } });
+            if (!tokenData) return next(createError(400, "Invalid/Expire Token"));
 
             await encrypt.verifyEmailActivationToken(token);
 
             const user = await User.findOne({ _id: tokenData.userId });
 
-            if (!user) return res.status(400).json({ success: false, errors: { err: "User not found Try Again" } });
+            if (!user) return next(createError(404, 'user not found : Register first'));
 
-            if (user.isVerified) return res.status(403).json({ success: false, errors: { err: "your email is already verified : Try Login" } });
+            if (user.isVerified) return next(createError(403, "Your email is already verified : Try Login"));
 
             user.isVerified = true;
             user.isActive = true;
@@ -61,29 +57,24 @@ const authController: AuthControllerType = {
 
             await tokenData.deleteOne()
             req.login(user, (err) => {
-                if (err) { return res.status(401).json({ success: false, errors: { err } }) };
+                if (err) { return next(createError(401, "Error : try Login")) };
                 return res.status(200).json({ success: true, data: { msg: 'email confirmed successful' } })
             });
             // res.status(200).json({ success: true, data: { user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
 
         } catch (err) {
-            if (err.message !== undefined) /* Checking if err consist of message property */ {
-                const errMsg: string = err.message.split(':').pop();
-                return res.status(403).json({ success: false, errors: { err: errMsg } })
-            } else {
-                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
-            }
+            next(createError(403, "Email verification error : try resend mail"));
         }
     },
     // SECTION  Resend confirmation Email
-    resend: async (req, res) => {
+    resend: async (req, res, next) => {
         try {
             const { email } = req.body;
 
             const user = await User.findOne({ email });
-            if (!user) return res.status(400).json({ success: false, errors: { err: "Email does't  exist : Try Registration" } });
+            if (!user) return next(createError(400, "Email does not  exist : Try Registration"))
 
-            if (user.isVerified) return res.status(403).json({ success: false, errors: { err: 'Email is already verified' } })
+            if (user.isVerified) return next(createError(403, 'Email is already verified'));
 
             const token = await Token.findOne({ userId: user._id });
             const emailVerificationToken = await encrypt.assignEmailActivationToken({ payload: user._id });
@@ -103,76 +94,86 @@ const authController: AuthControllerType = {
 
             res.status(200).json({ success: true, data: { msg: 'Email sent Successfully' } })
         } catch (err) {
-            if (err.message !== undefined) /* Checking if err consist of message property */ {
-                const errMsg: string = err.message.split(':').pop();
-                return res.status(403).json({ success: false, errors: { err: errMsg } })
-            } else {
-                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
-            }
+
+            const errMsg: string = err.message.split(':').pop();
+            return next(createError(403, errMsg));
         }
     },
 
     // SECTION : Login Controller 
-    login: async (req, res) => {
+    login: async (req, res, next) => {
         try {
-            const logInUser = req.user;
-            if (!logInUser) return res.status(403).json({ success: false, errors: { err: 'please login in' } });
-
-            const user = await User.findOne({ _id: logInUser._id });
-
-            if (user) {
-                user.isActive = true;
-                await user.updateOne(user);
-                return res.status(200).json({ success: true, data: { msg: "Sign in Successful" } })
-            } else {
-                return res.status(403).json({ success: false, errors: { err: "Please Log in" } })
-            }
+            res.status(200).json({ success: true, data: { msg: "login successful" } })
         } catch (err) {
-            if (err.message !== undefined) /* Checking if err consist of message property */ {
-                const errMsg: string = err.message.split(':').pop();
-                return res.status(403).json({ success: false, errors: { err: errMsg } })
-            } else {
-                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
-            }
+            return next(createError(403, err))
         }
     },
     // SECTION Logout
-    logout: async (req, res) => {
+    logout: async (req, res, next) => {
         try {
-            const logInUser = req.user;
-            if (!logInUser) return res.status(403).json({ success: false, errors: { err: 'please login in' } });
+            if (req.user) { req.logout(); }
 
-            const user = await User.findOne({ _id: logInUser._id });
+            const { userId } = req.body;
+            if (!mongoose.isValidObjectId(userId)) return next(createError(400, 'Invalid UserId '))
+
+            const user = await User.findOne({ _id: userId });
 
             if (user) {
 
                 user.isActive = false;
                 await user.updateOne(user);
-                req.logout();
-                return res.status(200).json({ success: true, data: { msg: 'logout successful' } })
+
+                res.status(200).json({ success: true, data: { msg: "logout successfully" } });
             } else {
-                res.status(403).json({ success: false, errors: { err: "Please log in" } });
+                next(createError(404, `user not found `))
             }
-
-
         } catch (err) {
-            if (err.message !== undefined) /* Checking if err consist of message property */ {
-                const errMsg: string = err.message.split(':').pop();
-                return res.status(403).json({ success: false, errors: { err: errMsg } })
-            } else {
-                return res.status(500).json({ success: false, errors: { err: "Unknown Error occurred please try again" } });
-            }
+            const errMsg: string = err.message;
+            return next(createError(403, errMsg))
         }
+
     },
     // SECTION Get Login user
-    getLogInUser: async (req, res) => {
-        const user = req.user;
-        if (user) {
-            const { email, username, isActive, _id } = user;
-            const token = await encrypt.assignUserToken({ payload: _id })
-            res.status(200).json({ success: true, data: { user: { email, username, isActive, _id, token } } })
-        } else {
-            res.status(401).json({ success: false, errors: { err: 'Please login' } })
+    getLogInUser: async (req, res, next) => {
+        try {
+            const user = req.user;
+            console.log(req.user);
+
+            if (user) {
+                const { email, username, isActive, _id } = user;
+                const token = await encrypt.assignUserToken({ payload: _id })
+                return res.status(200).json({ success: true, data: { user: { email, username, isActive, _id, token } } })
+            } else {
+                return next(createError(401, "Please Login"))
+            }
+        } catch (err) {
+            return next(createError(401, "Please Login"))
+        }
+    },
+
+    forgetPassword: async (req, res, next) => {
+        try {
+            const { usernameOrEmail } = req.body;
+            const user = await User.findOne().or([{ email: usernameOrEmail }, { username: usernameOrEmail }]);
+            if (!user) {
+                return next(createError(401, "Email/Username not found"))
+            } else {
+                // TODO : assign token 
+                const forgetPasswordToken = await encrypt.assignForgetPasswordToken({ payload: user._id })
+                // TODO : save token 
+                if (forgetPasswordToken) {
+                    await Token.create({ userId: user._id, token: forgetPasswordToken });
+                    // TODO : send mail to user 
+                    const emailContent = `
+                    <h1> Forget Password </h1>
+                    <p>${forgetPasswordToken}</p>
+                    `;
+                    await emailService.sendMail(user.email, "Forget Password", emailContent);
+                    res.status(200).json({ success: true, msg: "Email send successfully" })
+                }
+            }
+        } catch (err) {
+            next(createError(403, err))
         }
     }
 }

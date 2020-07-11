@@ -1,14 +1,15 @@
-import mongoose, { Error } from 'mongoose';
+import mongoose from 'mongoose';
 
 import keys from './keys';
 
-const dbConnection = async () => {
+const dbConnection = async () => await mongoose.connect(keys.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
-    try {
-        await mongoose.connect(keys.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-        console.log('database is connected');
-    } catch (err) { console.log('database err ', err) }
-
+const sessionDbConnection = () => {
+    const connection = mongoose.createConnection(keys.MONGO_URI_SESSION_STORE, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+    return connection;
 }
 
-export default dbConnection; 
+export default { dbConnection, sessionDbConnection }; 

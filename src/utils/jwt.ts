@@ -17,7 +17,7 @@ async function assignUserToken(payload: string | object) {
 async function verifyUserToken(token: string) {
     try {
         return await jwt.verify(token, keys.JWT_SECRET);
-    } catch (err) { throw new Error("JWT error") }
+    } catch (err) { throw new Error("JWT error : can't verify user token") }
 }
 
 async function assignEmailActivationToken(payload: string | object | Buffer): Promise<string> {
@@ -37,7 +37,26 @@ async function verifyEmailActivationToken(token: string) {
     try {
 
         return await jwt.verify(token, keys.JWT_ACC_ACTIVE);
-    } catch (err) { throw new Error("JWT error") }
+    } catch (err) { throw new Error("JWT error : can't verify email token") }
 }
 
-export default { assignEmailActivationToken, verifyEmailActivationToken, assignUserToken, verifyUserToken }
+async function assignForgetPasswordToken(payload: string | object | Buffer): Promise<string> {
+    try {
+        return await jwt.sign(payload, keys.JWT_FORGET_PASS, {
+            issuer: 'Articlone',
+            expiresIn: '12h',
+        })
+    } catch (err) {
+        throw new Error("JWT error : can't able to assign token ");
+    }
+
+}
+
+async function verifyForgetPasswordToken(token: string) {
+    try {
+        return await jwt.verify(token, keys.JWT_ACC_ACTIVE);
+    } catch (err) { throw new Error("JWT error : can't verify email token") }
+}
+
+
+export default { assignEmailActivationToken, verifyEmailActivationToken, assignUserToken, verifyUserToken, assignForgetPasswordToken, verifyForgetPasswordToken }

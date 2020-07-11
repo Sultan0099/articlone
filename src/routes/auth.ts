@@ -46,8 +46,15 @@ SECTION  logout User
 @method : Post
 @path : '/api/v1/logout'
 */
-
 router.post('/logout', authController.logout);
+
+/* 
+SECTION  Forget User
+@Des : Forget password route
+@method : Post
+@path : '/api/v1/forget-password'
+*/
+router.post("/forget-password", authController.forgetPassword);
 
 router.get('/get-user', authController.getLogInUser);
 export default router;
