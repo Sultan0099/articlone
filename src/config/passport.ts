@@ -1,12 +1,12 @@
 import passport from 'passport';
 import passportLocal from "passport-local";
+import passportJWT from "passport-jwt";
 
 import { User } from '../models';
 
+// SECTION Passport local strategy
 
 const LocalStrategy = passportLocal.Strategy;
-
-
 
 passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (usernameOrEmail: string, password: string, done) => {
     try {
@@ -33,6 +33,8 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
     }
 }));
 
+
+// SECTION passport jwt strategy 
 
 passport.serializeUser<any, any>((user, done) => {
     done(null, user.id);
