@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '20px',
         paddingBottom: '30px',
         textAlign: 'justify',
-        width: '301px',
+        width: '330px',
+        borderRadius:"4px",
         border: '1px solid #92B6B8',
         boxShadow: 'none',
     },
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: '0px', 
         paddingRight: '0px', 
         marginTop: '30px', 
+        // width:'22vw',
         marginBottom: '30px',
     },
     textfield: {
