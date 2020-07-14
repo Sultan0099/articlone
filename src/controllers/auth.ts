@@ -175,6 +175,34 @@ const authController: AuthControllerType = {
         } catch (err) {
             next(createError(403, err))
         }
+    },
+    resetPassword: async (req, res, next) => {
+        try {
+            const { token, password } = req.body;
+            const tokenData = await Token.findOne({ token });
+
+            if (!tokenData) return next(createError(400, "Invalid/Expire Token"));
+
+            await encrypt.verifyForgetPasswordToken(token);
+
+            const user = await User.findOne({ _id: tokenData.userId });
+
+            if (!user) return next(createError(404, 'user not found : Register first'));
+
+            user.password = password;
+
+            await user.updateOne(user);
+
+            await tokenData.deleteOne()
+            req.login(user, (err) => {
+                if (err) { return next(createError(401, "Error : try Login")) };
+                return res.status(200).json({ success: true, data: { msg: 'email confirmed successful' } })
+            });
+            // res.status(200).json({ success: true, data: { user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
+
+        } catch (err) {
+            next(createError(403, err));
+        }
     }
 }
 

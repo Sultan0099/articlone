@@ -58,6 +58,7 @@ export type EmailConfirmType = { token: string }
 export type ResendMailType = { email: string }
 export type UserLogoutType = { userId: string }
 export type ForgetPasswordType = { usernameOrEmail: string };
+export type resetPasswordType = { token: string, password: string };
 
 export type AuthControllerType = {
     register: (req: ExpressRequest<RegisterType>, res: ExpressResponse, next: ExpressNextFunction) => void;
@@ -67,6 +68,7 @@ export type AuthControllerType = {
     logout: (req: ExpressRequest<UserLogoutType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     getLogInUser: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     forgetPassword: (req: ExpressRequest<ForgetPasswordType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    resetPassword: (req: ExpressRequest<resetPasswordType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
 
 

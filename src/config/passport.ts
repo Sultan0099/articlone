@@ -16,20 +16,19 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
             return done(null, false, { message: `Email ${usernameOrEmail} not found.` })
         }
 
-        if (user) {
 
-            if (!user.isVerified) { return done(null, false, { message: "Please verify your email" }) }
-            const isValidPassword = await user.isValidPassword(password);
+        if (!user.isVerified) { return done(null, false, { message: "Please verify your email" }) }
+        const isValidPassword = await user.isValidPassword(password);
 
-            if (!isValidPassword) { return done(null, false, { message: "Invalid username/email or password" }) }
+        if (!isValidPassword) { return done(null, false, { message: "Invalid username/email or password" }) }
 
-            user.isActive = true;
-            await user.updateOne(user);
-            return done(null, user);
-        }
+        user.isActive = true;
+        await user.updateOne(user);
+        return done(null, user);
+
 
     } catch (err) {
-        throw new Error(err)
+        return done(err, false)
     }
 }));
 
