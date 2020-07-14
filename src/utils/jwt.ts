@@ -54,7 +54,7 @@ async function assignForgetPasswordToken(payload: string | object | Buffer): Pro
 
 async function verifyForgetPasswordToken(token: string) {
     try {
-        return await jwt.verify(token, keys.JWT_ACC_ACTIVE);
+        return await jwt.verify(token, keys.JWT_FORGET_PASS);
     } catch (err) { throw new Error("JWT error : can't verify email token") }
 }
 

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import createError from "http-errors";
 
 import { IUser } from "../types";
 
@@ -36,6 +37,9 @@ userSchema.path("email").validate(async function (email: string) {
     return (await User.countDocuments({ email: email.toLowerCase() })) === 0;
 }, "email already register");
 
+
+
+
 userSchema.pre<IUser>('save', async function (next) {
     try {
         const salt = await bcrypt.genSalt(10);
@@ -43,9 +47,11 @@ userSchema.pre<IUser>('save', async function (next) {
         this.password = hash;
         next();
     } catch (err) {
-        throw new Error("err")
+        next(createError(500, err))
     }
-})
+});
+
+
 
 
 userSchema.methods.isValidPassword = async function (newPassword: string) {
