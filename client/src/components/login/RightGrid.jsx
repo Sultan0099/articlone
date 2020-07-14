@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import LoginForm from './LoginForm'
+// import LoginOption from './LoginOption'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,7 +36,7 @@ export default function FullWidthGrid() {
                 <Grid item xs={12}>
                     <Paper className={classes.paper} style={{ textAlign: 'center', marginTop:'50px', marginBottom:'0px', paddingBottom:'0px' }}>
                         <Typography component="h1" className={classes.signin} variant="h1">
-                            Sign into Articlone
+                            Sign in Articlone
                         </Typography>
                     </Paper>
                 </Grid>
@@ -43,6 +44,9 @@ export default function FullWidthGrid() {
                     <Paper className={classes.paper} style={{ paddingTop: '0px' }}>
                         <LoginForm />
                     </Paper>
+                    {/* <Paper className={classes.paper} style={{ paddingTop: '0px' }}>
+                        <LoginOption />
+                    </Paper> */}
                 </Grid>
             </Grid>
         </div>
