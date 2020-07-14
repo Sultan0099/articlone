@@ -84,7 +84,7 @@ export default function PasswordReset() {
                                 autoFocus
                             />
                         </Paper>
-                        <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D', boxSizing: 'border-box', paddingLeft: '0px', paddingRight: '0px', marginTop: '30px', marginBottom: '30px', }}>
+                        <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D', boxSizing: 'border-box', paddingLeft: '0px', paddingRight: '0px', marginTop: '30px', marginBottom: '10px', }}>
                             <TextField
                                 variant="filled"
                                 margin="normal"
