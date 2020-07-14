@@ -151,7 +151,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link href="/login" variant="body2">
                 {"Already have an account? Sign In"}
               </Link>
             </Grid>

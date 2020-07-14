@@ -1,10 +1,12 @@
 import React from 'react';
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import PasswordReset from './pages/PasswordReset'
+import ResetLink from './pages/ResetLink'
 
 const theme = createMuiTheme({
   palette: {
@@ -39,8 +41,8 @@ const theme = createMuiTheme({
     h3: {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       fontSize:'24px',
-      fontWeight:'500',
-      color:'#394644',
+      fontWeight:'100',
+      color:'#242424',
     },
     h4: {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
@@ -68,8 +70,8 @@ const theme = createMuiTheme({
     },
     title2: {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      fontSize:'24px',
-      fontWeight:'500',
+      fontSize:'42px',
+      fontWeight:'100',
       color:'#242424',
     },
     subtitle1: {
@@ -94,6 +96,8 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/login" theme={theme} component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/password_reset" exact component={PasswordReset} />
+            <Route path="/password_reset/link" component={ResetLink} />
           </Switch>
         </div>
       </ThemeProvider>

@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: 'none',
         textAlign: 'center',
         height: '100vh',
-        borderRadius:'35% 8% 9% 57% / 0% 48% 52% 0%',
+        // borderRadius:'35% 8% 9% 57% / 0% 48% 52% 0%',
         [theme.breakpoints.down('xs')]: {
-            borderRadius:'35% 0% 48% 52% / 0% 26% 5% 4%',
+            // borderRadius:'35% 0% 48% 52% / 0% 26% 5% 4%',
             height:'50vh',
         },
         backgroundColor: '#9BD9DB',

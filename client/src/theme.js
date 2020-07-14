@@ -24,7 +24,8 @@ const colors = {
     h1: 32,
     h2: 26,
     h3: 18,
-    title: 16,
+    title1: 18,
+    title2: 20,
     body: 12,
     caption: 12,
     small: 8,
@@ -43,9 +44,13 @@ const colors = {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       fontSize: sizes.h3
     },
-    title: {
+    title1: {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      fontSize: sizes.title
+      fontSize: sizes.title1
+    },
+    title2: {
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      fontSize: sizes.title2
     },
     body: {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
