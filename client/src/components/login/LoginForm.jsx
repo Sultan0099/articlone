@@ -12,16 +12,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { assets } from '../../theme'
 
-const useStyles = makeStyles((theme) => ({ 
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor:'transparent',
+    backgroundColor: 'transparent',
     alignItems: 'center',
   },
   form: {
-    width: '90%', 
+    width: '90%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -29,18 +29,18 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 0, 2),
   },
   googlesubmit: {
-    backgroundColor:'#18A1E8',
-    color:'white',
-    marginBottom:'20px',
-    fontSize:'14px',
-    textTransform:'initial'
-},
-facebooksubmit: {
-    fontSize:'14px',
-    backgroundColor:'#3D60A7',
-    color:'white',
-    textTransform:'initial'
-},
+    backgroundColor: '#18A1E8',
+    color: 'white',
+    marginBottom: '20px',
+    fontSize: '14px',
+    textTransform: 'initial'
+  },
+  facebooksubmit: {
+    fontSize: '14px',
+    backgroundColor: '#3D60A7',
+    color: 'white',
+    textTransform: 'initial'
+  },
 }));
 
 export default function SignIn() {
@@ -51,8 +51,8 @@ export default function SignIn() {
       <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate>
-          <Grid item xs={12} style={{ marginTop: "0px", marginBottom: '0px', paddingTop:"0px" }}>
-            <Paper className={classes.paper} style={{ textAlign: 'center', paddingLeft: '0px', boxShadow:'none', paddingRight: '0px', paddingTop: "0px", paddingBottom: "0px" }}>
+          <Grid item xs={12} style={{ marginTop: "0px", marginBottom: '0px', paddingTop: "0px" }}>
+            <Paper className={classes.paper} style={{ textAlign: 'center', paddingLeft: '0px', boxShadow: 'none', paddingRight: '0px', paddingTop: "0px", paddingBottom: "0px" }}>
               <Button
                 type="submit"
                 variant="contained"
@@ -76,14 +76,14 @@ export default function SignIn() {
             </Paper>
           </Grid>
           <Grid item xs={12} style={{ marginTop: "0px", marginBottom: '0px' }}>
-            <Paper className={classes.paper} style={{ textAlign: 'center', marginTop:'30px',padding: '0px', boxShadow:'none' }}>
+            <Paper className={classes.paper} style={{ textAlign: 'center', marginTop: '30px', padding: '0px', boxShadow: 'none' }}>
               <Typography component="h1" variant="subtitle1">
                 or sign in with email
               </Typography>
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D', marginTop:'30px' }}>
+            <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D', marginTop: '30px' }}>
               <TextField
                 variant="filled"
                 margin="normal"
