@@ -79,6 +79,10 @@ router.post("/reset-password", authController.resetPassword);
 
 router.get('/get-user', authController.getLogInUser);
 router.get('/get-user-token', passportJWT, authController.getLogInUser);
+
+router.get("/check", (req, res) => {
+    res.send("check successful")
+})
 export default router;
 
 

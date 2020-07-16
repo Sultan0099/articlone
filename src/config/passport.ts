@@ -40,8 +40,6 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
 // SECTION passport jwt strategy 
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
-const token = ExtractJwt.fromAuthHeaderAsBearerToken();
-console.log(token)
 
 let options = {
     secretOrKey: keys.JWT_SECRET,

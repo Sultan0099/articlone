@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,15 +23,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-
+  useEffect(() => {
+    fetch('/api/v1/check').then(res => res.text()).then(d => console.log(d))
+  }, [])
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <LogoWhite />
-          <Link to="/login" style={{textDecoration:'none', color:'white'}}>
+          <Link to="/login" style={{ textDecoration: 'none', color: 'white' }}>
             <Button color="inherit">
-                Login
+              Login
             </Button>
           </Link>
         </Toolbar>
@@ -49,7 +51,7 @@ export default function ButtonAppBar() {
 // function Home() {
 //     return (
 //         <div className="home">
-            
+
 //         </div>
 //     )
 // }
