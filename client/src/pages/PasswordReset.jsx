@@ -1,11 +1,13 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import LogoCenter from '../components/LogoCenter';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import LogoCenter from '../components/common/LogoCenter';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,22 +40,22 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: '30px',
         textAlign: 'justify',
         width: '330px',
-        borderRadius:"4px",
+        borderRadius: "4px",
         border: '1px solid #92B6B8',
         boxShadow: 'none',
     },
     paperfield: {
-        boxShadow: '0px 1px 0px 0.1px #075A5D', 
-        boxSizing: 'border-box', 
-        paddingLeft: '0px', 
-        paddingRight: '0px', 
-        marginTop: '30px', 
+        boxShadow: '0px 1px 0px 0.1px #075A5D',
+        boxSizing: 'border-box',
+        paddingLeft: '0px',
+        paddingRight: '0px',
+        marginTop: '30px',
         // width:'22vw',
         marginBottom: '30px',
     },
     textfield: {
-        marginTop:'0px',
-        marginBottom:'0px',
+        marginTop: '0px',
+        marginBottom: '0px',
     },
     submit: {
         textTransform: 'initial',

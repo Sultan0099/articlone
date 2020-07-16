@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import LeftGrid from '../components/login/LeftGrid';
+import AuthScreenBanner from '../components/common/AuthScreenBanner';
 import RightGrid from '../components/login/RightGrid';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         // borderRadius:'35% 8% 9% 57% / 0% 48% 52% 0%',
         [theme.breakpoints.down('xs')]: {
             // borderRadius:'35% 0% 48% 52% / 0% 26% 5% 4%',
-            height:'50vh',
+            height: '50vh',
         },
         backgroundColor: '#9BD9DB',
         color: theme.palette.text.secondary,
@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
     rightpaper: {
         padding: theme.spacing(2),
         boxShadow: 'none',
-        height:'100vh',
+        height: '100vh',
         textAlign: 'center',
         [theme.breakpoints.down('xs')]: {
-            marginTop:'-250px',
-            height:'50vh',
-            backgroundColor:"transparent",
+            marginTop: '-250px',
+            height: '50vh',
+            backgroundColor: "transparent",
         },
         borderRadius: '0px',
         color: theme.palette.text.secondary,
@@ -66,7 +66,7 @@ export default function Login() {
             <Grid container spacing={0}>
                 <Grid item xs={12} sm={6}>
                     <Paper className={classes.leftpaper}>
-                        <LeftGrid />
+                        <AuthScreenBanner tagLine="Welcome back!" type="Sign In" />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={6}>

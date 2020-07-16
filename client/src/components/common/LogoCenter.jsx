@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { assets } from '../theme';
+
+import { assets } from '../../theme';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -10,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         padding: theme.spacing(2),
-        textAlign: 'left',
-        width: '100%',
-        backgroundColor:"transparent",
-        boxShadow:'none',
+        textAlign: 'center',
+        // width: '100%',
+        backgroundColor: "transparent",
+        boxShadow: 'none',
         color: theme.palette.text.secondary,
         [theme.breakpoints.down('xs')]: {
             padding: theme.spacing(0),
@@ -22,14 +24,14 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         marginTop: '0px',
-        marginLeft: '4%',
+        // marginLeft: '4%',
         width: '180px',
-        marginBottom:'0px',
+        marginBottom: '0px',
         height: '54px',
         [theme.breakpoints.down('xs')]: {
             width: '150px',
-            height:'44px',
-            marginTop:'10px'
+            height: '44px',
+            marginTop: '10px'
         },
     },
 }));
@@ -49,24 +51,3 @@ export default function FullWidthGrid() {
         </div>
     );
 }
-
-
-
-
-
-
-
-
-// import React from 'react'
-// import {assets} from '../../theme';
-// import './css/logogreen.css'
-
-// function Logo() {
-//     return (
-//         <div className="logo">
-//             <img src={assets.logo} alt="Sorry!"/>
-//         </div>
-//     )
-// }
-
-// export default Logo
