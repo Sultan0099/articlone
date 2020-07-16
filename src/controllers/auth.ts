@@ -1,5 +1,6 @@
 import createError from "http-errors";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 import { User, Token } from "../models";
 import { AuthControllerType } from "../types";
@@ -56,11 +57,10 @@ const authController: AuthControllerType = {
             await user.updateOne(user);
 
             await tokenData.deleteOne()
-            req.login(user, (err) => {
-                if (err) { return next(createError(401, "Error : try Login")) };
-                return res.status(200).json({ success: true, data: { msg: 'email confirmed successful' } })
-            });
-            // res.status(200).json({ success: true, data: { user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
+
+            const jwtToken = await encrypt.assignUserToken({ payload: user._id })
+
+            res.status(200).json({ success: true, data: { jwtToken, user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
 
         } catch (err) {
             next(createError(403, "Email verification error : try resend mail"));
@@ -103,7 +103,12 @@ const authController: AuthControllerType = {
     // SECTION : Login Controller 
     login: async (req, res, next) => {
         try {
-            res.status(200).json({ success: true, data: { msg: "login successful" } })
+            const user = req.user;
+            const { _id, email, username } = user;
+
+            const jwtToken = await encrypt.assignUserToken({ payload: _id })
+
+            res.status(200).json({ success: true, data: { jwtToken, user: { _id, email, username } } })
         } catch (err) {
             return next(createError(403, err))
         }
@@ -137,12 +142,11 @@ const authController: AuthControllerType = {
     getLogInUser: async (req, res, next) => {
         try {
             const user = req.user;
-            console.log(req.user);
 
             if (user) {
                 const { email, username, isActive, _id } = user;
                 const token = await encrypt.assignUserToken({ payload: _id })
-                return res.status(200).json({ success: true, data: { user: { email, username, isActive, _id, token } } })
+                return res.status(200).json({ success: true, data: { jwtToken: token, user: { email, username, isActive, _id } } })
             } else {
                 return next(createError(401, "Please Login"))
             }
@@ -188,15 +192,16 @@ const authController: AuthControllerType = {
             const user = await User.findOne({ _id: tokenData.userId });
 
             if (!user) return next(createError(404, 'user not found : Register first'));
-
-            user.password = password;
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(password, salt);
+            user.password = hash;
 
             await user.updateOne(user);
 
             await tokenData.deleteOne()
             req.login(user, (err) => {
                 if (err) { return next(createError(401, "Error : try Login")) };
-                return res.status(200).json({ success: true, data: { msg: 'email confirmed successful' } })
+                return res.status(200).json({ success: true, data: { msg: 'password reset successful' } })
             });
             // res.status(200).json({ success: true, data: { user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
 

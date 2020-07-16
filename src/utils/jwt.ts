@@ -6,7 +6,7 @@ import keys from '../config/keys';
 async function assignUserToken(payload: string | object) {
     try {
         return await jwt.sign(payload, keys.JWT_SECRET, {
-            issuer: "Articlone",
+            issuer: keys.JWT_ISSUER,
             expiresIn: '12h'
         })
     } catch (err) {
@@ -23,7 +23,7 @@ async function verifyUserToken(token: string) {
 async function assignEmailActivationToken(payload: string | object | Buffer): Promise<string> {
     try {
         return await jwt.sign(payload, keys.JWT_ACC_ACTIVE, {
-            issuer: 'Articlone',
+            issuer: keys.JWT_ISSUER,
             expiresIn: '12h',
         })
     } catch (err) {
@@ -43,7 +43,7 @@ async function verifyEmailActivationToken(token: string) {
 async function assignForgetPasswordToken(payload: string | object | Buffer): Promise<string> {
     try {
         return await jwt.sign(payload, keys.JWT_FORGET_PASS, {
-            issuer: 'Articlone',
+            issuer: keys.JWT_ISSUER,
             expiresIn: '12h',
         })
     } catch (err) {

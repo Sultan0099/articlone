@@ -9,4 +9,5 @@ export default {
   JWT_ACC_ACTIVE: process.env.JWT_ACC_ACTIVE,
   SESSION_SECRET: process.env.SESSION_SECRET,
   JWT_FORGET_PASS: process.env.JWT_FORGET_PASS,
+  JWT_ISSUER: process.env.JWT_ISSUER
 };

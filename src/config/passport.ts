@@ -2,7 +2,11 @@ import passport from 'passport';
 import passportLocal from "passport-local";
 import passportJWT from "passport-jwt";
 
+import keys from "./keys";
+
 import { User } from '../models';
+import { ExpressRequest } from '../types';
+import console from 'console';
 
 // SECTION Passport local strategy
 
@@ -34,6 +38,39 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
 
 
 // SECTION passport jwt strategy 
+const JwtStrategy = passportJWT.Strategy;
+const ExtractJwt = passportJWT.ExtractJwt;
+const token = ExtractJwt.fromAuthHeaderAsBearerToken();
+console.log(token)
+
+let options = {
+    secretOrKey: keys.JWT_SECRET,
+    issuer: keys.JWT_ISSUER,
+    jwtFromRequest: (req: ExpressRequest<any>) => {
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            return req.headers.authorization.split(' ')[1];
+        }
+        return null;
+    }
+}
+
+
+passport.use(new JwtStrategy(options, async (jwt, done) => {
+    try {
+        const user = await User.findOne({ _id: jwt.payload });
+        if (!user) return done(null, false);
+        if (!user.isActive) {
+            user.isActive = true
+            await user.updateOne(user);
+        }
+        done(null, user)
+
+    } catch (err) {
+        done(null, false)
+    }
+
+}))
+
 
 passport.serializeUser<any, any>((user, done) => {
     done(null, user.id);

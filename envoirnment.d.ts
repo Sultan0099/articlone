@@ -10,6 +10,7 @@ declare global {
             SESSION_SECRET: string,
             MONGO_URI_SESSION_STORE: string,
             JWT_FORGET_PASS: string,
+            JWT_ISSUER: string,
         }
     };
 

@@ -5,6 +5,8 @@ import "../config/passport";  //  importing passport configuration from config f
 
 import { authController } from '../controllers';
 
+const passportLocal = passport.authenticate('local', { session: false });
+const passportJWT = passport.authenticate('jwt', { session: false })
 
 const router = express.Router();
 
@@ -16,7 +18,7 @@ SECTION  Login
 @req : { usernameOrEmail , password }
 @res : { msg : "successfully login"}
 */
-router.post('/login', passport.authenticate('local', { session: true }), authController.login)
+router.post('/login', passportLocal, authController.login)
 
 /* 
 SECTION  Register
@@ -31,7 +33,7 @@ router.post('/register', authController.register);
 SECTION  Confirm Email
 @Des : Confirm Email Route
 @method : Post
-@path : '/api/v1/confirmEmail'
+@path : '/api/v1/confirm-email'
 @req : { token }
 */
 router.post('/confirm-email', authController.emailConfirm);
@@ -76,6 +78,7 @@ router.post("/reset-password", authController.resetPassword);
 
 
 router.get('/get-user', authController.getLogInUser);
+router.get('/get-user-token', passportJWT, authController.getLogInUser);
 export default router;
 
 

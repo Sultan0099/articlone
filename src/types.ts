@@ -80,3 +80,10 @@ export type JWTType = {
     iss: string
 
 }
+
+export type JWOptions = {
+    jwtFromRequest?: any,
+    secretOrKey?: string,
+    issuer?: string,
+    audience?: string,
+}
