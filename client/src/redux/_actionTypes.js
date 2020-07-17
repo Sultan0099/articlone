@@ -1,0 +1,2 @@
+export const REGISTER_USER_Type = "REGISTER_USER";
+export const REGISTER_ERR_TYPE = "REGISTER_ERR"

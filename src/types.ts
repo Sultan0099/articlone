@@ -42,7 +42,12 @@ export type UserType = {
 
 // SECTION : Auth Controller types 👇
 
-export type RegisterType = UserType;
+export type RegisterType = {
+    username: string,
+    email: string,
+    password: string,
+    confirmPassword: string
+};
 export type LoginType = {
     usernameOrEmail: string,
     password: string,
@@ -51,7 +56,8 @@ export type LoginType = {
 export type UserErrType = {
     username?: string,
     email?: string,
-    password?: string
+    password?: string,
+    confirmPassword?: string
 }
 
 export type EmailConfirmType = { token: string }

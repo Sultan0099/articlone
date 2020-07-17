@@ -16,7 +16,7 @@ SECTION  Login
 @method : Post
 @path : '/api/v1/login'
 @req : { usernameOrEmail , password }
-@res : { msg : "successfully login"}
+@res : { user : { username , email , isActive , _id } , jwtToken }
 */
 router.post('/login', passportLocal, authController.login)
 
@@ -26,6 +26,7 @@ SECTION  Register
 @method : Post
 @path : '/api/v1/register'
 @req : { username , email  , password }
+@res : { user : { username , email , isActive , _id } , jwtToken }
 */
 router.post('/register', authController.register);
 

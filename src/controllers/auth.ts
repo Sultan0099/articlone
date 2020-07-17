@@ -13,9 +13,9 @@ const authController: AuthControllerType = {
     // SECTION  Register Controller 
     register: async (req, res, next) => {
         try {
-            const { username, email, password } = req.body;
+            const { username, email, password, confirmPassword } = req.body;
 
-            const result = await authValidator.registerValidator.validateAsync({ username, email, password });
+            const result = await authValidator.registerValidator.validateAsync({ username, email, password, confirmPassword });
             if (result) {
 
                 const user = await User.create({ username: result.username, email: result.email, password: result.password });

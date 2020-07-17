@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -13,14 +13,35 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import { useDispatch } from "react-redux"
+
 import FacebookButton from "../common/FacebookButton";
 import GoogleButton from "../common/GoogleButton";
+import InputError from "../common/FormFieldError";
 
+import { register } from "../../redux/_actions/authAction"
+
+import useForm from "../../hooks/useForm";
+import validate from "./validate"
 
 
 export default function SignIn() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const submit = () => {
+    dispatchUser()
+  }
 
+  const { handleChange, handleSubmit, values, errors } = useForm({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  }, submit, validate)
+
+  const dispatchUser = () => {
+    dispatch(register(values));
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -40,7 +61,7 @@ export default function SignIn() {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D', marginTop: '10px' }}>
+            <Paper className={classes.paper} >
               <TextField
                 variant="filled"
                 margin="normal"
@@ -52,11 +73,16 @@ export default function SignIn() {
                 label="username"
                 name="username"
                 autoComplete="username"
+                error={errors.username ? true : false}
+                value={values.username}
+                onChange={handleChange}
               />
             </Paper>
+            {errors.username && <InputError errorText={errors.username} />}
+
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D', marginTop: '20px' }}>
+            <Paper className={classes.paper} >
               <TextField
                 variant="filled"
                 margin="normal"
@@ -68,11 +94,18 @@ export default function SignIn() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                error={errors.email ? true : false}
+                value={values.email}
+                onChange={handleChange}
+
               />
             </Paper>
+            {errors.email && <InputError errorText={errors.email} />}
+
+
           </Grid>
           <Grid item xs={12} style={{ marginTop: "20px" }}>
-            <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D' }}>
+            <Paper className={classes.paper}>
               <TextField
                 variant="filled"
                 style={{ marginTop: '0px', marginBottom: '0px' }}
@@ -84,8 +117,39 @@ export default function SignIn() {
                 label="Password"
                 type="password"
                 autoComplete="current-password"
+                error={errors.password ? true : false}
+
+                value={values.password}
+                onChange={handleChange}
+
               />
             </Paper>
+            {errors.password && <InputError errorText={errors.password} />}
+
+
+          </Grid>
+          <Grid item xs={12} style={{ marginTop: "20px" }}>
+            <Paper className={classes.paper}>
+              <TextField
+                variant="filled"
+                style={{ marginTop: '0px', marginBottom: '0px' }}
+                margin="normal"
+                size='small'
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                autoComplete="current-password"
+                error={errors.confirmPassword ? true : false}
+                value={values.confirmPassword}
+                onChange={handleChange}
+
+              />
+            </Paper>
+
+            {errors.confirmPassword && <InputError errorText={errors.confirmPassword} />}
+
           </Grid>
           <FormControlLabel
             style={{ marginTop: '8px' }}
@@ -93,11 +157,12 @@ export default function SignIn() {
             label="Remember me"
           />
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign up
           </Button>
