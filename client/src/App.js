@@ -2,11 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-
-
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import CheckEmail from './pages/CheckEmail'
 import PasswordReset from './pages/PasswordReset'
 import ResetLink from './pages/ResetLink'
 
@@ -97,7 +96,8 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" theme={theme} component={Login} />
-          <Route path="/signup" component={Signup} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/signup/check_email" component={CheckEmail} />
           <Route path="/password_reset" exact component={PasswordReset} />
           <Route path="/password_reset/link" component={ResetLink} />
         </Switch>

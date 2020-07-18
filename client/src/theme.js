@@ -4,6 +4,7 @@ const assets = {
     undraw:'/images/undraw.png',
     undrawSingle:'/images/undrawsingle.png',
     google:'/images/google.png',
+    undrawemail:'/images/undrawemail.svg',
     facebook: '/images/facebook.png',
 }
 const colors = {
