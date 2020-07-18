@@ -1,4 +1,4 @@
-import { REGISTER_ERR_TYPE, REGISTER_USER_Type } from "../_actionTypes"
+import { REGISTER_USER_TYPE, AUTH_ERR_TYPE, LOGIN_USER_TYPE } from "../_actionTypes"
 
 const initialState = {
     accessToken: null,
@@ -9,21 +9,26 @@ const initialState = {
 const testReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case REGISTER_ERR_TYPE:
+        case AUTH_ERR_TYPE:
             return {
                 ...state,
                 errors: {
                     ...action.payload
                 }
             };
-        case REGISTER_USER_Type:
+        case REGISTER_USER_TYPE:
             console.log(action.payload)
-        // return {
-        //     ...state,
-        //     errors: {},
-        //     user: action.payload.user,
-        //     accessToken: action.payload.jwtToken
-        // }
+            return {
+                ...state,
+                errors: {},
+            };
+        case LOGIN_USER_TYPE:
+            return {
+                ...state,
+                errors: {},
+                user: action.payload.user,
+                accessToken: action.payload.jwtToken
+            }
         default:
             return state;
     }

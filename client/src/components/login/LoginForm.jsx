@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -8,21 +8,38 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { green } from "@material-ui/core/colors";
 
+import { useDispatch } from "react-redux"
 
 import FacebookButton from "../common/FacebookButton";
 import GoogleButton from "../common/GoogleButton";
+import InputError from "../common/FormFieldError";
 
-
+import validate from "./validate";
+import useForm from "../../hooks/useForm";
+import { login } from "../../redux/_actions/authAction"
 
 export default function SignIn() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
+  const submit = () => loginUser();
+
+  const { handleChange, handleSubmit, values, errors, isSubmitting } = useForm({
+    usernameOrEmail: '',
+    password: '',
+  }, submit, validate);
+
+  const loginUser = async () => {
+    await dispatch(login(values))
+  }
+  console.log(isSubmitting)
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -51,11 +68,16 @@ export default function SignIn() {
                 fullWidth
                 style={{ marginTop: '0px', marginBottom: '0px' }}
                 size="small"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                label="Username Or Email "
+                name="usernameOrEmail"
+                error={errors.usernameOrEmail ? true : false}
+                value={values.usernameOrEmail}
+                onChange={handleChange}
+
               />
             </Paper>
+            {errors.usernameOrEmail && <InputError errorText={errors.usernameOrEmail} />}
+
           </Grid>
           <Grid item xs={12} style={{ marginTop: "30px" }}>
             <Paper className={classes.paper} style={{ boxShadow: '0px 1px 0px 0.1px #075A5D' }}>
@@ -67,26 +89,38 @@ export default function SignIn() {
                 required
                 fullWidth
                 name="password"
+                error={errors.password ? true : false}
+                value={values.password}
                 label="Password"
                 type="password"
-                autoComplete="current-password"
+                autoComplete="password"
+                onChange={handleChange}
+
               />
             </Paper>
+            {errors.password && <InputError errorText={errors.password} />}
+
+
           </Grid>
           <FormControlLabel
             style={{ marginTop: '8px' }}
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
+          <div className={classes.wrapper}>
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              fullWidth
+              disabled={isSubmitting}
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
           </Button>
+            {isSubmitting && <CircularProgress size={24} className={classes.buttonProgress} />}
+          </div>
           <Grid container>
             <Grid item xs>
               <Link to="/password_reset" style={{ color: "#4C797B" }}>
@@ -112,6 +146,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     backgroundColor: 'transparent',
     alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
   form: {
     width: '90%',

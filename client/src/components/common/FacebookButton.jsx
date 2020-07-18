@@ -9,7 +9,7 @@ export default function FacebookButton({ title }) {
     const classes = useStyles();
     return (
         <Button
-            type="submit"
+            type="button"
             variant="contained"
             color="secondary"
             fullWidth

@@ -1,10 +1,12 @@
 import createError from "http-errors";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import passport from "passport";
 
 import { User, Token } from "../models";
 import { AuthControllerType } from "../types";
 import { authValidator, EmailService, encrypt } from "../utils";
+import "../config/passport";  //  importing passport configuration from config folder ;
 
 
 const emailService = new EmailService();
@@ -103,12 +105,16 @@ const authController: AuthControllerType = {
     // SECTION : Login Controller 
     login: async (req, res, next) => {
         try {
-            const user = req.user;
-            const { _id, email, username } = user;
+            passport.authenticate('local', async (err, user, info) => {
+                if (err) { return next(createError(401, err)); }
+                if (!user) { return next(createError(404, "user not found")) }
+                const { _id, email, username, isActive } = user;
+                const jwtToken = await encrypt.assignUserToken({ payload: _id })
 
-            const jwtToken = await encrypt.assignUserToken({ payload: _id })
+                res.status(200).json({ success: true, data: { jwtToken, user: { _id, email, username, isActive } } });
+            })(req, res, next);
 
-            res.status(200).json({ success: true, data: { jwtToken, user: { _id, email, username } } })
+
         } catch (err) {
             return next(createError(403, err))
         }

@@ -4,8 +4,9 @@ import passport from 'passport';
 import "../config/passport";  //  importing passport configuration from config folder ;
 
 import { authController } from '../controllers';
+import createError from "http-errors";
 
-const passportLocal = passport.authenticate('local', { session: false });
+
 const passportJWT = passport.authenticate('jwt', { session: false })
 
 const router = express.Router();
@@ -18,7 +19,15 @@ SECTION  Login
 @req : { usernameOrEmail , password }
 @res : { user : { username , email , isActive , _id } , jwtToken }
 */
-router.post('/login', passportLocal, authController.login)
+router.post('/login', authController.login)
+// router.post('/login', async (req, res, next) => {
+//     passport.authenticate('local', function (err, user, info) {
+//         if (err) { console.log(err); return next(createError(401, err)); }
+//         // if (!user) { return res.redirect('/login'); }
+//         console.log(user)
+//         res.send("login")
+//     })(req, res, next);
+// })
 
 /* 
 SECTION  Register

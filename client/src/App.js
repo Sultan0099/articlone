@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import { useDispatch } from "react-redux"
-import { test } from "./redux/_actions/testAction";
+
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -91,10 +90,7 @@ const theme = createMuiTheme({
 })
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(test())
-  }, [])
+
   return (
     <Router>
       <ThemeProvider theme={theme}>

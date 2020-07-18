@@ -17,14 +17,14 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
         console.log("passport ", usernameOrEmail)
         const user = await User.findOne().or([{ email: usernameOrEmail }, { username: usernameOrEmail }]);
         if (!user) {
-            return done(null, false, { message: `Email ${usernameOrEmail} not found.` })
+            return done("user not found", false, { message: `Email ${usernameOrEmail} not found.` })
         }
 
 
-        if (!user.isVerified) { return done(null, false, { message: "Please verify your email" }) }
+        if (!user.isVerified) { return done("user is not verified", false, { message: "Please verify your email" }) }
         const isValidPassword = await user.isValidPassword(password);
 
-        if (!isValidPassword) { return done(null, false, { message: "Invalid username/email or password" }) }
+        if (!isValidPassword) { return done("password is not valid", false, { message: "Invalid username/email or password" }) }
 
         user.isActive = true;
         await user.updateOne(user);

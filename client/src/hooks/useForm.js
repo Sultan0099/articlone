@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const useForm = (formValues, callBack, validator) => {
+const useForm = (formValues, callBack, validator = null) => {
     const [values, setValues] = useState(formValues);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -9,16 +9,20 @@ const useForm = (formValues, callBack, validator) => {
 
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
-            callBack(values);
+            callBack(values).then(() => setIsSubmitting(false))
+        } else {
+            setIsSubmitting(false)
         }
-
     }, [errors])
 
     useEffect(() => {
         if (Object.keys(auth.errors).length !== 0) {
             setErrors(auth.errors)
+            setIsSubmitting(false)
         }
     }, [auth.errors])
+
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setValues({
@@ -28,7 +32,9 @@ const useForm = (formValues, callBack, validator) => {
     }
 
     const handleSubmit = () => {
-        setErrors(validator(values));
+        if (validator !== null) {
+            setErrors(validator(values));
+        }
         setIsSubmitting(true)
     }
 

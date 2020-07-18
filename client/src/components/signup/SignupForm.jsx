@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -8,10 +8,12 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { green } from "@material-ui/core/colors";
 
 import { useDispatch } from "react-redux"
 
@@ -28,19 +30,18 @@ import validate from "./validate"
 export default function SignIn() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const submit = () => {
-    dispatchUser()
-  }
+  const submit = () => registerUser()
 
-  const { handleChange, handleSubmit, values, errors } = useForm({
+
+  const { handleChange, handleSubmit, values, errors, isSubmitting } = useForm({
     username: '',
     email: '',
     password: '',
     confirmPassword: ''
   }, submit, validate)
 
-  const dispatchUser = () => {
-    dispatch(register(values));
+  const registerUser = async () => {
+    await dispatch(register(values));
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -156,16 +157,20 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleSubmit}
-          >
-            Sign up
+          <div className={classes.wrapper}>
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              fullWidth
+              disabled={isSubmitting}
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
           </Button>
+            {isSubmitting && <CircularProgress size={24} className={classes.buttonProgress} />}
+          </div>
           <Grid container>
             <Grid item>
               <Link to="/login" style={{ color: "#4C797B" }}>
@@ -186,6 +191,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     backgroundColor: 'transparent',
     alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing(1),
+    position: 'relative',
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
   form: {
     width: '90%',
