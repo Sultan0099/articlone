@@ -2,10 +2,15 @@
 const validate = (values) => {
     const errors = {}
     console.log(values)
+
+    const alphaNumRegx = /^[a-zA-Z0-9_]*$/;
+
     if (!values.username) {
         errors.username = "Please Enter username";
     } else if (values.username.length < 3 || values.username.length > 15) {
         errors.username = "username should be between 3 to 12 character";
+    } else if (!alphaNumRegx.test(values.username)) {
+        errors.username = 'username can only consist of Alphabets , Numbers and underscore '
     }
 
     //  check email

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { AUTH_ERR_TYPE, REGISTER_USER_TYPE, LOGIN_USER_TYPE } from "../_actionTypes"
+import { AUTH_ERR_TYPE, REGISTER_USER_TYPE, SET_USER_TYPE } from "../_actionTypes"
+
 
 const options = {
     headers: {
@@ -10,10 +11,11 @@ const options = {
 const grabStatusFromError = (err) => err.response.data.error.status;
 const grabMessageFromError = (err) => err.response.data.error.message;
 
-export const register = (registerData) => async dispatch => {
+export const register = (registerData, history) => async dispatch => {
     try {
-        await axios.post("/api/v1/register", registerData, options);
+        const res = await axios.post("/api/v1/register", registerData, options);
         await dispatch({ type: REGISTER_USER_TYPE })
+        if (res) { setTimeout(() => { history.push(`/signup/check_email/${registerData.email}`) }, 500) }
     } catch (err) {
         const status = grabStatusFromError(err);
         const message = grabMessageFromError(err);
@@ -29,11 +31,12 @@ export const register = (registerData) => async dispatch => {
 
 }
 
-export const login = (loginData) => async dispatch => {
+export const login = (loginData, history) => async dispatch => {
     try {
         const res = await axios.post("/api/v1/login", loginData, options);
-        console.log(res)
-        await dispatch({ type: LOGIN_USER_TYPE, payload: res.data.data });
+        localStorage.setItem('secret', res.data.data.jwtToken);
+        await dispatch({ type: SET_USER_TYPE, payload: res.data.data });
+
     } catch (err) {
         console.log({ err });
         const status = grabStatusFromError(err);
@@ -44,6 +47,36 @@ export const login = (loginData) => async dispatch => {
             } else if (message === 'password is not valid') {
                 dispatch({ type: AUTH_ERR_TYPE, payload: { password: "password is invalid" } })
             }
+            if (message === 'user is not verified') {
+                setTimeout(() => { history.push(`/signup/check_email/${loginData.email}`) }, 500)
+            }
         }
     }
 }
+
+export const getUserByToken = (token) => async dispatch => {
+    try {
+        const res = await axios.get('/api/v1/get-user-token', {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        });
+        localStorage.setItem('secret', res.data.data.jwtToken);
+        await dispatch({ type: SET_USER_TYPE, payload: res.data.data })
+    } catch (err) {
+        console.log(err)
+        localStorage.removeItem('secret');
+    }
+}
+
+export const verifyEmailToken = (token) => async dispatch => {
+    try {
+        const res = await axios.post('/api/v1/confirm-email', { token }, options);
+        localStorage.setItem('secret', res.data.data.jwtToken)
+        await dispatch({ type: SET_USER_TYPE, payload: res.data.data });
+    } catch (err) {
+        console.log(err)
+        localStorage.removeItem('secret');
+    }
+}
+

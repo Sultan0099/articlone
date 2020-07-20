@@ -7,6 +7,7 @@ import { User, Token } from "../models";
 import { AuthControllerType } from "../types";
 import { authValidator, EmailService, encrypt } from "../utils";
 import "../config/passport";  //  importing passport configuration from config folder ;
+import keys from "../config/keys";
 
 
 const emailService = new EmailService();
@@ -27,8 +28,9 @@ const authController: AuthControllerType = {
 
                 const emailContent = `
                 <h1> Email Verification</h1>
-                <p>${emailVerificationToken}</p>
+                <a href="${keys.CLIENT_ORIGIN}verify-email/${emailVerificationToken}"> click here to active your account </a>
                 `;
+
                 await emailService.sendMail(user.email, "Email Verification", emailContent);
                 res.status(200).json({ success: true, msg: "Sign up successful" })
             }
@@ -90,7 +92,7 @@ const authController: AuthControllerType = {
 
             const emailContent = `
             <h1> Email Verification</h1>
-            <p>${emailVerificationToken}</p>
+            <a href="${keys.CLIENT_ORIGIN}verify-email/${emailVerificationToken}"> click here to active your account </a>
             `;
             await emailService.sendMail(user.email, "Email Verification", emailContent);
 
@@ -106,7 +108,9 @@ const authController: AuthControllerType = {
     login: async (req, res, next) => {
         try {
             passport.authenticate('local', async (err, user, info) => {
-                if (err) { return next(createError(401, err)); }
+                if (err) {
+                    return next(createError(401, err));
+                }
                 if (!user) { return next(createError(404, "user not found")) }
                 const { _id, email, username, isActive } = user;
                 const jwtToken = await encrypt.assignUserToken({ payload: _id })
@@ -166,7 +170,7 @@ const authController: AuthControllerType = {
             const { usernameOrEmail } = req.body;
             const user = await User.findOne().or([{ email: usernameOrEmail }, { username: usernameOrEmail }]);
             if (!user) {
-                return next(createError(401, "Email/Username not found"))
+                return next(createError(401, "Email/Username not found : Try Register yourself"))
             } else {
                 // TODO : assign token 
                 const forgetPasswordToken = await encrypt.assignForgetPasswordToken({ payload: user._id })
@@ -176,7 +180,8 @@ const authController: AuthControllerType = {
                     // TODO : send mail to user 
                     const emailContent = `
                     <h1> Forget Password </h1>
-                    <p>${forgetPasswordToken}</p>
+                    <a href="${keys.CLIENT_ORIGIN}reset-password/${forgetPasswordToken}"> click here to change password </a>
+                    
                     `;
                     await emailService.sendMail(user.email, "Forget Password", emailContent);
                     res.status(200).json({ success: true, msg: "Email send successfully" })
@@ -188,27 +193,28 @@ const authController: AuthControllerType = {
     },
     resetPassword: async (req, res, next) => {
         try {
-            const { token, password } = req.body;
+            const { token, password, confirmPassword } = req.body;
             const tokenData = await Token.findOne({ token });
 
             if (!tokenData) return next(createError(400, "Invalid/Expire Token"));
 
             await encrypt.verifyForgetPasswordToken(token);
 
-            const user = await User.findOne({ _id: tokenData.userId });
+            const result = await authValidator.resetPassword.validateAsync({ password, confirmPassword });
+            if (result) {
 
-            if (!user) return next(createError(404, 'user not found : Register first'));
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(password, salt);
-            user.password = hash;
+                const user = await User.findOne({ _id: tokenData.userId });
 
-            await user.updateOne(user);
+                if (!user) return next(createError(404, 'user not found : Register first'));
+                const salt = await bcrypt.genSalt(10);
+                const hash = await bcrypt.hash(password, salt);
+                user.password = hash;
 
-            await tokenData.deleteOne()
-            req.login(user, (err) => {
-                if (err) { return next(createError(401, "Error : try Login")) };
-                return res.status(200).json({ success: true, data: { msg: 'password reset successful' } })
-            });
+                await user.updateOne(user);
+
+                await tokenData.deleteOne()
+                res.status(200).json({ success: true, data: {} })
+            }
             // res.status(200).json({ success: true, data: { user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
 
         } catch (err) {

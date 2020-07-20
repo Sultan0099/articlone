@@ -1,4 +1,4 @@
-import { REGISTER_USER_TYPE, AUTH_ERR_TYPE, LOGIN_USER_TYPE } from "../_actionTypes"
+import { REGISTER_USER_TYPE, AUTH_ERR_TYPE, SET_USER_TYPE } from "../_actionTypes"
 
 const initialState = {
     accessToken: null,
@@ -22,7 +22,7 @@ const testReducer = (state = initialState, action) => {
                 ...state,
                 errors: {},
             };
-        case LOGIN_USER_TYPE:
+        case SET_USER_TYPE:
             return {
                 ...state,
                 errors: {},

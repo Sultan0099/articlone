@@ -72,7 +72,7 @@ SECTION  Forget User
 @Des : Forget password route
 @method : Post
 @path : '/api/v1/forget-password'
-@req : { email }
+@req : { usernameOrEmail }
 */
 router.post("/forget-password", authController.forgetPassword);
 
@@ -81,13 +81,20 @@ SECTION  Forget User
 @Des : Reset password route
 @method : Post
 @path : '/api/v1/reset-password'
-@req : { token , password  }
+@req : { token , password , confirmPassword }
 */
 
 router.post("/reset-password", authController.resetPassword);
 
 
-router.get('/get-user', authController.getLogInUser);
+/* 
+SECTION  get User by token
+@Des : Get User Route
+@method : Post
+@path : '/api/v1/get-user-token'
+@req : null , 
+@headers : { authorization : Bearer + token }
+*/
 router.get('/get-user-token', passportJWT, authController.getLogInUser);
 
 router.get("/check", (req, res) => {

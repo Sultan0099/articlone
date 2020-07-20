@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -29,11 +29,12 @@ import validate from "./validate"
 
 export default function SignIn() {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
   const submit = () => registerUser()
 
 
-  const { handleChange, handleSubmit, values, errors, isSubmitting } = useForm({
+  const { handleChange, handleSubmit, values, errors, isSubmitting, handleBlur } = useForm({
     username: '',
     email: '',
     password: '',
@@ -41,7 +42,7 @@ export default function SignIn() {
   }, submit, validate)
 
   const registerUser = async () => {
-    await dispatch(register(values));
+    await dispatch(register(values, history));
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -77,6 +78,7 @@ export default function SignIn() {
                 error={errors.username ? true : false}
                 value={values.username}
                 onChange={handleChange}
+                onBlur={handleBlur}
               />
             </Paper>
             {errors.username && <InputError errorText={errors.username} />}
@@ -98,6 +100,8 @@ export default function SignIn() {
                 error={errors.email ? true : false}
                 value={values.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
+
 
               />
             </Paper>
@@ -122,6 +126,8 @@ export default function SignIn() {
 
                 value={values.password}
                 onChange={handleChange}
+                onBlur={handleBlur}
+
 
               />
             </Paper>
@@ -145,6 +151,8 @@ export default function SignIn() {
                 error={errors.confirmPassword ? true : false}
                 value={values.confirmPassword}
                 onChange={handleChange}
+                onBlur={handleBlur}
+
 
               />
             </Paper>

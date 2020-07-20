@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,21 +25,21 @@ import validate from "./validate";
 import useForm from "../../hooks/useForm";
 import { login } from "../../redux/_actions/authAction"
 
-export default function SignIn() {
+export default function SignIn(props) {
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const submit = () => loginUser();
 
-  const { handleChange, handleSubmit, values, errors, isSubmitting } = useForm({
+  const { handleChange, handleSubmit, handleBlur, values, errors, isSubmitting } = useForm({
     usernameOrEmail: '',
     password: '',
   }, submit, validate);
 
   const loginUser = async () => {
-    await dispatch(login(values))
+    await dispatch(login(values, history));
   }
-  console.log(isSubmitting)
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -73,6 +73,7 @@ export default function SignIn() {
                 error={errors.usernameOrEmail ? true : false}
                 value={values.usernameOrEmail}
                 onChange={handleChange}
+                onBlur={handleBlur}
 
               />
             </Paper>

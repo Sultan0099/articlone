@@ -9,5 +9,6 @@ export default {
   JWT_ACC_ACTIVE: "acoutnactivationsecret",
   SESSION_SECRET: "sessionsecret",
   JWT_FORGET_PASS: "forgetpasswordsecret",
-  JWT_ISSUER: "Articlone"
+  JWT_ISSUER: "Articlone",
+  CLIENT_ORIGIN: "http://localhost:3000/"
 };

@@ -11,6 +11,13 @@ const registerValidator = Joi.object<UserErrType>({
     email: Joi.string().email().lowercase().required(),
     password: Joi.string().min(8).max(15).required(),
     confirmPassword: Joi.any().valid(Joi.ref('password')).equal(Joi.ref('password')).required().label("password must match")
+});
+
+const resetPassword = Joi.object<UserErrType>({
+    password: Joi.string().min(8).max(15).required(),
+    confirmPassword: Joi.any().valid(Joi.ref('password')).equal(Joi.ref('password')).required().label("password must match")
 })
 
-export default { registerValidator };
+
+export default { registerValidator, resetPassword };
+

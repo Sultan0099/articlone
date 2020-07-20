@@ -4,12 +4,14 @@ import passportJWT from "passport-jwt";
 
 import keys from "./keys";
 
-import { User } from '../models';
+import { User, Token } from '../models';
 import { ExpressRequest } from '../types';
 import console from 'console';
+import { encrypt, EmailService } from '../utils';
 
 // SECTION Passport local strategy
 
+const emailService = new EmailService();
 const LocalStrategy = passportLocal.Strategy;
 
 passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (usernameOrEmail: string, password: string, done) => {
@@ -21,10 +23,21 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
         }
 
 
-        if (!user.isVerified) { return done("user is not verified", false, { message: "Please verify your email" }) }
+        if (!user.isVerified) {
+            const emailVerificationToken = await encrypt.assignEmailActivationToken({ payload: user._id });
+            if (emailVerificationToken) await Token.create({ userId: user._id, token: emailVerificationToken });
+
+            const emailContent = `
+                        <h1> Email Verification</h1>
+                        <a href="${keys.CLIENT_ORIGIN}verify-email/${emailVerificationToken}"> click here to active your account </a>
+                        `;
+
+            await emailService.sendMail(user.email, "Email Verification", emailContent);
+            return done("user is not verified", false, { message: "Please verify your email" })
+        }
         const isValidPassword = await user.isValidPassword(password);
 
-        if (!isValidPassword) { return done("password is not valid", false, { message: "Invalid username/email or password" }) }
+        if (!isValidPassword) { return done("password is not valid", user, { message: "Invalid username/email or password" }) }
 
         user.isActive = true;
         await user.updateOne(user);

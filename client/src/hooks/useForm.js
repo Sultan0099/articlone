@@ -23,6 +23,7 @@ const useForm = (formValues, callBack, validator = null) => {
     }, [auth.errors])
 
 
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setValues({
@@ -38,11 +39,20 @@ const useForm = (formValues, callBack, validator = null) => {
         setIsSubmitting(true)
     }
 
+    const handleBlur = (event) => {
+        const { name } = event.target;
+        setErrors({
+            ...errors,
+            [name]: null
+        })
+    }
+
     return {
         values,
         errors,
         handleChange,
         handleSubmit,
+        handleBlur,
         isSubmitting
     }
 }

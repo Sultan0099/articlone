@@ -1,13 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import CheckEmail from './pages/CheckEmail'
-import PasswordReset from './pages/PasswordReset'
-import ResetLink from './pages/ResetLink'
+import { useDispatch } from "react-redux";
+
+
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import CheckEmail from './pages/CheckEmail';
+import PasswordReset from './pages/PasswordReset';
+import ResetLink from './pages/ResetLink';
+import Dashboard from "./pages/Dashboard";
+import VerifyEmail from './pages/VerifyEmail';
+import PageNotFound from "./pages/PageNotFound";
+
+import AuthRoute from "./components/HOCs/AuthRoute";
+import GuestRoute from "./components/HOCs/GuestRoute";
+
+import { getUserByToken } from './redux/_actions/authAction';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -89,17 +102,37 @@ const theme = createMuiTheme({
 })
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function setUserToStore() {
+      const token = localStorage.getItem('secret');
+      if (token) {
+        await dispatch(getUserByToken(token))
+        setLoading(false)
+      } else {
+        setLoading(false)
+      }
+    }
+    setUserToStore();
+  }, [dispatch])
+
+  if (loading) { return <p> Loading...</p> }
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/login" theme={theme} component={Login} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/signup/check_email" component={CheckEmail} />
-          <Route path="/password_reset" exact component={PasswordReset} />
-          <Route path="/password_reset/link" component={ResetLink} />
+          <GuestRoute path="/" exact Component={Home} />
+          <GuestRoute path="/login" exact Component={Login} />
+          <GuestRoute path="/signup" exact Component={Signup} />
+          <GuestRoute path="/signup/check_email/:email" exact Component={CheckEmail} />
+          <GuestRoute path="/password_reset" exact Component={PasswordReset} />
+          <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
+          <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
+          <AuthRoute path="/dashboard" exact Component={Dashboard} />
+          <GuestRoute Component={PageNotFound} />
         </Switch>
       </ThemeProvider>
     </Router>

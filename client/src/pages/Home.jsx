@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-
+  console.log("home", 'render')
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -34,6 +34,7 @@ export default function ButtonAppBar() {
               Login
             </Button>
           </Link>
+          <Button component={Link} to='/dashboard'> Dashboard </Button>
         </Toolbar>
       </AppBar>
     </div>

@@ -62,4 +62,4 @@ app.use((err: ExpressError, req: ExpressRequest<any>, res: ExpressResponse, next
 })
 
 
-app.listen(PORT, () => console.log(`server is up and running at :\nhttp://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`server is up and running at :\nhttp://localhost:${PORT}\n${process.env.NODE_ENV}`));

@@ -6,6 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+
 import LogoCenter from '../components/common/LogoCenter';
 import ResendEmail from '../components/common/ResendEmail'
 import { assets } from '../theme'
@@ -68,8 +71,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function PasswordReset() {
+export default function CheckEmail() {
     const classes = useStyles();
+    const { email } = useParams();
+
+    const resendMail = async () => {
+        try {
+            await axios.post("/api/v1/resend-mail", { email }, {
+                headers: {
+                    'content-type': 'application/json'
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <div className={classes.root}>
@@ -86,11 +102,13 @@ export default function PasswordReset() {
                             Check Email
                         </Typography>
                         <Typography component="h1" variant="subtitle1" className={classes.info} >
-                            <span>Please check your email inbox and click on the provided link to reset your password. If you didn't recive email.
-                            <ResendEmail resend="Click here to resend." />
+                            <span>Please check your email inbox and click on the provided link to reset your password. If you didn't receive email.
+                            <ResendEmail handleClick={resendMail} />
                             </span>
                         </Typography>
                         <Button
+                            component={Link}
+                            to="/signup"
                             type="button"
                             color="primary"
                             className={classes.button}
