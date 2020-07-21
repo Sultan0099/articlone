@@ -12,6 +12,8 @@ declare global {
             JWT_FORGET_PASS: string,
             JWT_ISSUER: string,
             CLIENT_ORIGIN: string,
+            ARTICLONE_MAIL: string,
+            ARTICLONE_PASS: string
         }
     };
 

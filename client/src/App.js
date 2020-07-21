@@ -117,7 +117,7 @@ function App() {
     }
     setUserToStore();
   }, [dispatch])
-
+  // TODO loading page with animations
   if (loading) { return <p> Loading...</p> }
 
   return (

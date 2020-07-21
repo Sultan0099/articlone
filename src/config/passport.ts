@@ -32,7 +32,7 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
                         <a href="${keys.CLIENT_ORIGIN}verify-email/${emailVerificationToken}"> click here to active your account </a>
                         `;
 
-            await emailService.sendMail(user.email, "Email Verification", emailContent);
+            await emailService.sendMailFromGmail(user.email, "Email Verification", emailContent);
             return done("user is not verified", false, { message: "Please verify your email" })
         }
         const isValidPassword = await user.isValidPassword(password);

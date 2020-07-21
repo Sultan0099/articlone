@@ -10,5 +10,7 @@ export default {
   SESSION_SECRET: "sessionsecret",
   JWT_FORGET_PASS: "forgetpasswordsecret",
   JWT_ISSUER: "Articlone",
-  CLIENT_ORIGIN: "http://localhost:3000/"
+  CLIENT_ORIGIN: "http://localhost:3000/",
+  ARTICLONE_MAIL: "articlone.contact@gmail.com",
+  ARTICLONE_PASS: "articlonefypfsd"
 };

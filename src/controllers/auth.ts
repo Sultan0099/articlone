@@ -31,7 +31,7 @@ const authController: AuthControllerType = {
                 <a href="${keys.CLIENT_ORIGIN}verify-email/${emailVerificationToken}"> click here to active your account </a>
                 `;
 
-                await emailService.sendMail(user.email, "Email Verification", emailContent);
+                await emailService.sendMailFromGmail(user.email, "Email Verification", emailContent);
                 res.status(200).json({ success: true, msg: "Sign up successful" })
             }
 
@@ -94,7 +94,7 @@ const authController: AuthControllerType = {
             <h1> Email Verification</h1>
             <a href="${keys.CLIENT_ORIGIN}verify-email/${emailVerificationToken}"> click here to active your account </a>
             `;
-            await emailService.sendMail(user.email, "Email Verification", emailContent);
+            await emailService.sendMailFromGmail(user.email, "Email Verification", emailContent);
 
             res.status(200).json({ success: true, data: { msg: 'Email sent Successfully' } })
         } catch (err) {
@@ -183,7 +183,7 @@ const authController: AuthControllerType = {
                     <a href="${keys.CLIENT_ORIGIN}reset-password/${forgetPasswordToken}"> click here to change password </a>
                     
                     `;
-                    await emailService.sendMail(user.email, "Forget Password", emailContent);
+                    await emailService.sendMailFromGmail(user.email, "Forget Password", emailContent);
                     res.status(200).json({ success: true, msg: "Email send successfully" })
                 }
             }

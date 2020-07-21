@@ -10,5 +10,7 @@ export default {
   SESSION_SECRET: process.env.SESSION_SECRET,
   JWT_FORGET_PASS: process.env.JWT_FORGET_PASS,
   JWT_ISSUER: process.env.JWT_ISSUER,
-  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN
+  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN,
+  ARTICLONE_MAIL: process.env.ARTICLONE_MAIL,
+  ARTICLONE_PASS: process.env.ARTICLONE_PASS
 };
