@@ -58,7 +58,7 @@ app.use('/api/v1', routes.auth);
 
 // SECTION Error handler
 app.use((err: ExpressError, req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => {
-    res.status(err.status || 500).json({ success: false, error: { status: err.status || 500, message: err.message } })
+    res.status(err.status || 500).json({ success: false, error: { status: err.status || 500, message: err.message || 'internal server error' } })
 })
 
 

@@ -12,5 +12,7 @@ export default {
   JWT_ISSUER: "Articlone",
   CLIENT_ORIGIN: "http://localhost:3000/",
   ARTICLONE_MAIL: "articlone.contact@gmail.com",
-  ARTICLONE_PASS: "articlonefypfsd"
+  ARTICLONE_PASS: "articlonefypfsd",
+  GOOGLE_CLIENT_ID: "824032173177-tted05i9jtbdjdc0ts5c1jbqc8k23jjh.apps.googleusercontent.com",
+  GOOGLE_CLIENT_SECRET: "46njqCIcliFq_IqqJoFIbEik"
 };

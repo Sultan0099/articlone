@@ -220,6 +220,28 @@ const authController: AuthControllerType = {
         } catch (err) {
             next(createError(403, err));
         }
+    },
+
+    googleAuth: async (req, res, next) => {
+        try {
+            passport.authenticate('google', async (err, user, info) => {
+                if (err) {
+                    return next(createError(401, err));
+                }
+                if (!user) { return next(createError(404, "user not found")) }
+                if (!user.isVerified) {
+                    return res.redirect(`${keys.CLIENT_ORIGIN}signup/check_email/${user.email}`)
+                }
+
+                const token = await encrypt.assignUserToken({ payload: user._id })
+
+                return res.redirect(`${keys.CLIENT_ORIGIN}?token=${token}`)
+            })(req, res, next);
+
+
+        } catch (err) {
+            return next(createError(403, err))
+        }
     }
 }
 

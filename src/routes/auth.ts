@@ -97,6 +97,21 @@ SECTION  get User by token
 */
 router.get('/get-user-token', passportJWT, authController.getLogInUser);
 
+/* 
+SECTION  get User by token
+@Des : Google Auth Route
+@method : GET
+@path : '/api/v1/auth/google'
+@req : null , 
+@headers : null
+*/
+router.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback',
+    authController.googleAuth
+);
+
 router.get("/check", (req, res) => {
     res.send("check successful")
 })

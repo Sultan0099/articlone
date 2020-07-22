@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Link from "@material-ui/core/Link"
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -10,6 +11,8 @@ export default function GoogleButton({ title }) {
     const classes = useStyles();
     return (
         <Button
+            component={Link}
+            href="/api/v1/auth/google"
             type="button"
             variant="contained"
             color="primary"

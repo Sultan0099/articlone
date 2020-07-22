@@ -75,6 +75,7 @@ export type AuthControllerType = {
     getLogInUser: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     forgetPassword: (req: ExpressRequest<ForgetPasswordType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     resetPassword: (req: ExpressRequest<resetPasswordType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    googleAuth: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
 
 

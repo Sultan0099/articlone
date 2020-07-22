@@ -1,6 +1,8 @@
 import passport from 'passport';
 import passportLocal from "passport-local";
 import passportJWT from "passport-jwt";
+import passportGoogle from "passport-google-oauth20";
+import bcrypt from 'bcrypt';
 
 import keys from "./keys";
 
@@ -16,7 +18,6 @@ const LocalStrategy = passportLocal.Strategy;
 
 passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (usernameOrEmail: string, password: string, done) => {
     try {
-        console.log("passport ", usernameOrEmail)
         const user = await User.findOne().or([{ email: usernameOrEmail }, { username: usernameOrEmail }]);
         if (!user) {
             return done("user not found", false, { message: `Email ${usernameOrEmail} not found.` })
@@ -52,7 +53,6 @@ passport.use(new LocalStrategy({ usernameField: "usernameOrEmail" }, async (user
 
 // SECTION passport jwt strategy 
 const JwtStrategy = passportJWT.Strategy;
-const ExtractJwt = passportJWT.ExtractJwt;
 
 let options = {
     secretOrKey: keys.JWT_SECRET,
@@ -81,6 +81,52 @@ passport.use(new JwtStrategy(options, async (jwt, done) => {
     }
 
 }))
+
+
+// SECTION PASSPORT GOOGLE AUTH STRATEGY
+const GoogleStrategy = passportGoogle.Strategy;
+passport.use(new GoogleStrategy({
+    clientID: keys.GOOGLE_CLIENT_ID,
+    clientSecret: keys.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3001/api/v1/auth/google/callback"
+},
+    async function (accessToken, refreshToken, profile, done) {
+        try {
+            if (profile) {
+                const { email, name, picture, email_verified, sub, given_name } = profile._json;
+                const user = await User.findOne({ email });
+                if (!user) {
+                    const username: string = given_name + sub;
+                    const salt = await bcrypt.genSalt(10);
+                    const hash = await bcrypt.hash(given_name + sub, salt);
+                    const password = hash;
+                    const createdUser = await User.create({ email, username, password });
+
+                    const emailVerificationToken = await encrypt.assignEmailActivationToken({ payload: createdUser._id });
+                    if (emailVerificationToken) await Token.create({ userId: createdUser._id, token: emailVerificationToken });
+
+                    const emailContent = `
+                                    <h1> Email Verification</h1>
+                                    <a href="${keys.CLIENT_ORIGIN}verify-email/${emailVerificationToken}"> click here to active your account </a>
+                                    `;
+
+                    await emailService.sendMailFromGmail(createdUser.email, "Email Verification", emailContent);
+                    return done(undefined, createdUser)
+
+                } else {
+                    return done(undefined, user);
+                }
+            } else {
+                done("profile not found", false)
+            }
+
+
+        } catch (err) {
+            done(err, false);
+        }
+
+    }
+));
 
 
 passport.serializeUser<any, any>((user, done) => {

@@ -33,6 +33,7 @@
     "nodemailer": "^6.4.10",
     "nodemailer-mailgun-transport": "^2.0.0",
     "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   },
@@ -47,6 +48,7 @@
     "@types/nodemailer": "^6.4.0",
     "@types/nodemailer-mailgun-transport": "^1.4.1",
     "@types/passport": "^1.0.3",
+    "@types/passport-google-oauth20": "^2.0.3",
     "@types/passport-jwt": "^3.0.3",
     "@types/passport-local": "^1.0.33",
     "concurrently": "^5.2.0",

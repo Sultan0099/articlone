@@ -13,7 +13,9 @@ declare global {
             JWT_ISSUER: string,
             CLIENT_ORIGIN: string,
             ARTICLONE_MAIL: string,
-            ARTICLONE_PASS: string
+            ARTICLONE_PASS: string,
+            GOOGLE_CLIENT_ID: string,
+            GOOGLE_CLIENT_SECRET: string
         }
     };
 

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import { useDispatch } from "react-redux";
-
+import queryString from "query-string";
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -103,15 +103,22 @@ const theme = createMuiTheme({
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   useEffect(() => {
     async function setUserToStore() {
       const token = localStorage.getItem('secret');
+
       if (token) {
         await dispatch(getUserByToken(token))
         setLoading(false)
       } else {
+        const query = queryString.parse(window.location.search);
+        if (query.token) {
+          await dispatch(getUserByToken(query.token));
+          localStorage.setItem('secret', query.token);
+          setLoading(false);
+        }
         setLoading(false)
       }
     }
