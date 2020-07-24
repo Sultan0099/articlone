@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import { useDispatch } from "react-redux";
@@ -114,38 +114,45 @@ function App() {
 
       if (token) {
         await dispatch(getUserByToken(token))
-        setLoading(false)
+        setTimeout(() => setLoading(false), 2000)
+
       } else {
         const query = queryString.parse(window.location.search);
         if (query.token) {
           await dispatch(getUserByToken(query.token));
           localStorage.setItem('secret', query.token);
-          setLoading(false);
+          setTimeout(() => setLoading(false), 2000)
+
         }
-        setLoading(false)
+        setTimeout(() => setLoading(false), 2000)
+
       }
     }
     setUserToStore();
   }, [dispatch])
   // TODO loading page with animations
-  if (loading) { return <Loading /> }
+
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <Switch>
-          <GuestRoute path="/" exact Component={Home} />
-          <GuestRoute path="/login" exact Component={Login} />
-          <GuestRoute path="/signup" exact Component={Signup} />
-          <GuestRoute path="/signup/check_email/:email" exact Component={CheckEmail} />
-          <GuestRoute path="/password_reset" exact Component={PasswordReset} />
-          <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
-          <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
-          <AuthRoute path="/dashboard" exact Component={Dashboard} />
-          <GuestRoute Component={PageNotFound} />
-          <GuestRoute Component={WentWrong} />
-          <GuestRoute Component={ServerError} />
-        </Switch>
+        {loading ? <Loading /> :
+          <Switch>
+            <GuestRoute path="/" exact Component={Home} />
+            <GuestRoute path="/login" exact Component={Login} />
+            <GuestRoute path="/signup" exact Component={Signup} />
+            <GuestRoute path="/signup/check_email/:email" exact Component={CheckEmail} />
+            <GuestRoute path="/password_reset" exact Component={PasswordReset} />
+            <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
+            <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
+            <AuthRoute path="/dashboard" exact Component={Dashboard} />
+            <Route path="/something-went-wrong" exact component={WentWrong} />
+            <Route path="/server-error" component={ServerError} />
+            <Route path="/loading" component={Loading} />
+            <Route component={PageNotFound} />
+          </Switch>
+        }
+
       </ThemeProvider>
     </Router>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 
+import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import { motion } from 'framer-motion'
 
 import { assets } from '../theme'
@@ -9,51 +9,41 @@ import { assets } from '../theme'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        display: 'flex',
+        position: 'fixed',
         boxShadow: 'none',
         height: '100%',
-        backgroundColor: 'white',
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column'
+
     },
-    papercard: {
-        textAlign: "center",
-        marginTop: '22vh',
-        position: 'fixed',
+    loadingImg: {
+        width: '60px'
     },
-    loading: {
-        marginLeft: '155px',
-        width: '120px',
-    },
-    papercard2: {
-        marginTop: '40vh',
-        textAlign: "center",
-    },
-    info: {
-        color: 'gray',
-    },
-    title: {
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", 
-        fontSize: '34px', 
-        fontWeight: '600', 
-        marginTop: '30px',
-    },
+    loadingText: {
+        marginTop: '14px'
+    }
+
 }));
 
 export default function PasswordReset() {
     const classes = useStyles();
 
     return (
+
         <div className={classes.root}>
-            <Grid container direction="column" alignItems="center" >
-                <Grid item xs={12} sm={6}>
-                    <div className={classes.papercard}>
-                        <motion.img src={assets.loading} animate={{ width: '60px', transform: 'rotateZ(720deg)' }} transition={{ delay: 0.0, yoyo: Infinity, duration: 2 }} className={classes.loading} alt="sorry" />
-                    </div>
-                    <div className={classes.papercard2}>
-                        <h1 className={classes.title}>Redirecting, please wait...</h1>
-                        <p className={classes.info}>You will be redirected in a while!</p>
-                    </div>
-                </Grid>
-            </Grid>
-        </div >
+            <motion.img src={assets.loading}
+
+                animate={{ scale: [1, 1.4, 1] }}
+                transition={{ duration: 0.9, yoyo: Infinity, ease: 'easeInOut' }}
+
+                className={classes.loadingImg} alt="articlone loading img"
+            />
+            <Typography className={classes.loadingText} variant="h4" > Loading </Typography>
+        </div>
+
     );
 }
 

@@ -1,15 +1,12 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
-import ResendEmail from '../components/common/ResendEmail'
 import { assets } from '../theme'
 
 const useStyles = makeStyles((theme) => ({
@@ -33,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         fontWeight: '600',
-        fontSize:"36px",
-        marginBottom:'10px',
+        fontSize: "36px",
+        marginBottom: '10px',
     },
     info: {
-        fontSize:'18px',
+        fontSize: '18px',
         marginLeft: '10px',
         marginRight: '10px',
         textAlign: 'center',
@@ -66,7 +63,7 @@ export default function Server() {
                         <Typography component="h1" variant="subtitle1" className={classes.info} >
                             <span>The server encountered a temporary error and could not complete your request. That's all we know.</span>
                         </Typography>
-                        <ResendEmail resend="Try again in 30 seconds" />
+                        <Button component={Link} to="/" type="button" variant="contained" color="primary">Come back in 30s </Button>
                     </div>
                 </Grid>
             </Grid>

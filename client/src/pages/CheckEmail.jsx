@@ -1,15 +1,13 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import ResendEmail from '../components/common/ResendEmail'
+import ResendEmail from '../components/common/ResendEmail';
 import { assets } from '../theme'
 
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +76,7 @@ export default function CheckEmail() {
                             <span>Your account has been successfully registered. To complete the process please check your email for a validation request.
                             </span>
                         </Typography>
-                        <ResendEmail resend="Resend Email" />
+                        <ResendEmail resend="Resend Email" handleClick={resendMail} />
                     </div>
                 </Grid>
             </Grid>
