@@ -4,7 +4,6 @@ import passport from 'passport';
 import "../config/passport";  //  importing passport configuration from config folder ;
 
 import { authController } from '../controllers';
-import createError from "http-errors";
 
 
 const passportJWT = passport.authenticate('jwt', { session: false })
@@ -106,7 +105,7 @@ SECTION  get User by token
 @headers : null
 */
 router.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }));
+    passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
 
 router.get('/auth/google/callback',
     authController.googleAuth
