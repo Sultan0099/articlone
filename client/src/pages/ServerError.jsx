@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     papercard: {
         paddingLeft: '20px',
         paddingRight: '20px',
-        paddingTop: '20vh',
+        paddingTop: '13vh',
         marginTop: '20px',
         paddingBottom: '30px',
         textAlign: 'center',
@@ -29,13 +29,15 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             width: '300px',
         },
-        // backgroundColor:'pink',
         borderRadius: "8px",
     },
     title: {
-        fontWeight: '400',
+        fontWeight: '600',
+        fontSize:"36px",
+        marginBottom:'10px',
     },
     info: {
+        fontSize:'18px',
         marginLeft: '10px',
         marginRight: '10px',
         textAlign: 'center',
@@ -43,42 +45,28 @@ const useStyles = makeStyles((theme) => ({
         float: 'left',
         marginTop: '10px',
     },
-    undrawemail: {
-        width: '190px',
+    server: {
+        width: '380px',
         marginBottom: '10px',
     },
 }));
 
-export default function CheckEmail() {
+export default function Server() {
     const classes = useStyles();
-    const { email } = useParams();
-
-    const resendMail = async () => {
-        try {
-            await axios.post("/api/v1/resend-mail", { email }, {
-                headers: {
-                    'content-type': 'application/json'
-                }
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
     return (
         <div className={classes.root}>
             <Grid container direction="column" alignItems="center" >
                 <Grid item >
                     <div className={classes.papercard}>
-                        <img src={assets.undrawemail} className={classes.undrawemail} alt="sorry" />
-                        <Typography component="h1" className={classes.title} variant="h2">
-                            Confirm your email!
+                        <img src={assets.server} className={classes.server} alt="sorry" />
+                        <Typography component="h1" className={classes.title} variant="h1">
+                            502. That's an error!
                         </Typography>
                         <Typography component="h1" variant="subtitle1" className={classes.info} >
-                            <span>Your account has been successfully registered. To complete the process please check your email for a validation request.
-                            </span>
+                            <span>The server encountered a temporary error and could not complete your request. That's all we know.</span>
                         </Typography>
-                        <ResendEmail resend="Resend Email" />
+                        <ResendEmail resend="Try again in 30 seconds" />
                     </div>
                 </Grid>
             </Grid>

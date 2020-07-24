@@ -9,32 +9,39 @@ const useStyles = makeStyles((theme) => ({
     resend: {
         flexGrow: 1,
         boxShadow: 'none',
-        width: "100%",
         backgroundColor: 'white',
     },
     linkpaper: {
         padding: theme.spacing(0),
+        // backgroundColor:"orange",
         boxShadow: 'none',
         textAlign: 'center',
-        width: '250px',
+        width: '36vw',
+        [theme.breakpoints.down('xs')]: {
+            width: '300px',
+        },
         borderRadius: '0px',
         color: theme.palette.text.secondary,
     },
-    link: {
-        color: "blue",
-        marginLeft: '10px'
+    resendbtn: {
+        textTransform:'initial',
+        textDecoration:"none",
+        fontSize:"16px",
+        marginTop:'15px',
+        paddingLeft:'20px',
+        paddingRight:"20px",
     },
 }));
 
-export default function ResendEmail({ handleClick }) {
+export default function ResendEmail({ handleClick, resend }) {
     const classes = useStyles();
 
     return (
         <div className={classes.resend}>
             <Grid container spacing={0}>
-                <Grid item xs={12} sm={6}>
+                <Grid item >
                     <Paper className={classes.linkpaper}>
-                        <Button type="button" variant="text" color="primary" onClick={handleClick}>Resend Mail</Button>
+                        <Button type="button" variant="contained" color="primary" className={classes.resendbtn} onClick={handleClick}>{ resend }</Button>
                     </Paper>
                 </Grid>
             </Grid>

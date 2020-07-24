@@ -6,6 +6,10 @@ const assets = {
     google:'/images/google.png',
     undrawemail:'/images/undrawemail.svg',
     facebook: '/images/facebook.png',
+    loading: '/images/loading.png',
+    notfound: '/images/notfound.png',
+    server: '/images/server.png',
+    wentwrong: '/images/wentwrong.png',
 }
 const colors = {
     accent: "#F72B2B",

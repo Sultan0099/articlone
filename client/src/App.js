@@ -15,6 +15,9 @@ import ResetLink from './pages/ResetLink';
 import Dashboard from "./pages/Dashboard";
 import VerifyEmail from './pages/VerifyEmail';
 import PageNotFound from "./pages/PageNotFound";
+import ServerError from "./pages/ServerError";
+import Loading from './pages/Loading';
+import WentWrong from './pages/WentWrong';
 
 import AuthRoute from "./components/HOCs/AuthRoute";
 import GuestRoute from "./components/HOCs/GuestRoute";
@@ -125,7 +128,7 @@ function App() {
     setUserToStore();
   }, [dispatch])
   // TODO loading page with animations
-  if (loading) { return <p> Loading...</p> }
+  if (loading) { return <Loading /> }
 
   return (
     <Router>
@@ -140,6 +143,8 @@ function App() {
           <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
           <AuthRoute path="/dashboard" exact Component={Dashboard} />
           <GuestRoute Component={PageNotFound} />
+          <GuestRoute Component={WentWrong} />
+          <GuestRoute Component={ServerError} />
         </Switch>
       </ThemeProvider>
     </Router>
