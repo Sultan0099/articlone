@@ -17,7 +17,6 @@ import { green } from "@material-ui/core/colors";
 
 import { useDispatch } from "react-redux"
 
-import FacebookButton from "../common/FacebookButton";
 import GoogleButton from "../common/GoogleButton";
 import InputError from "../common/FormFieldError";
 
@@ -52,7 +51,6 @@ export default function SignIn() {
           <Grid item xs={12} style={{ marginTop: "0px", marginBottom: '0px', paddingTop: "0px" }}>
             <Paper className={classes.paper} style={{ textAlign: 'center', paddingLeft: '0px', boxShadow: 'none', paddingRight: '0px', paddingTop: "0px", paddingBottom: "0px" }}>
               <GoogleButton title="Sign up with Google" />
-              <FacebookButton title="Sign up with Facebook" />
             </Paper>
           </Grid>
           <Grid item xs={12} style={{ marginTop: "0px", marginBottom: '0px' }}>
