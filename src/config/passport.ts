@@ -98,7 +98,7 @@ passport.use(new GoogleStrategy({
                 if (!user) {
                     const username: string = given_name + sub;
                     const salt = await bcrypt.genSalt(10);
-                    const hash = await bcrypt.hash(given_name + sub, salt);
+                    const hash = await bcrypt.hash(given_name + sub + ((Math.random() * 999) + 1000), salt);
                     const password = hash;
                     const createdUser = await User.create({ email, username, password });
 
