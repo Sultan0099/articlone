@@ -25,6 +25,8 @@ export const register = (registerData, history) => async dispatch => {
             } else if (message.search("email") !== -1) {
                 dispatch({ type: AUTH_ERR_TYPE, payload: { email: "Email is already registered : Try login" } })
             }
+        } else if (status === 500) {
+            history.push('/something-went-wrong');
         }
 
     }
@@ -50,6 +52,8 @@ export const login = (loginData, history) => async dispatch => {
             if (message === 'user is not verified') {
                 setTimeout(() => { history.push(`/signup/check_email/${loginData.email}`) }, 500)
             }
+        } else if (status === 500) {
+            history.push('/something-went-wrong')
         }
     }
 }
