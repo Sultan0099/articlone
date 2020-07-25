@@ -9,6 +9,8 @@ const assets = {
     loading: '/images/loading.png',
     notfound: '/images/notfound.png',
     server: '/images/server.png',
+    profile: '/images/profile.png',
+    profile2: '/images/profile2.png',
     wentwrong: '/images/wentwrong.png',
 }
 const colors = {
