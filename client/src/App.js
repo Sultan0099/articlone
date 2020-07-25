@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import CheckEmail from './pages/CheckEmail';
+import CreateProfile from './pages/CreateProfile'
 import PasswordReset from './pages/PasswordReset';
 import ResetLink from './pages/ResetLink';
 import Dashboard from "./pages/Dashboard";
@@ -141,6 +142,7 @@ function App() {
             <GuestRoute path="/" exact Component={Home} />
             <GuestRoute path="/login" exact Component={Login} />
             <GuestRoute path="/signup" exact Component={Signup} />
+            <GuestRoute path="/create-profile" Component={CreateProfile} />
             <GuestRoute path="/signup/check_email/:email" exact Component={CheckEmail} />
             <GuestRoute path="/password_reset" exact Component={PasswordReset} />
             <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
