@@ -68,7 +68,7 @@ let options = {
 
 passport.use(new JwtStrategy(options, async (jwt, done) => {
     try {
-        const user = await User.findOne({ _id: jwt.payload });
+        const user = await User.findOne({ _id: jwt.payload }).populate('profile');
         if (!user) return done(null, false);
         if (!user.isActive) {
             user.isActive = true

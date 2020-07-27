@@ -1,124 +1,96 @@
-import React from 'react';
+import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
+import TextField from "@material-ui/core/TextField";
+import Typography from '@material-ui/core/Typography';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
 import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(0),
-        marginTop:'10px',
-        textAlign: 'center',
-        boxShadow: 'none',
-        color: theme.palette.text.secondary,
-    },
-    radiopaper: {
-        paddingLeft:'15px',
-        boxShadow: 'none',
-    },
-    title: {
-        textAlign:'center',
-    },
-    paperfield: {
-        width: '300px',
-        textAlign: 'center',
-        boxShadow: '0px 1px 0px 0.1px #075A5D',
-        boxSizing: 'border-box',
-        paddingLeft: '0px',
-        paddingRight: '0px',
-        marginTop: '30px',
+import InputError from "../common/FormFieldError";
+import profileStyles from "./styles"
 
-        marginBottom: '10px',
-    },
-    gendertitle: {
-        fontWeight: '600',
-        textAlign:'left',
-        marginTop:'20px',
-        marginBottom:'20px',
-    },
-    radio: {
-        fontSize: '50px',
-    },
-}));
-
-export default function FullWidthGrid() {
-    const classes = useStyles();
-
-    const [value, setValue] = React.useState('female');
-
-    const handleChange = (event) => {
-        setValue(event.target.value);
-    };
-
+export default function Personal({ values, errors, handleChange }) {
+    const classes = profileStyles();
     return (
-        <div className={classes.root}>
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <FormControl component="fieldset">
-                            <Paper className={classes.paperfield} >
-                                <TextField
-                                    type="text"
-                                    variant="filled"
-                                    margin="normal"
-                                    color='primary'
-                                    required
-                                    fullWidth
-                                    style={{ marginTop: '0px', marginBottom: '0px' }}
-                                    size="small"
-                                    id="firstName"
-                                    label="First name"
-                                    name="firstName"
-                                    autoComplete="firstName"
-                                    autoFocus
-                                // value={values.firstName}
-                                // onChange={handleChange}
-                                />
-                            </Paper>
-                            <Paper className={classes.paperfield} >
-                                <TextField
-                                    type="text"
-                                    variant="filled"
-                                    margin="normal"
-                                    color='primary'
-                                    required
-                                    fullWidth
-                                    style={{ marginTop: '0px', marginBottom: '0px' }}
-                                    size="small"
-                                    id="lastName"
-                                    label="Last name"
-                                    name="lastName"
-                                    autoComplete="lastName"
-                                    // autoFocus
-                                // value={values.firstName}
-                                // onChange={handleChange}
-                                />
-                            </Paper>
-                            <Paper className={classes.radiopaper} >
-                                <FormLabel component="legend">
-                                    <Typography variant="h3" className={classes.gendertitle}>
-                                        Gender
-                                    </Typography>
-                                </FormLabel>
-                                <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                                    <FormControlLabel value="Female" className={classes.radio} color="primary" control={<Radio />} label="Female" />
-                                    <FormControlLabel value="Male" control={<Radio />} label="Male" />
-                                </RadioGroup>
-                            </Paper>
-                        </FormControl>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </div>
-    );
+        <>
+            <div className={classes.textFieldWrapper}>
+                <TextField
+
+                    variant="filled"
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+                    error={errors.firstName ? true : false}
+                    value={values.firstName}
+                    label="First Name"
+                    type="Text"
+                    name="firstName"
+                    autoComplete="firstName"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.firstName && <InputError errorText={errors.firstName} />}
+            <div className={classes.textFieldWrapper}>
+                <TextField
+                    variant="filled"
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+
+                    error={errors.lastName ? true : false}
+                    value={values.lastName}
+                    label="Last Name"
+                    type="Text"
+                    name="lastName"
+                    autoComplete="lastName"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.lastName && <InputError errorText={errors.lastName} />}
+            <div className={classes.radioWrapper}>
+                <FormLabel component="legend">
+                    <Typography variant="h4"> Choose Your Gender </Typography>
+                </FormLabel>
+                <RadioGroup aria-label="gender" name="gender" value={values.gender} onChange={handleChange}>
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                </RadioGroup>
+            </div>
+            {errors.gender && <InputError errorText={errors.gender} />}
+
+            <div className={classes.textFieldWrapper}>
+                <TextField
+                    variant="filled"
+                    style={{ marginTop: '0px', marginBottom: '0px' }}
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+                    multiline={true}
+                    rows={3}
+                    error={errors.purposeToJoin ? true : false}
+                    value={values.purposeToJoin}
+                    label="Tell us why are you joining Articlone"
+                    type="Text"
+                    name="purposeToJoin"
+                    autoComplete="purposeToJoin"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.purposeToJoin && <InputError errorText={errors.purposeToJoin} />}
+        </>
+    )
 }

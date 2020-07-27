@@ -9,6 +9,7 @@ function AuthRoute(props) {
     const token = localStorage.getItem("secret");
     const { path, Component } = props;
     if (!token && !auth.user) return <Redirect to='/' />
+
     return (
         <Route path={path} exact render={(props) => <Component {...props} />} />
     )

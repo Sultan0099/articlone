@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import passport from 'passport';
 
 import "../config/passport";  //  importing passport configuration from config folder ;
@@ -8,7 +8,7 @@ import { authController } from '../controllers';
 
 const passportJWT = passport.authenticate('jwt', { session: false })
 
-const router = express.Router();
+const router = Router();
 
 /* 
 SECTION  Login

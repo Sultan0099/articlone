@@ -78,6 +78,7 @@ export const verifyEmailToken = (token) => async dispatch => {
         const res = await axios.post('/api/v1/confirm-email', { token }, options);
         localStorage.setItem('secret', res.data.data.jwtToken)
         await dispatch({ type: SET_USER_TYPE, payload: res.data.data });
+
     } catch (err) {
         console.log(err)
         localStorage.removeItem('secret');

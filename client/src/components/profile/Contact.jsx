@@ -1,160 +1,122 @@
-import React from 'react';
+import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
-import FormLabel from '@material-ui/core/FormLabel';
+import TextField from "@material-ui/core/TextField";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(0),
-        marginTop: '10px',
-        textAlign: 'center',
-        boxShadow: 'none',
-        color: theme.palette.text.secondary,
-    },
-    radiopaper: {
-        paddingLeft: '15px',
-        boxShadow: 'none',
-    },
-    title: {
-        textAlign: 'center',
-    },
-    paperfield: {
-        width: '300px',
-        textAlign: 'center',
-        boxShadow: '0px 1px 0px 0.1px #075A5D',
-        boxSizing: 'border-box',
-        paddingLeft: '0px',
-        paddingRight: '0px',
-        marginTop: '30px',
-        marginBottom: '10px',
-    },
-}));
 
-export default function Info() {
-    const classes = useStyles();
+import InputError from "../common/FormFieldError";
+import profileStyles from "./styles"
 
-    const [value, setValue] = React.useState('female');
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
-    };
-
+export default function Contact({ values, errors, handleChange }) {
+    const classes = profileStyles();
     return (
-        <div className={classes.root}>
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <FormControl component="fieldset">
-                            <Paper className={classes.paperfield} >
-                                <TextField
-                                    type="address"
-                                    variant="filled"
-                                    margin="normal"
-                                    color='primary'
-                                    required
-                                    fullWidth
-                                    style={{ marginTop: '0px', marginBottom: '0px' }}
-                                    size="small"
-                                    id="address"
-                                    label="Address"
-                                    name="address"
-                                    autoComplete="address"
-                                    autoFocus
-                                // value={values.firstName}
-                                // onChange={handleChange}
-                                />
-                            </Paper>
-                            <Paper className={classes.paperfield} >
-                                <TextField
-                                    type="city"
-                                    variant="filled"
-                                    margin="normal"
-                                    color='primary'
-                                    required
-                                    fullWidth
-                                    style={{ marginTop: '0px', marginBottom: '0px' }}
-                                    size="small"
-                                    id="city"
-                                    label="City"
-                                    name="city"
-                                    autoComplete="city"
-                                // autoFocus
-                                // value={values.firstName}
-                                // onChange={handleChange}
-                                />
-                            </Paper>
-                            <Paper className={classes.paperfield} >
-                                <TextField
-                                    type="text"
-                                    variant="filled"
-                                    margin="normal"
-                                    color='primary'
-                                    required
-                                    fullWidth
-                                    style={{ marginTop: '0px', marginBottom: '0px' }}
-                                    size="small"
-                                    id="cityCode"
-                                    label="Zip / Postal Code"
-                                    name="cityCode"
-                                    autoComplete="Code"
-                                // autoFocus
-                                // value={values.firstName}
-                                // onChange={handleChange}
-                                />
-                            </Paper>
-                            <Paper className={classes.paperfield} >
-                                <TextField
-                                    type="country"
-                                    variant="filled"
-                                    margin="normal"
-                                    color='primary'
-                                    required
-                                    fullWidth
-                                    style={{ marginTop: '0px', marginBottom: '0px' }}
-                                    size="small"
-                                    id="country"
-                                    label="Country"
-                                    name="country"
-                                    autoComplete="country"
-                                // autoFocus
-                                // value={values.firstName}
-                                // onChange={handleChange}
-                                />
-                            </Paper>
-                            <Paper className={classes.paperfield} >
-                                <TextField
-                                    type="tel"
-                                    variant="filled"
-                                    margin="normal"
-                                    color='primary'
-                                    required
-                                    fullWidth
-                                    style={{ marginTop: '0px', marginBottom: '0px' }}
-                                    size="small"
-                                    id="number"
-                                    label="Add Phone number"
-                                    name="number"
-                                    autoComplete="number"
-                                // autoFocus
-                                // value={values.firstName}
-                                // onChange={handleChange}
-                                />
-                            </Paper>
-                        </FormControl>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </div>
-    );
+        <>
+            <div className={classes.textFieldWrapper}>
+                <TextField
+
+                    variant="filled"
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+                    error={errors.address ? true : false}
+                    value={values.address}
+                    label="Street Address"
+                    type="Text"
+                    name="address"
+                    autoComplete="address"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.address && <InputError errorText={errors.address} />}
+            <div className={classes.textFieldWrapper}>
+                <TextField
+
+                    variant="filled"
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+                    error={errors.city ? true : false}
+                    value={values.city}
+                    label="City Name"
+                    type="Text"
+                    name="city"
+                    autoComplete="city"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.city && <InputError errorText={errors.city} />}
+            <div className={classes.textFieldWrapper}>
+                <TextField
+
+                    variant="filled"
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+                    error={errors.zipOrPostal ? true : false}
+                    value={values.zipOrPostal}
+                    label="Postal Code"
+                    type="text"
+                    name="zipOrPostal"
+                    autoComplete="zipOrPostal"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.zipOrPostal && <InputError errorText={errors.zipOrPostal} />}
+            <div className={classes.textFieldWrapper}>
+                <TextField
+
+                    variant="filled"
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+                    error={errors.country ? true : false}
+                    value={values.country}
+                    label="Country"
+                    type="text"
+                    name="country"
+                    autoComplete="country"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.country && <InputError errorText={errors.country} />}
+            <div className={classes.textFieldWrapper}>
+                <TextField
+
+                    variant="filled"
+                    margin="normal"
+                    size='small'
+                    required
+                    fullWidth
+                    className={classes.textField}
+                    error={errors.phoneNo ? true : false}
+                    value={values.phoneNo}
+                    label="Phone No."
+                    type="text"
+                    name="phoneNo"
+                    autoComplete="phoneNo"
+                    onChange={handleChange}
+
+                />
+
+            </div>
+            {errors.phoneNo && <InputError errorText={errors.phoneNo} />}
+
+        </>
+    )
 }

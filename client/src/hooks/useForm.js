@@ -8,7 +8,9 @@ const useForm = (formValues, callBack, validator = null) => {
     const auth = useSelector(state => state.auth);
 
     useEffect(() => {
+        console.log(errors)
         if (Object.keys(errors).length === 0 && isSubmitting) {
+
             callBack(values).then(() => setIsSubmitting(false))
         } else {
             setIsSubmitting(false)
@@ -29,15 +31,18 @@ const useForm = (formValues, callBack, validator = null) => {
         setValues({
             ...values,
             [name]: value
-        })
+        });
     }
 
     const handleSubmit = () => {
+        console.log('called');
         if (validator !== null) {
+            console.log("called validator")
             setErrors(validator(values));
         }
         setIsSubmitting(true)
     }
+
 
     const handleBlur = (event) => {
         const { name } = event.target;
@@ -53,7 +58,7 @@ const useForm = (formValues, callBack, validator = null) => {
         handleChange,
         handleSubmit,
         handleBlur,
-        isSubmitting
+        isSubmitting,
     }
 }
 

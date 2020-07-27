@@ -24,6 +24,7 @@ export interface IUser extends mongoose.Document {
     isVerified?: boolean;
     isActive?: boolean;
     isValidPassword: (password: string) => boolean;
+    profile?: IProfile | string;
 }
 
 
@@ -93,4 +94,89 @@ export type JWOptions = {
     secretOrKey?: string,
     issuer?: string,
     audience?: string,
+}
+
+
+// SECTION : Profile Controller types 👇
+
+export interface IProfile extends mongoose.Document {
+    user: IUser | string;
+    firstName: string;
+    lastName: string;
+    gender: string;
+    purposeToJoin: string;
+    business?: {
+        businessType: string,
+        businessName: string,
+        businessWebsite: string,
+    };
+    contactInfo: {
+        address: string,
+        city: string
+        zipOrPostal: number,
+        country: string,
+        phoneNo: string,
+    };
+
+}
+
+export type ProfileType = {
+    user: string;
+    firstName: string;
+    lastName: string;
+    gender: string;
+    purposeToJoin: string;
+    business?: {
+        businessType: string,
+        businessName: string,
+        businessWebsite: string,
+    };
+    contactInfo: {
+        address: string,
+        city: string
+        zipOrPostal: number,
+        country: string,
+        phoneNo: string,
+    };
+
+}
+
+export type ProfileErrType = {
+    user?: string;
+    firstName?: string;
+    lastName?: string;
+    gender?: string;
+    purposeToJoin?: string;
+    business?: {
+        businessType?: string,
+        businessName?: string,
+        businessWebsite?: string,
+    };
+    contactInfo: {
+        address?: string,
+        city?: string
+        zipOrPostal?: number,
+        country?: string,
+        phoneNo?: string,
+    };
+}
+
+export type BusinessErrType = {
+
+    businessType?: string,
+    businessName?: string,
+    businessWebsite?: string,
+
+}
+
+export type ContactErrType = {
+    address?: string,
+    city?: string
+    zipOrPostal?: number,
+    country?: string,
+    phoneNo?: string,
+}
+
+export type ProfileControllerType = {
+    create: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void
 }

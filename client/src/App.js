@@ -142,12 +142,13 @@ function App() {
             <GuestRoute path="/" exact Component={Home} />
             <GuestRoute path="/login" exact Component={Login} />
             <GuestRoute path="/signup" exact Component={Signup} />
-            <GuestRoute path="/create-profile" Component={CreateProfile} />
             <GuestRoute path="/signup/check_email/:email" exact Component={CheckEmail} />
             <GuestRoute path="/password_reset" exact Component={PasswordReset} />
             <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
             <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
             <AuthRoute path="/dashboard" exact Component={Dashboard} />
+            <AuthRoute path="/create-profile" Component={CreateProfile} />
+
             <Route path="/something-went-wrong" exact component={WentWrong} />
             <Route path="/server-error" component={ServerError} />
             <Route path="/loading" component={Loading} />

@@ -1,3 +1,4 @@
+import { IProfile } from "./src/types";
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
@@ -22,7 +23,7 @@ declare global {
     namespace Express {
         interface Request {
             session: any,
-            user: { email: string, username: string, _id: string, isActive: boolean, token: string },
+            user: { email: string, username: string, _id: string, isActive: boolean, token: string, profile: IProfile },
             sessionStore: string,
             sessionID: string,
             session: string

@@ -154,9 +154,9 @@ const authController: AuthControllerType = {
             const user = req.user;
 
             if (user) {
-                const { email, username, isActive, _id } = user;
+                const { email, username, isActive, _id, profile } = user;
                 const token = await encrypt.assignUserToken({ payload: _id })
-                return res.status(200).json({ success: true, data: { jwtToken: token, user: { email, username, isActive, _id } } })
+                return res.status(200).json({ success: true, data: { jwtToken: token, user: { email, username, isActive, _id, profile } } })
             } else {
                 return next(createError(401, "Please Login"))
             }

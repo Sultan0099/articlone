@@ -25,6 +25,11 @@ const userSchema = new Schema({
     isActive: {
         type: Boolean,
         default: false
+    },
+    profile: {
+        type: Schema.Types.ObjectId,
+        ref: 'profile',
+        required: false
     }
 }, { timestamps: true });
 

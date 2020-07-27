@@ -3,7 +3,8 @@ import { REGISTER_USER_TYPE, AUTH_ERR_TYPE, SET_USER_TYPE } from "../_actionType
 const initialState = {
     accessToken: null,
     user: null,
-    errors: {}
+    errors: {},
+    profile: null
 };
 
 const testReducer = (state = initialState, action) => {
@@ -27,7 +28,8 @@ const testReducer = (state = initialState, action) => {
                 ...state,
                 errors: {},
                 user: action.payload.user,
-                accessToken: action.payload.jwtToken
+                accessToken: action.payload.jwtToken,
+                profile: action.payload.user.profile ? action.payload.user.profile : null
             }
         default:
             return state;
