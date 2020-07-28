@@ -16,7 +16,8 @@ declare global {
             ARTICLONE_MAIL: string,
             ARTICLONE_PASS: string,
             GOOGLE_CLIENT_ID: string,
-            GOOGLE_CLIENT_SECRET: string
+            GOOGLE_CLIENT_SECRET: string,
+            GOOGLE_CALLBACK: string,
         }
     };
 

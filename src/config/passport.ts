@@ -8,7 +8,6 @@ import keys from "./keys";
 
 import { User, Token } from '../models';
 import { ExpressRequest } from '../types';
-import console from 'console';
 import { encrypt, EmailService } from '../utils';
 
 // SECTION Passport local strategy
@@ -88,7 +87,7 @@ const GoogleStrategy = passportGoogle.Strategy;
 passport.use(new GoogleStrategy({
     clientID: keys.GOOGLE_CLIENT_ID,
     clientSecret: keys.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3001/api/v1/auth/google/callback"
+    callbackURL: keys.GOOGLE_CALLBACK
 },
     async function (accessToken, refreshToken, profile, done) {
         try {

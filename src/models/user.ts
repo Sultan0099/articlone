@@ -29,7 +29,8 @@ const userSchema = new Schema({
     profile: {
         type: Schema.Types.ObjectId,
         ref: 'profile',
-        required: false
+        required: false,
+        default: null,
     }
 }, { timestamps: true });
 
