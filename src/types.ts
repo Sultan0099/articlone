@@ -179,4 +179,24 @@ export type ContactErrType = {
 
 export type ProfileControllerType = {
     create: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void
+};
+
+
+// Section Collections types 👇
+
+export interface ICollections extends mongoose.Document {
+    user: IUser | string,
+    title: string,
+    description: string,
+}
+
+export type collectionType = {
+    user: string,
+    title: string,
+    description: string
+}
+
+
+export type collectionControllerType = {
+    create: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
