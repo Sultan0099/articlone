@@ -172,12 +172,10 @@ const authController: AuthControllerType = {
             if (!user) {
                 return next(createError(401, "Email/Username not found : Try Register yourself"))
             } else {
-                // TODO : assign token 
                 const forgetPasswordToken = await encrypt.assignForgetPasswordToken({ payload: user._id })
-                // TODO : save token 
+
                 if (forgetPasswordToken) {
                     await Token.create({ userId: user._id, token: forgetPasswordToken });
-                    // TODO : send mail to user 
                     const emailContent = `
                     <h1> Forget Password </h1>
                     <a href="${keys.CLIENT_ORIGIN}reset-password/${forgetPasswordToken}"> click here to change password </a>
