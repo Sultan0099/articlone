@@ -5,7 +5,7 @@ import './css/logo.css'
 function LogoWhite() {
     return (
         <div className="logowhite">
-            <img src={assets.logoWhite} alt="sorry!" />
+            <img src={assets.logo} alt="sorry!" />
         </div>
     )
 }
