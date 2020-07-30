@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     // backgroundColor : theme.secondary
   },
+  appbar: {
+    backgroundColor:'white',
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -26,11 +29,11 @@ export default function ButtonAppBar() {
   console.log("home", 'render')
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <LogoWhite />
           <Link to="/login" style={{ textDecoration: 'none', color: 'white' }}>
-            <Button color="inherit">
+            <Button color="secondary">
               Login
             </Button>
           </Link>
