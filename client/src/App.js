@@ -149,7 +149,7 @@ function App() {
             <GuestRoute path="/password_reset" exact Component={PasswordReset} />
             <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
             <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
-            <GuestRoute path="/username" Component={UserDashboard} />
+            <AuthRoute path="/username" Component={UserDashboard} />
             <AuthRoute path="/dashboard" exact Component={Dashboard} />
             <AuthRoute path="/create-profile" Component={CreateProfile} />
             <Route path="/something-went-wrong" exact component={WentWrong} />
