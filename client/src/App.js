@@ -18,15 +18,15 @@ import VerifyEmail from './pages/VerifyEmail';
 import PageNotFound from "./pages/PageNotFound";
 import ServerError from "./pages/ServerError";
 import Loading from './pages/Loading';
-import Overview from './pages/Overview';
 import WentWrong from './pages/WentWrong';
-import CreateProject from './pages/CreateProject'
+import Collections from "./pages/Collections";
+
 
 import AuthRoute from "./components/HOCs/AuthRoute";
 import GuestRoute from "./components/HOCs/GuestRoute";
 
 import { getUserByToken } from './redux/_actions/authAction';
-import UserDashboard from './pages/UserDashboard';
+
 
 
 const theme = createMuiTheme({
@@ -149,9 +149,11 @@ function App() {
             <GuestRoute path="/password_reset" exact Component={PasswordReset} />
             <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
             <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
-            <AuthRoute path="/username" Component={UserDashboard} />
+
             <AuthRoute path="/dashboard" exact Component={Dashboard} />
-            <AuthRoute path="/create-profile" Component={CreateProfile} />
+            <AuthRoute path="/create-profile" exact Component={CreateProfile} />
+            <AuthRoute path='/collections' exact Component={Collections} />
+
             <Route path="/something-went-wrong" exact component={WentWrong} />
             <Route path="/server-error" component={ServerError} />
             <Route path="/loading" component={Loading} />

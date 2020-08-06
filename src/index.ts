@@ -56,6 +56,7 @@ app.use(passport.session());
 // SECTION : ROUTES 
 app.use('/api/v1', routes.auth);
 app.use('/api/v1/profile', routes.profile);
+app.use('/api/v1/collections', routes.collections);
 
 // SECTION Error handler
 app.use((err: ExpressError, req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => {

@@ -10,6 +10,10 @@ export interface ExpressRequest<T> extends Request {
     body: T;
 }
 
+export interface ExpressRequestWithParams<T> extends Request {
+    body: T;
+}
+
 export interface ExpressError extends ErrorRequestHandler {
     status: number,
     message: string
@@ -191,12 +195,23 @@ export interface ICollections extends mongoose.Document {
 }
 
 export type collectionType = {
+    id?: string,
+    user: string,
+    title: string,
+    description: string
+}
+
+export type CollectionsErrType = {
     user: string,
     title: string,
     description: string
 }
 
 
+
 export type collectionControllerType = {
+    getAllPost: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void,
     create: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    update: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }

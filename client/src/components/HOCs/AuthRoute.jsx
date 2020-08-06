@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 function AuthRoute(props) {
     const auth = useSelector(state => state.auth);
     const token = localStorage.getItem("secret");
-    const { path, Component } = props;
+    const { path, Component, exact } = props;
     if (!token && !auth.user) return <Redirect to='/' />
 
     return (
-        <Route path={path} exact render={(props) => <Component {...props} />} />
+        <Route path={path} exact={exact} render={(props) => <Component {...props} />} />
     )
 }
 

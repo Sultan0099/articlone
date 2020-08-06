@@ -4,10 +4,11 @@ const initialState = {
     accessToken: null,
     user: null,
     errors: {},
-    profile: null
+    profile: null,
+    isAuthenticated: false
 };
 
-const testReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case AUTH_ERR_TYPE:
@@ -27,6 +28,7 @@ const testReducer = (state = initialState, action) => {
             return {
                 ...state,
                 errors: {},
+                isAuthenticated: true,
                 user: action.payload.user,
                 accessToken: action.payload.jwtToken,
                 profile: action.payload.user.profile ? action.payload.user.profile : null
@@ -37,4 +39,4 @@ const testReducer = (state = initialState, action) => {
 
 };
 
-export default testReducer;
+export default authReducer;
