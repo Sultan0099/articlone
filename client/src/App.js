@@ -13,7 +13,8 @@ import CheckEmail from './pages/CheckEmail';
 import CreateProfile from './pages/CreateProfile'
 import PasswordReset from './pages/PasswordReset';
 import ResetLink from './pages/ResetLink';
-import Dashboard from "./pages/Dashboard";
+// import Dashboard from "./pages/Dashboard";
+import Dashboard from "./components/dashboard";
 import VerifyEmail from './pages/VerifyEmail';
 import PageNotFound from "./pages/PageNotFound";
 import ServerError from "./pages/ServerError";
@@ -108,7 +109,7 @@ const theme = createMuiTheme({
   }
 })
 
-function App() {
+function App(props) {
   const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
@@ -150,7 +151,7 @@ function App() {
             <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
             <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
 
-            <AuthRoute path="/dashboard" exact Component={Dashboard} />
+            <AuthRoute path="/dashboard/:collectionId" exact={false} Component={Dashboard} />
             <AuthRoute path="/create-profile" exact Component={CreateProfile} />
             <AuthRoute path='/collections' exact Component={Collections} />
 

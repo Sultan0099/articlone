@@ -38,8 +38,6 @@ export default () => {
             {collections.map(collection => (
                 <Collection key={collection._id} collection={collection} />
             ))}
-
-            {console.log(collections)}
         </Container>
     )
 }

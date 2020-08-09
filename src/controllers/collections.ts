@@ -47,13 +47,16 @@ const collectionControllers: collectionControllerType = {
 
             const collection = await Collections.findOne({ _id: req.body.id });
             if (!collection) return next(createError(404, "collection not found "));
-            if (req.user._id !== collection.user) {
-                return next(createError(401, 'your cannot delete other collections'))
+            console.log(req.user._id)
+            if (req.user._id.toString() !== collection.user.toString()) {
+                return next(createError(401, 'you cannot update other collections'))
             }
 
-            const updateCollection = await Collections.findByIdAndUpdate(req.body.id, req.body);
+            // const updateCollection = await Collections.findByIdAndUpdate(req.body.id, req.body);
 
-            return res.status(200).json({ success: true, data: { collection: updateCollection } })
+            const updateCollection = await Collections.findOneAndUpdate({ _id: req.body.id }, req.body);
+
+            return res.status(200).json({ success: true, data: { collectionId: updateCollection!._id } })
 
         } catch (error) {
             next(createError(error))
@@ -66,6 +69,16 @@ const collectionControllers: collectionControllerType = {
 
             if (!collections) return next(createError(404, 'Collections not found : try create new one'));
             res.status(200).json({ success: true, data: { success: true, collections } })
+        } catch (err) {
+            next(createError(err))
+        }
+    },
+    getSingle: async (req, res, next) => {
+        try {
+            const collectionId = req.params.collectionId;
+            const collection = await Collections.findOne({ _id: collectionId });
+            if (!collection) return next(createError(404, 'Collection not found'));
+            return res.status(200).json({ success: true, data: { collection } })
         } catch (err) {
             next(createError(err))
         }

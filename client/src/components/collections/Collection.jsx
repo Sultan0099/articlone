@@ -19,7 +19,7 @@ export default ({ collection }) => {
             </div>
             <Button
                 component={Link}
-                to="/dashboard"
+                to={`/dashboard/${collection._id}`}
                 color="primary"
                 variant="contained"
                 size="small"

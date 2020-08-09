@@ -1,7 +1,8 @@
-import { SET_COLLECTION_TYPE, CREAT_COLLECTION_TYPE } from "../_actionTypes";
+import { SET_COLLECTION_TYPE, CREAT_COLLECTION_TYPE, SET_ACTIVE_COLLECTION_TYPE } from "../_actionTypes";
 
 const initialState = {
     collections: [],
+    active: null,
     error: {}
 }
 
@@ -18,6 +19,11 @@ const collectionReducer = (state = initialState, action) => {
                 ...state,
                 collections: [...state.collections, action.payload],
                 error: {}
+            }
+        case SET_ACTIVE_COLLECTION_TYPE:
+            return {
+                ...state,
+                active: action.payload
             }
         default:
             return state;

@@ -186,7 +186,10 @@ export type ProfileControllerType = {
 };
 
 
-// Section Collections types 👇
+// ******************************
+// Section Collection types 👇
+// ******************************
+
 
 export interface ICollections extends mongoose.Document {
     user: IUser | string,
@@ -210,8 +213,36 @@ export type CollectionsErrType = {
 
 
 export type collectionControllerType = {
-    getAllPost: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void,
+    getAllPost: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getSingle: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     create: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     update: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+}
+
+// ******************************
+// Section Posts types 👇
+// ******************************
+
+export interface IPost extends mongoose.Document {
+    collectionId: string | ICollections;
+    title: string;
+    description: string;
+    img: string;
+}
+
+export type PostType = {
+    id?: string;
+    collectionId: string;
+    title: string;
+    description: string;
+    img: string;
+}
+
+export type PostControllerType = {
+    getAllPost: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getSingle: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    create: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    update: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }

@@ -7,7 +7,8 @@ const dbConnection = async () => await mongoose.connect(keys.MONGO_URI, { useNew
 const sessionDbConnection = () => {
     const connection = mongoose.createConnection(keys.MONGO_URI_SESSION_STORE, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     });
     return connection;
 }

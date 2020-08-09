@@ -23,7 +23,7 @@ router.post('/create', passportJWT, collectionControllers.create);
 SECTION  Delete Collections
 @Des : Delete Collections Route
 @method : Delete
-@path : '/api/v1/collections/delete'
+@path : '/api/v1/collections/delete/:collectionId'
 @req  : params : { collectionId }]
 */
 router.delete('/delete/:collectionId', passportJWT, collectionControllers.delete);
@@ -40,6 +40,25 @@ SECTION  Update Collections
 
 router.patch("/update", passportJWT, collectionControllers.update)
 
+/* 
+SECTION  Get All  Collections
+@Des : Get All  Collections Route
+@method : GET
+@path : '/api/v1/collections/getAll'
+@req : null 
+@res : [ collection ]
+*/
+
 router.get("/getAll", passportJWT, collectionControllers.getAllPost)
+
+/* 
+SECTION  Get Single Collection
+@Des : Get Single Collection Route
+@method : GET
+@path : '/api/v1/collections/getSingle'
+@req : null
+@res : {  title, description}
+*/
+router.get('/getSingle/:collectionId', passportJWT, collectionControllers.getSingle)
 
 export default router;
