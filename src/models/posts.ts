@@ -11,10 +11,11 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
-    img: {
-        type: String,
-        required: true
+    handler: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
+
     body: {
         type: String,
         required: true
@@ -22,8 +23,8 @@ const postSchema = new Schema({
     collectionId: {
         type: Schema.Types.ObjectId,
         ref: "Collections",
-    }
-});
+    },
+}, { timestamps: true });
 
 
 const Post = model<IPost>("Post", postSchema, 'posts');

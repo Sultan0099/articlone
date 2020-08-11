@@ -228,20 +228,23 @@ export interface IPost extends mongoose.Document {
     collectionId: string | ICollections;
     title: string;
     description: string;
-    img: string;
+    body: string;
+    handler: string | IUser;
+    state: string;
+
 }
 
 export type PostType = {
-    id?: string;
+    postId: string,
     collectionId: string;
     title: string;
     description: string;
-    img: string;
+    body: string;
 }
 
 export type PostControllerType = {
-    getAllPost: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
-    getSingle: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getAllPost: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getSingle: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     create: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     update: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;

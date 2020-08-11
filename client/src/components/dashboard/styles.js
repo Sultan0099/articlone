@@ -12,7 +12,11 @@ const styles = makeStyles((theme) => ({
     sideBar: {
         height: "100%",
         width: '60px',
-        borderRight: "1px solid gray",
+        borderRight: "1px solid rgba(0,0,0,0.1)",
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        backgroundColor: "white",
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -36,12 +40,17 @@ const styles = makeStyles((theme) => ({
         display: "block",
         marginBottom: 16,
         height: 'fit-content',
-        color: theme.palette.primary.main
+        color: 'rgba(0,0,0,0.6)',
+        '&:hover': {
+            color: theme.palette.primary.main
+        }
     },
     links: {
         marginTop: 20,
         padding: 5,
-
+    },
+    navActive: {
+        color: theme.palette.primary.main,
     }
 }))
 

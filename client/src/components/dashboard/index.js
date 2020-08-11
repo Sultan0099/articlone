@@ -46,9 +46,14 @@ export default () => {
     return (
         <div className={classes.wrapper}>
             <Sidebar collection={activeCollection} />
-            <AuthRoute path="/dashboard/:collectionId" exact={true} Component={Container} />
-            <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
-            <AuthRoute path="/dashboard/:collectionId/blog/all" exact={true} Component={AllBlogs} />
+            <div style={{ marginLeft: '60px', width: "100%", }}>
+
+
+                <AuthRoute path="/dashboard/:collectionId" exact={true} Component={Container} />
+                <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
+                <AuthRoute path="/dashboard/:collectionId/blog/all" exact={true} Component={AllBlogs} />
+            </div>
         </div>
+
     )
 };

@@ -36,7 +36,7 @@ export const getSingleCollection = (collectionId) => async dispatch => {
         });
         dispatch({ type: SET_ACTIVE_COLLECTION_TYPE, payload: res.data.data.collection })
     } catch (err) {
-        console.log(err)
+        console.log({ err })
     }
 
 }

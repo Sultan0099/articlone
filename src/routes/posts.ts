@@ -18,7 +18,7 @@ SECTION  Create post
 @res : { _id  , title, description , img , collectionId }
 */
 
-router.get("/create", passportJWT, postControllers.create);
+router.post("/create", passportJWT, postControllers.create);
 
 /* 
 SECTION  Update Post
@@ -29,7 +29,7 @@ SECTION  Update Post
 @res : { postId }
 */
 
-router.get("/update", passportJWT, postControllers.update);
+router.patch("/update", passportJWT, postControllers.update);
 
 /* 
 SECTION  Delete Post
@@ -39,16 +39,16 @@ SECTION  Delete Post
 @req : null
 */
 
-router.get("/delete/:postId", passportJWT, postControllers.delete);
+router.delete("/delete/:postId", passportJWT, postControllers.delete);
 
 /* 
 SECTION  All Post
 @Des : GET All Posts Route
 @method : GET
-@path : '/api/v1/posts/getAll'
+@path : '/api/v1/posts/getAll/:collectionId'
 */
 
-router.get("/getAll", passportJWT, postControllers.getAllPost);
+router.get("/getAll/:collectionId", passportJWT, postControllers.getAllPost);
 
 /* 
 SECTION  Single Post

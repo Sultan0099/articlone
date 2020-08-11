@@ -15,7 +15,7 @@ const collectionsSchema = new Schema({
         required: true
     },
 
-});
+}, { timestamps: true });
 
 const Collections = mongooseModel<ICollections>('Collections', collectionsSchema, 'collections');
 

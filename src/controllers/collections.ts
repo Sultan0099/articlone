@@ -80,7 +80,7 @@ const collectionControllers: collectionControllerType = {
             if (!collection) return next(createError(404, 'Collection not found'));
             return res.status(200).json({ success: true, data: { collection } })
         } catch (err) {
-            next(createError(err))
+            next(createError(err.status, err))
         }
     }
 }
