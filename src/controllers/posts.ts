@@ -30,7 +30,7 @@ const postControllers: PostControllerType = {
         try {
             const userId = req.user._id;
 
-            const { postId } = req.body;
+            const { postId } = req.params;
 
             const post = await Posts.findOne({ _id: postId });
 
@@ -38,9 +38,9 @@ const postControllers: PostControllerType = {
 
             if (userId.toString() !== post.handler.toString()) { return next(createError(401, "This post is not handle by this user")); }
 
-            const updatedPost = await post.updateOne(req.body);
+            await post.updateOne(req.body);
 
-            return res.status(200).json({ success: true, data: { postId: updatedPost._id } });
+            return res.status(200).json({ success: true, data: { postId: post._id } });
         } catch (err) {
             next(createError(err))
         }
@@ -99,6 +99,29 @@ const postControllers: PostControllerType = {
             }
 
             return res.status(200).json({ success: true, data: { post } })
+
+        } catch (err) {
+            next(createError(err))
+        }
+    },
+    pagination: async (req, res, next) => {
+        try {
+            const userId = req.user._id;
+            const { collectionId } = req.params;
+
+            const { limit = 10, page = 1 } = req.query;
+            console.log(typeof limit)
+            const collection = await Collections.findOne({ _id: collectionId });
+
+            if (!collection) return next(createError(404, "Collection not found"))
+
+            if (collection.user.toString() !== userId.toString()) return next(createError(401, "this collection is not created by this user"));
+
+            const posts = await Posts.find({ collectionId: collection._id }).limit(+limit).skip((+page - 1) * +limit);
+
+            const totalPost = await Posts.countDocuments({ collectionId: collection._id });
+
+            return res.status(200).json({ success: true, data: { totalPages: Math.ceil(totalPost / +limit), currentPage: +page, totalPosts: +totalPost, postPerPage: +limit, posts } })
 
         } catch (err) {
             next(createError(err))

@@ -25,11 +25,12 @@ SECTION  Update Post
 @Des : Update Posts Route
 @method : Patch
 @path : '/api/v1/posts/update'
-@req : {  title , description , img , body }
+@params : { postId }
+@req : {  title , description , img , body  }
 @res : { postId }
 */
 
-router.patch("/update", passportJWT, postControllers.update);
+router.patch("/update/:postId", passportJWT, postControllers.update);
 
 /* 
 SECTION  Delete Post
@@ -57,6 +58,15 @@ SECTION  Single Post
 @path : '/api/v1/posts/getSingle/:postId'
 */
 
+
 router.get("/getSingle/:postId", passportJWT, postControllers.getSingle);
+/* 
+SECTION  Paginated Post
+@Des : GET Single Posts Route
+@method : GET
+@path : '/api/v1/posts/paginatedPost/:collectionId'
+*/
+router.get("/paginatedPost/:collectionId", passportJWT, postControllers.pagination);
+
 
 export default router;

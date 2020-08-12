@@ -155,10 +155,10 @@ function App(props) {
             <AuthRoute path="/create-profile" exact Component={CreateProfile} />
             <AuthRoute path='/collections' exact Component={Collections} />
 
+            <Route component={PageNotFound} />
             <Route path="/something-went-wrong" exact component={WentWrong} />
             <Route path="/server-error" component={ServerError} />
-            <Route path="/loading" component={Loading} />
-            <Route component={PageNotFound} />
+            {/* <Route path="/loading" component={Loading} /> */}
           </Switch>
         }
 

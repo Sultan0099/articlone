@@ -230,9 +230,11 @@ export interface IPost extends mongoose.Document {
     description: string;
     body: string;
     handler: string | IUser;
-    state: string;
+    state?: string;
 
 }
+
+
 
 export type PostType = {
     postId: string,
@@ -240,6 +242,7 @@ export type PostType = {
     title: string;
     description: string;
     body: string;
+    state: string;
 }
 
 export type PostControllerType = {
@@ -248,4 +251,5 @@ export type PostControllerType = {
     create: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     update: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    pagination: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { useParams } from "react-router-dom";
+import { useParams, Switch, Route } from "react-router-dom";
 
 import AuthRoute from "../HOCs/AuthRoute";
 
@@ -18,6 +18,7 @@ import Loading from "../../pages/Loading";
 import { getSingleCollection } from "../../redux/_actions/collectionAction"
 import styles from "./styles";
 import Container from "./Container"
+import PageNotFound from "../../pages/PageNotFound";
 
 export default () => {
     const classes = styles();
@@ -49,9 +50,14 @@ export default () => {
             <div style={{ marginLeft: '60px', width: "100%", }}>
 
 
-                <AuthRoute path="/dashboard/:collectionId" exact={true} Component={Container} />
-                <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
-                <AuthRoute path="/dashboard/:collectionId/blog/all" exact={true} Component={AllBlogs} />
+                <Switch>
+                    <AuthRoute path="/dashboard/:collectionId" exact={true} Component={Container} />
+                    <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
+                    <AuthRoute path="/dashboard/:collectionId/blog/all" exact={true} Component={AllBlogs} />
+                    <Route component={PageNotFound} />
+
+                </Switch>
+
             </div>
         </div>
 

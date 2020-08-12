@@ -1,7 +1,5 @@
 import React from 'react';
 
 export default () => {
-    return (
-        <h1> Table </h1>
-    )
+    <h1> Footer </h1>
 }

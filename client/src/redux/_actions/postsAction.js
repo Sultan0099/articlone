@@ -20,3 +20,19 @@ export const getAllPosts = (collectionId) => async dispatch => {
         console.log(err)
     }
 }
+
+export const getPaginatedPost = ({ page = 1, limit = 10, collectionId }) => async dispatch => {
+    try {
+        const token = localStorage.getItem('secret');
+        const res = await axios.get(ORIGIN(`/paginatedPost/${collectionId}?page=${page}&limit=${limit}`), {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        });
+
+        dispatch({ type: SET_POSTS_TYPE, payload: res.data.data });
+        console.log(res);
+    } catch (err) {
+        console.log(err)
+    }
+}

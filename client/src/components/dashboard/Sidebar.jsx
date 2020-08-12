@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Link, NavLink } from "react-router-dom";
 
 import { BsPencilSquare, BsCollection } from "react-icons/bs";
-import { IoIosListBox, IoIosApps } from "react-icons/io";
+import { IoIosApps } from "react-icons/io";
 
 import styles from "./styles";
 
@@ -30,7 +30,7 @@ export default ({ collection }) => {
     return (
         <div className={classes.sideBar}>
             <div className={classes.navBox}>
-                <Link to="/collections">
+                <Link to="/collections" style={{ textDecoration: "none" }}>
                     <Avatar size="large" variant="rounded" style={{
                         color: "#fff",
                         backgroundColor: "#075A5D"
