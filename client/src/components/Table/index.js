@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from "@material-ui/core/Table";
-import Paper from "@material-ui/core/Paper";
 
 import TableHeader from "./Header";
 import TableBody from "./Body";
@@ -53,7 +52,7 @@ export default (props) => {
             <ActionBar totalPosts={data.totalPosts} selectedPosts={isRowSelected} setSelectedPosts={setIsRowSelected} postsPerPage={data.postPerPage} actions={actions} />
             <TableContainer>
                 <Table size='small'>
-                    <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} checked={data.postPerPage == isRowSelected.length} />
+                    <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} checked={data.postPerPage === isRowSelected.length} />
                     <TableBody
                         data={data.posts}
                         tableHeaderData={tableHeaderData}

@@ -118,7 +118,7 @@ const postControllers: PostControllerType = {
 
             if (collection.user.toString() !== userId.toString()) return next(createError(401, "this collection is not created by this user"));
 
-            const posts = await Posts.find({ collectionId: collection._id }).limit(+limit).skip((+page - 1) * +limit);
+            const posts = await Posts.find({ collectionId: collection._id }).sort({ createdAt: -1 }).limit(+limit).skip((+page - 1) * +limit);
 
             const totalPost = await Posts.countDocuments({ collectionId: collection._id });
 

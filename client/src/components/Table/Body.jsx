@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
@@ -7,6 +7,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 
 import { BsPencil } from 'react-icons/bs';
+import { IoIosPaper } from "react-icons/io";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -38,7 +39,7 @@ export default ({ data, tableHeaderData, onSelect, selectedRow }) => {
                     {tableHeaderData.map(cell => (
                         <React.Fragment key={cell}>
                             <TableCell >
-                                {row[cell].length > 40 ? <DialogButton title={cell} content={row[cell]} /> : row[cell]}
+                                {row[cell].length > 40 ? <DialogButton title={cell} content={row[cell]} icon={IoIosPaper} /> : row[cell]}
                             </TableCell>
                         </React.Fragment>
                     ))}

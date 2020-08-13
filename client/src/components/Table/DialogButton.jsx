@@ -6,11 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { IoIosPaper } from "react-icons/io";
+
 
 import styles from "./styles";
 
-export default ({ title, content }) => {
+export default ({ title, content, icon: Icon }) => {
     const [open, setOpen] = React.useState(false);
     const classes = styles();
 
@@ -25,7 +25,7 @@ export default ({ title, content }) => {
     return (
         <div>
             <Button onClick={handleClickOpen} className={classes.dialogButton}>
-                <IoIosPaper />
+                <Icon />
             </Button>
             <Dialog
                 open={open}
@@ -39,6 +39,7 @@ export default ({ title, content }) => {
                         {content}
                     </DialogContentText>
                 </DialogContent>
+
             </Dialog>
         </div>
     );
