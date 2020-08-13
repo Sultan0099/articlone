@@ -225,6 +225,7 @@ export type collectionControllerType = {
 // ******************************
 
 export interface IPost extends mongoose.Document {
+    _doc?: IPost;
     collectionId: string | ICollections;
     title: string;
     description: string;

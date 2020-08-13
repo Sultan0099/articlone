@@ -9,7 +9,7 @@ import TableBody from "./Body";
 import ActionBar from "./SelectedPostActions";
 
 export default (props) => {
-    const { data, tableHeaderData, onSelect } = props;
+    const { data, tableHeaderData, onSelect, actions } = props;
     const [isRowSelected, setIsRowSelected] = useState([]);
     const [checkAll, setCheckAll] = useState(false);
 
@@ -50,10 +50,10 @@ export default (props) => {
 
     return (
         <>
-            <ActionBar />
-            <TableContainer component={Paper}>
+            <ActionBar totalPosts={data.totalPosts} selectedPosts={isRowSelected} setSelectedPosts={setIsRowSelected} postsPerPage={data.postPerPage} actions={actions} />
+            <TableContainer>
                 <Table size='small'>
-                    <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} />
+                    <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} checked={data.postPerPage == isRowSelected.length} />
                     <TableBody
                         data={data.posts}
                         tableHeaderData={tableHeaderData}

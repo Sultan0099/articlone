@@ -40,7 +40,7 @@ const postControllers: PostControllerType = {
 
             await post.updateOne(req.body);
 
-            return res.status(200).json({ success: true, data: { postId: post._id } });
+            return res.status(200).json({ success: true, data: { ...post._doc, ...req.body } });
         } catch (err) {
             next(createError(err))
         }
@@ -54,12 +54,13 @@ const postControllers: PostControllerType = {
 
             if (!post) return next(createError(404, "Post not found"));
 
-            if (post.handler !== userId) return next(createError(401, "This post is not handle by this user"));
+            if (post.handler.toString() !== userId.toString()) return next(createError(401, "This post is not handle by this user"));
 
             const deletedPost = await post.deleteOne();
 
+            const totalPosts = await Posts.countDocuments({ handler: userId });
 
-            return res.status(200).json({ success: true, data: { postId: deletedPost._id } });
+            return res.status(200).json({ success: true, data: { postId: deletedPost._id, totalPosts: +totalPosts } });
 
         } catch (err) {
             next(createError(err))

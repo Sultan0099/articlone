@@ -6,12 +6,13 @@ import TableCell from "@material-ui/core/TableCell";
 
 import Checkbox from "@material-ui/core/CheckBox"
 
-export default ({ tableHeaderData, onSelectAll }) => {
+export default ({ tableHeaderData, onSelectAll, checked }) => {
     return (
         <TableHead>
             <TableRow>
                 <TableCell>
                     <Checkbox
+                        checked={checked}
                         onChange={onSelectAll}
                         inputProps={{ 'aria-label': 'select all blogs' }}
                     />

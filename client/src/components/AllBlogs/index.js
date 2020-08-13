@@ -10,11 +10,10 @@ import Header from "./Header";
 
 import Table from "../Table"
 
-import { getPaginatedPost } from "../../redux/_actions/postsAction"
+import { getPaginatedPost, deletePosts, publishPosts, unPublishPosts } from "../../redux/_actions/postsAction"
 
 export default () => {
     const [loading, setLoading] = useState(true);
-    const [checkAll, setCheckAll] = useState(false);
 
     const posts = useSelector(state => state.posts)
 
@@ -40,9 +39,52 @@ export default () => {
     ]
 
     const selectPost = (e, selectedPosts) => {
-        console.log(selectedPosts)
+        // console.log(selectedPosts)
     }
 
+    const deletePostsAction = async (selectedPosts, loading) => {
+        await selectedPosts.forEach(async postId => {
+            try {
+                await dispatch(deletePosts(postId));
+                return
+            } catch (err) {
+                console.log(err)
+                return
+            }
+        })
+        loading(false);
+
+        // await dispatch(deletePosts(selectedPosts[0]))
+    }
+
+    const publishPostsAction = async (selectedPosts, loading) => {
+        await selectedPosts.forEach(async postId => {
+            try {
+                await dispatch(publishPosts(postId));
+                return
+            } catch (err) {
+                console.log(err)
+                return
+            }
+        })
+
+        loading(false)
+
+    }
+
+    const unPublishPostsAction = async (selectedPosts, loading) => {
+        await selectedPosts.forEach(async postId => {
+            try {
+                await dispatch(unPublishPosts(postId));
+                return
+            } catch (err) {
+                console.log(err)
+                return
+            }
+        });
+
+        loading(false);
+    }
 
 
 
@@ -55,8 +97,13 @@ export default () => {
                     data={posts}
                     tableHeaderData={tableHeaderData}
                     onSelect={selectPost}
-
-
+                    actions={
+                        {
+                            deletePostsAction,
+                            publishPostsAction,
+                            unPublishPostsAction
+                        }
+                    }
                 />
             )
             }
