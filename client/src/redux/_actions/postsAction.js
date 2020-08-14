@@ -33,7 +33,7 @@ export const getPaginatedPost = ({ page = 1, limit = 10, collectionId }) => asyn
         dispatch({ type: SET_POSTS_TYPE, payload: res.data.data });
         console.log(res);
     } catch (err) {
-        console.log(err)
+        console.log({ err })
     }
 }
 

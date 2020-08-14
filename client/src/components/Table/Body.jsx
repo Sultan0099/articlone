@@ -19,10 +19,14 @@ export default ({ data, tableHeaderData, onSelect, selectedRow }) => {
     const classes = styles();
     const collectionId = useSelector(state => state.collections.active._id);
 
+
+    const { totalPosts, postPerPage, totalPages, currentPage } = data;
+
+
     return (
         <TableBody>
 
-            {data.map(row => (
+            {data.posts.map((row, index) => (
                 <TableRow key={row._id}>
                     <TableCell>
                         <Checkbox
@@ -36,11 +40,17 @@ export default ({ data, tableHeaderData, onSelect, selectedRow }) => {
                             <BsPencil />
                         </Button>
                     </TableCell>
+                    <TableCell>
+                        {((currentPage - 1) * 10) + index + 1}
+                    </TableCell>
                     {tableHeaderData.map(cell => (
                         <React.Fragment key={cell}>
-                            <TableCell >
+
+
+                            <TableCell style={{ color: row[cell] == 'unpublished' ? 'red' : 'black' }}>
                                 {row[cell].length > 40 ? <DialogButton title={cell} content={row[cell]} icon={IoIosPaper} /> : row[cell]}
                             </TableCell>
+
                         </React.Fragment>
                     ))}
                 </TableRow>

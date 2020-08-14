@@ -8,6 +8,7 @@ const initialState = {
     posts: [],
     published: [],
     unPublished: [],
+    filteredPosts: [],
     active: null,
     errors: {}
 }
@@ -24,6 +25,7 @@ const postsReducer = (state = initialState, action) => {
                 posts: action.payload.posts,
                 published: action.payload.posts.filter(post => post.state === "published"),
                 unPublished: action.payload.posts.filter(post => post.state === "unpublished"),
+                filteredPosts: action.payload.posts,
                 totalPages: action.payload.totalPages,
                 currentPage: action.payload.currentPage,
                 totalPosts: action.payload.totalPosts,
@@ -33,6 +35,7 @@ const postsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: filterPostsWithId(state.posts, action.payload.postId),
+                filteredPosts: filterPostsWithId(state.posts, action.payload.postId),
                 published: filterPostsWithId(state.published, action.payload.postId),
                 unPublished: filterPostsWithId(state.unPublished, action.payload.postId),
 
@@ -51,6 +54,7 @@ const postsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: updatedPosts,
+                filteredPosts: updatedPosts,
                 published: updatedPosts.filter(post => post.state === "published"),
                 unPublished: updatedPosts.filter(post => post.state === "unpublished"),
             };
@@ -65,6 +69,7 @@ const postsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: updatedPosts,
+                filteredPosts: updatedPosts,
                 published: updatedPosts.filter(post => post.state === "published"),
                 unPublished: updatedPosts.filter(post => post.state === "unpublished"),
             }

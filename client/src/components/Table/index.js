@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from "@material-ui/core/Table";
@@ -6,12 +6,23 @@ import Table from "@material-ui/core/Table";
 import TableHeader from "./Header";
 import TableBody from "./Body";
 import ActionBar from "./SelectedPostActions";
+import Pagination from "./Pagination";
 
 export default (props) => {
-    const { data, tableHeaderData, onSelect, actions } = props;
+    const { data, tableHeaderData, onSelect, actions, pagination } = props;
     const [isRowSelected, setIsRowSelected] = useState([]);
+    const [checked, setChecked] = useState(false);
     const [checkAll, setCheckAll] = useState(false);
+    const [posts, setPosts] = useState(data.posts);
 
+
+    useEffect(() => {
+        if (checked && data.posts.length === isRowSelected.length) {
+            setCheckAll(true);
+        } else {
+            setCheckAll(false);
+        }
+    }, [checked, isRowSelected])
 
     const selectRow = (e, postId) => {
 
@@ -31,30 +42,36 @@ export default (props) => {
     }
 
     const selectAllRows = (e) => {
-        const selectAllRows = data.posts.map(post => post._id);
 
-
-        if (checkAll) {
+        if (checked && checkAll) {
             setIsRowSelected([])
             onSelect(e, [])
-            setCheckAll(false);
-        } else {
+            setChecked(false);
+        }
+        else {
+            const selectAllRows = data.posts.map(post => post._id);
             setIsRowSelected([...selectAllRows])
             onSelect(e, [...selectAllRows])
-            setCheckAll(true);
+
+            setChecked(true);
         }
 
     }
 
+    const filterAction = (filter) => {
+        console.log(filter)
+        setPosts(data[filter]);
+    }
 
     return (
-        <>
-            <ActionBar totalPosts={data.totalPosts} selectedPosts={isRowSelected} setSelectedPosts={setIsRowSelected} postsPerPage={data.postPerPage} actions={actions} />
-            <TableContainer>
+        <div >
+            <ActionBar filterAction={filterAction} totalPosts={data.totalPosts} selectedPosts={isRowSelected} setSelectedPosts={setIsRowSelected} postsPerPage={data.postPerPage} actions={actions} />
+            <TableContainer >
                 <Table size='small'>
-                    <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} checked={data.postPerPage === isRowSelected.length} />
+                    <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} checked={checkAll} />
                     <TableBody
-                        data={data.posts}
+                        posts={posts}
+                        data={data}
                         tableHeaderData={tableHeaderData}
                         selectedRow={isRowSelected}
                         onSelect={selectRow}
@@ -62,6 +79,7 @@ export default (props) => {
                     />
                 </Table>
             </TableContainer>
-        </>
+            <Pagination pagination={pagination} totalPages={data.totalPages} currentPage={data.currentPage} />
+        </div>
     )
 }

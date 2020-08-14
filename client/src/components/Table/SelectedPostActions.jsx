@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -7,17 +7,28 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from "@material-ui/core/DialogActions";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BsArrowBarUp, BsArrowBarDown } from "react-icons/bs";
 
 import styles from "./styles";
 
-export default ({ totalPosts, selectedPosts, postsPerPage, actions, setSelectedPosts }) => {
+export default ({ totalPosts, selectedPosts, postsPerPage, actions, setSelectedPosts, filterAction }) => {
     const classes = styles();
     const { deletePostsAction, publishPostsAction, unPublishPostsAction } = actions;
     const [open, setOpen] = React.useState(false);
     const [loading, setLoading] = useState(false);
+
+
+    useEffect(() => {
+        if (!loading) {
+            console.log("run effect condition");
+            setSelectedPosts([]);
+            setOpen(false);
+        }
+    }, [loading])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -29,25 +40,18 @@ export default ({ totalPosts, selectedPosts, postsPerPage, actions, setSelectedP
 
 
     const handleDelete = async () => {
-        setLoading(true);
+        setLoading(true)
         await deletePostsAction(selectedPosts, setLoading);
-        if (!loading) {
-            setSelectedPosts([]);
-            setOpen(false);
-        }
-
     }
+
     const handlePublish = async () => {
+        setLoading(true);
         await publishPostsAction(selectedPosts, setLoading);
-        setSelectedPosts([]);
-        if (!loading) { setSelectedPosts([]); }
-
     }
+
     const handleUnPublish = async () => {
+        setLoading(true)
         await unPublishPostsAction(selectedPosts, setLoading);
-
-        if (!loading) { setSelectedPosts([]); }
-
     }
 
     return (
@@ -56,7 +60,7 @@ export default ({ totalPosts, selectedPosts, postsPerPage, actions, setSelectedP
                 <Typography variant="subtitle2" className={classes.m_9} > {selectedPosts.length} items selected </Typography>
                 {(selectedPosts && selectedPosts.length > 0) && (
                     <>
-                        <Button size='small' variant="text" className={classes.deleteButton} onClick={handleClickOpen}>
+                        <Button size='small' variant="text" className={classes.deleteButton} onClick={handleClickOpen} disabled={loading ? true : false}>
                             <FaRegTrashAlt style={{ fontSize: 11, marginRight: 2 }} />
                             Delete
                         </Button>
@@ -73,23 +77,24 @@ export default ({ totalPosts, selectedPosts, postsPerPage, actions, setSelectedP
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleClose} color="primary">
+                                <Button onClick={handleClose} color="primary" disabled={loading ? true : false}>
                                     close
                                 </Button>
-                                <Button onClick={handleDelete} autoFocus style={{ color: "red" }} size='medium'>
+                                <Button onClick={handleDelete} autoFocus style={{ color: "red" }} size='medium' disabled={loading ? true : false}>
                                     Delete
                                 </Button>
                             </DialogActions>
                         </Dialog>
 
-                        <Button size='small' variant="text" className={classes.publishButton} onClick={handlePublish}>
+                        <Button size='small' variant="text" className={classes.publishButton} onClick={handlePublish} disabled={loading ? true : false}>
                             <BsArrowBarUp style={{ fontSize: 18, marginRight: 2 }} />
                             Publish
                         </Button>
-                        <Button size='small' variant="text" className={classes.unpublishButton} onClick={handleUnPublish}>
+                        <Button size='small' variant="text" className={classes.unpublishButton} onClick={handleUnPublish} disabled={loading ? true : false}>
                             <BsArrowBarDown style={{ fontSize: 18, marginRight: 2 }} />
                             Un Publish
                         </Button>
+                        {loading && <CircularProgress color="primary" style={{ width: 20, height: 20, marginLeft: 5 }} />}
                     </>
                 )}
 
@@ -97,6 +102,7 @@ export default ({ totalPosts, selectedPosts, postsPerPage, actions, setSelectedP
             <div className={classes.flex}>
                 <Typography variant="subtitle2" className={classes.m_9}> Total Posts : {totalPosts} </Typography>
                 <Typography variant="subtitle2" className={classes.m_9}> Per Page : {postsPerPage} </Typography>
+                {/* <FilterPosts filterAction={filterAction} /> */}
             </div>
         </div>
     )

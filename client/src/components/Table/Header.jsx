@@ -20,6 +20,9 @@ export default ({ tableHeaderData, onSelectAll, checked }) => {
                 <TableCell>
                     Edit
                 </TableCell>
+                <TableCell>
+                    #
+                </TableCell>
                 {tableHeaderData.map(cell => (
                     <TableCell key={cell}>{cell}</TableCell>
                 ))}

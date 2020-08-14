@@ -27,7 +27,8 @@ const styles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         // background: "pink",
         boxSizing: "border-box",
-        padding: "0px 15px"
+        padding: "0px 15px",
+        borderBottom: "1px solid rgba(0,0,0,0.1)"
     },
     m_9: {
         marginLeft: "9px",
@@ -48,8 +49,39 @@ const styles = makeStyles((theme) => ({
     unpublishButton: {
         color: "orange",
         fontSize: '10px'
-
+    },
+    paginationBar: {
+        backgroundColor: "white",
+        marginTop: "15px",
+        width: '100%',
+        height: 50,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'sticky',
+        bottom: 0,
+        left: 0,
+        zIndex: 4
+    },
+    paginationInput: {
+        width: 50,
+        height: "100%",
+        border: "1px solid rgba(0,0,0,0.1)"
+    },
+    paginationCount: {
+        marginTop: '-6px',
+        marginLeft: 8,
+        marginRight: 8,
+        border: "1px solid black",
+        fontWeight: 'bold',
+        boxSizing: 'border-box',
+        padding: "5px 10px"
+    },
+    filterButton: {
+        color: "green",
+        fontSize: '10px'
     }
+
 }));
 
 
