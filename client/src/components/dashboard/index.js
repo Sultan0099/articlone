@@ -53,7 +53,7 @@ export default () => {
                 <Switch>
                     <AuthRoute path="/dashboard/:collectionId" exact={true} Component={Container} />
                     <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
-                    <AuthRoute path="/dashboard/:collectionId/blog/all" exact={true} Component={AllBlogs} />
+                    <AuthRoute path="/dashboard/:collectionId/blog/:filter" exact={true} Component={AllBlogs} />
                     <Route component={PageNotFound} />
 
                 </Switch>

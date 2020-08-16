@@ -22,7 +22,7 @@ export default () => {
     const posts = useSelector(state => state.posts)
 
     const dispatch = useDispatch();
-    const { collectionId } = useParams()
+    const { collectionId, filter } = useParams()
 
 
     useEffect(() => {

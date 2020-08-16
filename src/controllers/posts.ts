@@ -4,6 +4,12 @@ import { Posts, Collections } from "../models"
 
 import { PostControllerType } from "../types";
 
+import { bucket } from "../config/firebase";
+
+
+
+
+
 const postControllers: PostControllerType = {
     create: async (req, res, next) => {
         try {
@@ -125,6 +131,33 @@ const postControllers: PostControllerType = {
             return res.status(200).json({ success: true, data: { totalPages: Math.ceil(totalPost / +limit), currentPage: +page, totalPosts: +totalPost, postPerPage: +limit, posts } })
 
         } catch (err) {
+            next(createError(err))
+        }
+    },
+    uploadContentImgs: async (req, res, next) => {
+        try {
+
+            console.log('runs')
+            const { filename, path, mimetype } = req.file;
+
+            await bucket.upload(path, {
+                resumable: false,
+                metadata: {
+                    metadata: {
+                        contentType: mimetype
+                    }
+                }
+            });
+
+            let imageUrl = `https://firebasestorage.googleapis.com/v0/b/articlone.appspot.com/o/${filename}?alt=media`;
+
+
+
+
+
+            res.status(200).json({ uploaded: true, url: imageUrl })
+        } catch (err) {
+            console.log(err)
             next(createError(err))
         }
     }

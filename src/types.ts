@@ -253,4 +253,5 @@ export type PostControllerType = {
     delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     update: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     pagination: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    uploadContentImgs: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }

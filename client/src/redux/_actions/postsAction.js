@@ -87,3 +87,7 @@ export const unPublishPosts = (postId) => async dispatch => {
         console.log({ err })
     }
 }
+
+export const applyFilter = (filter) => async dispatch => {
+
+}

@@ -18,6 +18,13 @@ declare global {
             GOOGLE_CLIENT_ID: string,
             GOOGLE_CLIENT_SECRET: string,
             GOOGLE_CALLBACK: string,
+            FIREBASE_API: string,
+            FIREBASE_AUTH_DOMAIN: string,
+            FIREBASE_DATABASE: string,
+            FIREBASE_PROJECT_ID: string,
+            FIREBASE_STORAGE: string,
+            FIREBASE_MESSAGE: string,
+            FIREBASE_APP_ID: string
         }
     };
 
@@ -29,6 +36,11 @@ declare global {
             sessionID: string,
             session: string
         }
+    }
+
+    declare module "*.json" {
+        const value: any;
+        export default value;
     }
 }
 

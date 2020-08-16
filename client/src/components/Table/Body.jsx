@@ -20,7 +20,7 @@ export default ({ data, tableHeaderData, onSelect, selectedRow }) => {
     const collectionId = useSelector(state => state.collections.active._id);
 
 
-    const { totalPosts, postPerPage, totalPages, currentPage } = data;
+    const { currentPage } = data;
 
 
     return (
@@ -47,7 +47,7 @@ export default ({ data, tableHeaderData, onSelect, selectedRow }) => {
                         <React.Fragment key={cell}>
 
 
-                            <TableCell style={{ color: row[cell] == 'unpublished' ? 'red' : 'black' }}>
+                            <TableCell style={{ color: row[cell] === 'unpublished' ? 'red' : 'black' }}>
                                 {row[cell].length > 40 ? <DialogButton title={cell} content={row[cell]} icon={IoIosPaper} /> : row[cell]}
                             </TableCell>
 

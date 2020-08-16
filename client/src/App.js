@@ -106,7 +106,16 @@ const theme = createMuiTheme({
       fontSize: '14px',
       color: '#242424',
     },
-  }
+  },
+  overrides: {
+
+    '@global': {
+      ul: {
+        color: "red"
+      }
+    },
+
+  },
 })
 
 function App(props) {

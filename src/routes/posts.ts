@@ -2,10 +2,12 @@ import { Router } from "express";
 import passport from 'passport';
 
 import "../config/passport";  //  importing passport configuration from config folder ;
+import { postControllers } from "../controllers";
+import upload from "../config/multer";
+
 
 const router = Router();
 
-import { postControllers } from "../controllers";
 
 const passportJWT = passport.authenticate('jwt', { session: false });
 
@@ -68,5 +70,13 @@ SECTION  Paginated Post
 */
 router.get("/paginatedPost/:collectionId", passportJWT, postControllers.pagination);
 
+
+/* 
+SECTION  Upload content images Post
+@Des : upload content img 
+@method : post
+@path : '/api/v1/posts/upload-content'
+*/
+router.post("/upload-content", upload.single('upload'), postControllers.uploadContentImgs)
 
 export default router;
