@@ -1,4 +1,4 @@
-import { SET_POSTS_TYPE, DELETE_POSTS_TYPE, PUBLISH_POSTS_TYPE, UNPUBLISH_POSTS_TYPE } from "../_actionTypes";
+import { SET_POSTS_TYPE, DELETE_POSTS_TYPE, PUBLISH_POSTS_TYPE, UNPUBLISH_POSTS_TYPE, SET_ACTIVE_POSTS_TYPE } from "../_actionTypes";
 
 const initialState = {
     totalPages: 0,
@@ -72,6 +72,11 @@ const postsReducer = (state = initialState, action) => {
                 filteredPosts: updatedPosts,
                 published: updatedPosts.filter(post => post.state === "published"),
                 unPublished: updatedPosts.filter(post => post.state === "unpublished"),
+            };
+        case SET_ACTIVE_POSTS_TYPE:
+            return {
+                ...state,
+                active: action.payload
             }
         default:
             return state

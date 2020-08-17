@@ -2,11 +2,10 @@ import React from 'react';
 
 import TextField from "@material-ui/core/TextField";
 
-import InputError from "../common/FormFieldError";
 import styles from "./styles";
 
 
-export default ({ handleChange, values, errors }) => {
+export default ({ handleChange, values }) => {
 
     const classes = styles();
 
@@ -27,12 +26,11 @@ export default ({ handleChange, values, errors }) => {
                     type="Text"
                     name="title"
                     autoComplete="title"
-                    error={errors.title ? true : false}
+
                     onChange={handleChange}
 
                 />
             </div>
-            {errors.title && <InputError errorText={errors.title} />}
             <div className={classes.textFieldWrapper}>
                 <TextField
 
@@ -47,14 +45,14 @@ export default ({ handleChange, values, errors }) => {
                     type="Text"
                     multiline={true}
                     rows={3}
-                    error={errors.description ? true : false}
+
                     name="description"
                     autoComplete="description"
                     onChange={handleChange}
 
                 />
             </div>
-            {errors.description && <InputError errorText={errors.description} />}
+
         </div>
     )
 }

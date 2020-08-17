@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -12,58 +12,85 @@ import { useDispatch } from "react-redux";
 import Editor from "../Editor";
 import Form from "./Form";
 
-import { createPost } from "../../redux/_actions/postsAction";
-import useForm from "../../hooks/useForm";
-import validate from "./validate";
+import { updatePosts, getSinglePost } from "../../redux/_actions/postsAction";
+
+import CircularIndicator from "../common/CircularIndicator";
 
 import styles from "./styles";
 
 export default () => {
-    const savedContent = localStorage.getItem("content")
     const classes = styles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [body, setBody] = useState(savedContent ? savedContent : '');
-
-    const submit = () => savePosts();
-    const { handleChange, handleSubmit, values, errors, isSubmitting, } = useForm({
+    const [values, setValues] = useState({
         title: '',
-        description: '',
-    }, submit, validate);
+        description: ''
+    });
+    const [body, setBody] = useState('')
+    const [loading, setLoading] = useState(true)
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { collectionId, postId } = useParams();
 
 
-    const { collectionId } = useParams();
+
+    useEffect(() => {
+        const fetchSinglePost = async () => {
+            const post = await dispatch(getSinglePost(postId));
+            if (post) {
+
+                setBody(post.body);
+                setValues({ title: post.title, description: post.description })
+                setLoading(false)
+            }
+        }
+        fetchSinglePost();
+
+    }, [postId, dispatch])
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setValues({
+            ...values,
+            [name]: value
+        })
+    }
+
+
 
 
     const handleGetEditorData = (data) => {
-        setBody(data);
-        localStorage.setItem("content", data)
+        setBody(data)
     }
 
     const savePosts = async () => {
+        setIsSubmitting(true)
         const { title, description } = values;
-        await dispatch(createPost({ title, description, body, collectionId }));
-        localStorage.removeItem('content');
+        await dispatch(updatePosts({ title, description, body, collectionId }, postId));
+
         history.push(`/dashboard/${collectionId}/blog/all`)
     }
+
+    if (loading) return <CircularIndicator />
+
 
 
     return (
         <Container style={{ width: 700, marginTop: 30 }}>
-            <Form values={values} handleChange={handleChange} errors={errors} />
+            <Form values={values} handleChange={handleChange} />
             <Editor getEditorData={handleGetEditorData} editorState={body} />
 
             <div className={classes.wrapper}>
                 <Button
                     type="button"
-                    onClick={handleSubmit}
+                    onClick={savePosts}
                     fullWidth
                     disabled={isSubmitting}
                     variant="contained"
                     color="primary"
                     className={classes.submit}
                 >
-                    Submit
+                    Update
           </Button>
                 {isSubmitting && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>

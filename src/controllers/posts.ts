@@ -95,7 +95,7 @@ const postControllers: PostControllerType = {
     getSingle: async (req, res, next) => {
         try {
             const userId = req.user._id;
-            const { postId } = req.body;
+            const { postId } = req.params;
 
             const post = await Posts.findOne({ _id: postId });
 
@@ -105,7 +105,7 @@ const postControllers: PostControllerType = {
                 return next(createError(401, "This post is not created by this user"));
             }
 
-            return res.status(200).json({ success: true, data: { post } })
+            return res.status(200).json({ success: true, data: { ...post._doc } })
 
         } catch (err) {
             next(createError(err))

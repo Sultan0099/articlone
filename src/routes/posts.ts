@@ -28,7 +28,7 @@ SECTION  Update Post
 @method : Patch
 @path : '/api/v1/posts/update'
 @params : { postId }
-@req : {  title , description , img , body  }
+@req : {  title , description  , body  }
 @res : { postId }
 */
 

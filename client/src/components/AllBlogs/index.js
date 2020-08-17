@@ -38,6 +38,7 @@ export default () => {
         "state",
         "title",
         "description",
+        "body",
         "createdAt",
         "updatedAt"
     ]

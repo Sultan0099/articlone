@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { SET_POSTS_TYPE, DELETE_POSTS_TYPE, PUBLISH_POSTS_TYPE, UNPUBLISH_POSTS_TYPE } from "../_actionTypes";
+import { SET_POSTS_TYPE, DELETE_POSTS_TYPE, PUBLISH_POSTS_TYPE, UNPUBLISH_POSTS_TYPE, SET_ACTIVE_POSTS_TYPE } from "../_actionTypes";
 
 const ORIGIN = (path) => `/api/v1/posts${path}`;
 
@@ -46,7 +46,6 @@ export const deletePosts = (postId) => async dispatch => {
             }
         });
 
-        console.log("delete action", res);
 
         await dispatch({ type: DELETE_POSTS_TYPE, payload: res.data.data })
     } catch (err) {
@@ -63,7 +62,7 @@ export const publishPosts = (postId) => async dispatch => {
             }
         });
 
-        console.log("delete action", res);
+
 
         await dispatch({ type: PUBLISH_POSTS_TYPE, payload: res.data.data })
     } catch (err) {
@@ -80,7 +79,7 @@ export const unPublishPosts = (postId) => async dispatch => {
             }
         });
 
-        console.log("delete action", res);
+
 
         await dispatch({ type: UNPUBLISH_POSTS_TYPE, payload: res.data.data })
     } catch (err) {
@@ -88,6 +87,44 @@ export const unPublishPosts = (postId) => async dispatch => {
     }
 }
 
-export const applyFilter = (filter) => async dispatch => {
+export const createPost = ({ title, description, body, collectionId }) => async dispatch => {
+    try {
+        const token = localStorage.getItem('secret');
+        await axios.post(ORIGIN('/create'), { title, description, body, collectionId }, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
 
+    } catch (err) {
+        console.log({ err })
+    }
+
+}
+export const updatePosts = (data, postId) => async dispatch => {
+    try {
+        const token = localStorage.getItem('secret');
+        const res = await axios.patch(ORIGIN(`/update/${postId}`), data, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const getSinglePost = (postId) => async dispatch => {
+    try {
+        const token = localStorage.getItem('secret');
+        const res = await axios.get(ORIGIN(`/getSingle/${postId}`), {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
+        dispatch({ type: SET_ACTIVE_POSTS_TYPE, payload: res.data.data });
+        return res.data.data;
+    } catch (err) {
+        console.log(err)
+    }
 }

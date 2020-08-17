@@ -8,6 +8,7 @@ import AuthRoute from "../HOCs/AuthRoute";
 
 import CreateBlog from "../CreateBlog";
 import AllBlogs from "../AllBlogs";
+import EditBlogs from "../EditBlogs";
 
 import Sidebar from "./Sidebar";
 
@@ -54,6 +55,7 @@ export default () => {
                     <AuthRoute path="/dashboard/:collectionId" exact={true} Component={Container} />
                     <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
                     <AuthRoute path="/dashboard/:collectionId/blog/:filter" exact={true} Component={AllBlogs} />
+                    <AuthRoute path="/dashboard/:collectionId/blog/edit/:postId" exact={true} Component={EditBlogs} />
                     <Route component={PageNotFound} />
 
                 </Switch>

@@ -8,7 +8,6 @@ const useForm = (formValues, callBack, validator = null) => {
     const auth = useSelector(state => state.auth);
 
     useEffect(() => {
-        console.log(errors)
         if (Object.keys(errors).length === 0 && isSubmitting) {
 
             callBack(values).then(() => setIsSubmitting(false))
@@ -35,9 +34,7 @@ const useForm = (formValues, callBack, validator = null) => {
     }
 
     const handleSubmit = () => {
-        console.log('called');
         if (validator !== null) {
-            console.log("called validator")
             setErrors(validator(values));
         }
         setIsSubmitting(true)
