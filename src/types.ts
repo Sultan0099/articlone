@@ -255,3 +255,19 @@ export type PostControllerType = {
     pagination: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     uploadContentImgs: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
+
+// ******************************
+// Section cms types 👇
+// ******************************
+
+export interface ICMS extends mongoose.Document {
+    collectionId: string | ICollections,
+    apiKey: string
+}
+
+export type CmsControllerType = {
+    getAllPost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getSinglePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    likePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    commentPost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+}

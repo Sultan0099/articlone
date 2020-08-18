@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import styles from "./styles";
 import DialogButton from "./DialogButton";
 
-export default ({ data, tableHeaderData, onSelect, selectedRow }) => {
+export default ({ data, tableHeaderData, onSelect, selectedRow, posts }) => {
     const classes = styles();
     const collectionId = useSelector(state => state.collections.active._id);
 
@@ -26,7 +26,7 @@ export default ({ data, tableHeaderData, onSelect, selectedRow }) => {
     return (
         <TableBody>
 
-            {data.posts.map((row, index) => (
+            {posts.map((row, index) => (
                 <TableRow key={row._id}>
                     <TableCell>
                         <Checkbox

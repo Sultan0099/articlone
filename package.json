@@ -24,6 +24,7 @@
     "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
     "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
@@ -39,7 +40,8 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
@@ -56,6 +58,7 @@
     "@types/passport-google-oauth20": "^2.0.3",
     "@types/passport-jwt": "^3.0.3",
     "@types/passport-local": "^1.0.33",
+    "@types/uuid": "^8.3.0",
     "concurrently": "^5.2.0",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.49",

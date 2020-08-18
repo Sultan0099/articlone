@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { Link, useParams } from "react-router-dom";
+
 import { RiFilter2Line } from "react-icons/ri"
 
 import styles from "./styles";
@@ -11,6 +13,7 @@ import styles from "./styles";
 export default ({ filterAction }) => {
 
     const classes = styles();
+    const { collectionId } = useParams();
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -18,10 +21,7 @@ export default ({ filterAction }) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const filterPosts = (changeFilter) => {
-        filterAction(changeFilter);
-        handleClose();
-    };
+
     const handleClose = () => {
         setAnchorEl(null)
     }
@@ -39,9 +39,9 @@ export default ({ filterAction }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={() => filterPosts('posts')}>All Posts</MenuItem>
-                <MenuItem onClick={() => filterPosts('published')}>Published </MenuItem>
-                <MenuItem onClick={() => filterPosts('unPublished')}>Un Published</MenuItem>
+                <MenuItem component={Link} to={`/dashboard/${collectionId}/blog/posts`} onClick={() => setAnchorEl(null)}>All Posts</MenuItem>
+                <MenuItem component={Link} to={`/dashboard/${collectionId}/blog/published`} onClick={() => setAnchorEl(null)}>Published </MenuItem>
+                <MenuItem component={Link} to={`/dashboard/${collectionId}/blog/unPublished`} onClick={() => setAnchorEl(null)}>Un Published</MenuItem>
             </Menu>
         </div>
     );

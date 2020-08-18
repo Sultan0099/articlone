@@ -10,6 +10,7 @@ import Header from "./Header";
 
 import Table from "../Table"
 // import SnackBar from "./SnackBar";
+import Overview from "../common/Overview";
 
 import { getPaginatedPost, deletePosts, publishPosts, unPublishPosts } from "../../redux/_actions/postsAction";
 
@@ -115,8 +116,9 @@ export default () => {
 
             {loading ? <CircularIndicator /> : (
                 <>
-                    <Table
+                    {posts.posts.length == 0 ? <Overview /> : <Table
                         data={posts}
+                        filter={filter}
                         tableHeaderData={tableHeaderData}
                         onSelect={selectPost}
                         pagination={
@@ -132,6 +134,9 @@ export default () => {
                             }
                         }
                     />
+
+                    }
+
                 </>
             )
             }

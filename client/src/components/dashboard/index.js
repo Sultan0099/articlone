@@ -18,7 +18,7 @@ import Sidebar from "./Sidebar";
 import Loading from "../../pages/Loading";
 import { getSingleCollection } from "../../redux/_actions/collectionAction"
 import styles from "./styles";
-import Container from "./Container"
+import FrontPage from "./FrontPage"
 import PageNotFound from "../../pages/PageNotFound";
 
 export default () => {
@@ -52,7 +52,7 @@ export default () => {
 
 
                 <Switch>
-                    <AuthRoute path="/dashboard/:collectionId" exact={true} Component={Container} />
+                    <AuthRoute path="/dashboard/:collectionId" exact={true} Component={FrontPage} />
                     <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
                     <AuthRoute path="/dashboard/:collectionId/blog/:filter" exact={true} Component={AllBlogs} />
                     <AuthRoute path="/dashboard/:collectionId/blog/edit/:postId" exact={true} Component={EditBlogs} />

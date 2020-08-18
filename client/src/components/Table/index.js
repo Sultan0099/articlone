@@ -9,11 +9,11 @@ import ActionBar from "./SelectedPostActions";
 import Pagination from "./Pagination";
 
 export default (props) => {
-    const { data, tableHeaderData, onSelect, actions, pagination } = props;
+    const { data, tableHeaderData, onSelect, actions, pagination, filter } = props;
     const [isRowSelected, setIsRowSelected] = useState([]);
     const [checked, setChecked] = useState(false);
     const [checkAll, setCheckAll] = useState(false);
-    const [posts, setPosts] = useState(data.posts);
+
 
 
     useEffect(() => {
@@ -58,19 +58,14 @@ export default (props) => {
 
     }
 
-    const filterAction = (filter) => {
-        console.log(filter)
-        setPosts(data[filter]);
-    }
-
     return (
         <div >
-            <ActionBar filterAction={filterAction} totalPosts={data.totalPosts} selectedPosts={isRowSelected} setSelectedPosts={setIsRowSelected} postsPerPage={data.postPerPage} actions={actions} />
+            <ActionBar totalPosts={data.totalPosts} selectedPosts={isRowSelected} setSelectedPosts={setIsRowSelected} postsPerPage={data.postPerPage} actions={actions} />
             <TableContainer >
                 <Table size='small'>
                     <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} checked={checkAll} />
                     <TableBody
-                        posts={posts}
+                        posts={data[filter]}
                         data={data}
                         tableHeaderData={tableHeaderData}
                         selectedRow={isRowSelected}

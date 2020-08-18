@@ -12,6 +12,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BsArrowBarUp, BsArrowBarDown } from "react-icons/bs";
+import FilterPosts from "./FilterPosts";
 
 import styles from "./styles";
 
@@ -102,7 +103,7 @@ export default ({ totalPosts, selectedPosts, postsPerPage, actions, setSelectedP
             <div className={classes.flex}>
                 <Typography variant="subtitle2" className={classes.m_9}> Total Posts : {totalPosts} </Typography>
                 <Typography variant="subtitle2" className={classes.m_9}> Per Page : {postsPerPage} </Typography>
-                {/* <FilterPosts filterAction={filterAction} /> */}
+                <FilterPosts filterAction={filterAction} />
             </div>
         </div>
     )

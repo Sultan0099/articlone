@@ -29,6 +29,18 @@ const styles = makeStyles((theme) => ({
         marginTop: -12,
         marginLeft: -12,
     },
+    appBar: {
+        backgroundColor: "white",
+        boxShadow: 'none',
+        borderBottom: "1px solid rgba(0,0,0,0.1)"
+
+    },
+    title: {
+        flexGrow: 1,
+    },
+    appBarButton: {
+        paddingLeft: '6px'
+    }
 }))
 
 export default styles;

@@ -68,7 +68,7 @@ export default () => {
         const { title, description } = values;
         await dispatch(updatePosts({ title, description, body, collectionId }, postId));
 
-        history.push(`/dashboard/${collectionId}/blog/all`)
+        history.push(`/dashboard/${collectionId}/blog/posts`)
     }
 
     if (loading) return <CircularIndicator />
@@ -76,7 +76,7 @@ export default () => {
 
 
     return (
-        <Container style={{ width: 700, marginTop: 30 }}>
+        <Container style={{ width: 750, marginTop: 30 }}>
             <Form values={values} handleChange={handleChange} />
             <Editor getEditorData={handleGetEditorData} editorState={body} />
 
@@ -91,7 +91,7 @@ export default () => {
                     className={classes.submit}
                 >
                     Update
-          </Button>
+               </Button>
                 {isSubmitting && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>
         </Container>

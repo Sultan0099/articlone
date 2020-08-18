@@ -1,8 +1,10 @@
 import createError from "http-errors";
+import { v4 as uuidv4 } from 'uuid';
 
 import { collectionControllerType } from "../types";
-import { Collections } from "../models";
+import { Collections, CMS } from "../models";
 import { collectionsValidator } from "../utils";
+
 
 const collectionControllers: collectionControllerType = {
     create: async (req, res, next) => {
@@ -14,9 +16,12 @@ const collectionControllers: collectionControllerType = {
             if (result) {
 
                 const collection = await Collections.create({ user: result.user, title: result.title, description: result.description });
+
+                const apiKey = uuidv4();
+
+                await CMS.create({ collectionId: collection._id, apiKey })
                 return res.status(200).json({ success: true, data: { collection } })
             }
-
 
         } catch (err) {
             next(createError(err))
