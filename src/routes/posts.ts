@@ -51,7 +51,7 @@ SECTION  All Post
 @path : '/api/v1/posts/getAll/:collectionId'
 */
 
-router.get("/getAll/:collectionId", passportJWT, postControllers.getAllPost);
+router.get("/getAll/:collectionId/", passportJWT, postControllers.getAllPost);
 
 /* 
 SECTION  Single Post
@@ -68,7 +68,7 @@ SECTION  Paginated Post
 @method : GET
 @path : '/api/v1/posts/paginatedPost/:collectionId'
 */
-router.get("/paginatedPost/:collectionId", passportJWT, postControllers.pagination);
+router.get("/paginatedPost/:collectionId/:filter", passportJWT, postControllers.pagination);
 
 
 /* 

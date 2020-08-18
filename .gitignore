@@ -1,6 +1,7 @@
 node_modules
 /template
 /dist
+/uploads
 .vscode
 # dependencies
 client/.pnp

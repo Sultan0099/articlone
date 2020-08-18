@@ -28,11 +28,12 @@ export default () => {
 
     useEffect(() => {
         const fetchAllPosts = async () => {
-            await dispatch(getPaginatedPost({ collectionId }))
+            setLoading(true);
+            await dispatch(getPaginatedPost({ collectionId, filter }))
             setLoading(false);
         }
         fetchAllPosts();
-    }, [dispatch, collectionId])
+    }, [dispatch, collectionId, filter])
 
     const tableHeaderData = [
         "_id",
@@ -106,9 +107,11 @@ export default () => {
 
     const fetchMorePosts = async (page) => {
         setLoading(true);
-        await dispatch(getPaginatedPost({ collectionId, page }))
+        await dispatch(getPaginatedPost({ collectionId, page, filter }))
         setLoading(false);
     }
+
+    const ifUserCreatedPost = posts.allPosts === 0;
 
     return (
         <>
@@ -116,25 +119,26 @@ export default () => {
 
             {loading ? <CircularIndicator /> : (
                 <>
-                    {posts.posts.length == 0 ? <Overview /> : <Table
-                        data={posts}
-                        filter={filter}
-                        tableHeaderData={tableHeaderData}
-                        onSelect={selectPost}
-                        pagination={
-                            {
-                                fetchMorePosts
+                    {ifUserCreatedPost ? <Overview /> : (
+                        <Table
+                            data={posts}
+                            filter={filter}
+                            tableHeaderData={tableHeaderData}
+                            onSelect={selectPost}
+                            pagination={
+                                {
+                                    fetchMorePosts
+                                }
                             }
-                        }
-                        actions={
-                            {
-                                deletePostsAction,
-                                publishPostsAction,
-                                unPublishPostsAction
+                            actions={
+                                {
+                                    deletePostsAction,
+                                    publishPostsAction,
+                                    unPublishPostsAction
+                                }
                             }
-                        }
-                    />
-
+                        />
+                    )
                     }
 
                 </>

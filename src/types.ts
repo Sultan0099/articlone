@@ -266,7 +266,7 @@ export interface ICMS extends mongoose.Document {
 }
 
 export type CmsControllerType = {
-    getAllPost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getPosts: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     getSinglePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     likePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     commentPost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;

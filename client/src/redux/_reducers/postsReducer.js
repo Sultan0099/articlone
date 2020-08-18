@@ -26,6 +26,7 @@ const postsReducer = (state = initialState, action) => {
                 published: action.payload.posts.filter(post => post.state === "published"),
                 unPublished: action.payload.posts.filter(post => post.state === "unpublished"),
                 filteredPosts: action.payload.posts,
+                allPosts: action.payload.allPosts,
                 totalPages: action.payload.totalPages,
                 currentPage: action.payload.currentPage,
                 totalPosts: action.payload.totalPosts,
@@ -39,7 +40,7 @@ const postsReducer = (state = initialState, action) => {
                 published: filterPostsWithId(state.published, action.payload.postId),
                 unPublished: filterPostsWithId(state.unPublished, action.payload.postId),
 
-                totalPosts: action.payload.totalPosts,
+                totalPosts: state.totalPosts - 1,
                 totalPages: Math.ceil(action.payload.totalPosts / state.postPerPage)
 
             };

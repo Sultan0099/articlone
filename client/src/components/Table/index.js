@@ -65,7 +65,7 @@ export default (props) => {
                 <Table size='small'>
                     <TableHeader tableHeaderData={tableHeaderData} onSelectAll={selectAllRows} checked={checkAll} />
                     <TableBody
-                        posts={data[filter]}
+                        posts={data.posts}
                         data={data}
                         tableHeaderData={tableHeaderData}
                         selectedRow={isRowSelected}

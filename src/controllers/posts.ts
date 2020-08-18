@@ -114,7 +114,7 @@ const postControllers: PostControllerType = {
     pagination: async (req, res, next) => {
         try {
             const userId = req.user._id;
-            const { collectionId } = req.params;
+            const { collectionId, filter } = req.params;
 
             const { limit = 10, page = 1 } = req.query;
             console.log(typeof limit)
@@ -124,11 +124,16 @@ const postControllers: PostControllerType = {
 
             if (collection.user.toString() !== userId.toString()) return next(createError(401, "this collection is not created by this user"));
 
-            const posts = await Posts.find({ collectionId: collection._id }).sort({ createdAt: -1 }).limit(+limit).skip((+page - 1) * +limit);
+            const query = filter === "all" ? { collectionId: collection._id } : { collectionId: collection._id, state: filter }
 
-            const totalPost = await Posts.countDocuments({ collectionId: collection._id });
 
-            return res.status(200).json({ success: true, data: { totalPages: Math.ceil(totalPost / +limit), currentPage: +page, totalPosts: +totalPost, postPerPage: +limit, posts } })
+            const posts = await Posts.find(query).sort({ createdAt: -1 }).limit(+limit).skip((+page - 1) * +limit);
+
+            const allPosts = await Posts.countDocuments({ collectionId: collection._id })
+            const totalPost = await Posts.countDocuments(query);
+            const totalPages = Math.ceil(totalPost / +limit);
+            const currentPage = +page > totalPages ? totalPages : +page;
+            return res.status(200).json({ success: true, data: { allPosts, totalPages: +totalPages, currentPage: +currentPage, totalPosts: +totalPost, postPerPage: +limit, posts } })
 
         } catch (err) {
             next(createError(err))

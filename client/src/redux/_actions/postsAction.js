@@ -21,10 +21,11 @@ export const getAllPosts = (collectionId) => async dispatch => {
     }
 }
 
-export const getPaginatedPost = ({ page = 1, limit = 10, collectionId }) => async dispatch => {
+export const getPaginatedPost = ({ page = 1, limit = 10, filter = "posts", collectionId }) => async dispatch => {
     try {
+        const applyFilter = filter === "posts" ? "all" : filter;
         const token = localStorage.getItem('secret');
-        const res = await axios.get(ORIGIN(`/paginatedPost/${collectionId}?page=${page}&limit=${limit}`), {
+        const res = await axios.get(ORIGIN(`/paginatedPost/${collectionId}/${applyFilter.toLowerCase()}?page=${page}&limit=${limit}`), {
             headers: {
                 authorization: `Bearer ${token}`
             }

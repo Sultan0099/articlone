@@ -9,6 +9,7 @@ import AuthRoute from "../HOCs/AuthRoute";
 import CreateBlog from "../CreateBlog";
 import AllBlogs from "../AllBlogs";
 import EditBlogs from "../EditBlogs";
+import CMS from "../CMS";
 
 import Sidebar from "./Sidebar";
 
@@ -30,6 +31,7 @@ export default () => {
 
     useEffect(() => {
         const fetchSingleCollection = async () => {
+            setLoading(true);
             if (activeCollection) {
                 if (activeCollection._id === collectionId) {
                     setLoading(false)
@@ -56,6 +58,7 @@ export default () => {
                     <AuthRoute path="/dashboard/:collectionId/blog/create" exact={true} Component={CreateBlog} />
                     <AuthRoute path="/dashboard/:collectionId/blog/:filter" exact={true} Component={AllBlogs} />
                     <AuthRoute path="/dashboard/:collectionId/blog/edit/:postId" exact={true} Component={EditBlogs} />
+                    <AuthRoute path="/dashboard/:collectionId/apis" exact={true} Component={CMS} />
                     <Route component={PageNotFound} />
 
                 </Switch>
