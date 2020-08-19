@@ -83,7 +83,9 @@ const collectionControllers: collectionControllerType = {
             const collectionId = req.params.collectionId;
             const collection = await Collections.findOne({ _id: collectionId });
             if (!collection) return next(createError(404, 'Collection not found'));
-            return res.status(200).json({ success: true, data: { collection } })
+            const cms = await CMS.findOne({ collectionId: collection._id });
+
+            return res.status(200).json({ success: true, data: { collection, apiKey: cms!.apiKey } })
         } catch (err) {
             next(createError(err.status, err))
         }

@@ -6,17 +6,20 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Divider from "@material-ui/core/Divider";
-import Chip from '@material-ui/core/Chip';
-import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 
+import { IoMdPlay } from "react-icons/io";
+
+import { useSelector } from "react-redux";
 
 import styles from "./styles";
+import FlexItem from "./FlexItem";
+import FieldsItem from "./FieldsItems";
 
 export default (props) => {
     const classes = styles();
-    const { type, query, fetch, expanded, handleChange, details, method, description } = props;
-    console.log(details)
+    const apiKey = useSelector(state => state.collections.apiKey);
+    const { type, query, fetch, expanded, handleChange, details, method, description, data, queryParams } = props;
     return (
 
         <Accordion expanded={expanded === type} onChange={handleChange(type)}>
@@ -32,48 +35,33 @@ export default (props) => {
                 </Typography>
                 <Typography className={classes.secondaryHeading}>
                     <span className={classes.detailSpan}>
-                        Api
-                    </span> : <span className={classes.brick}> {query} </span></Typography>
+                        ApiKey
+                    </span> : <span className={classes.brick}> {apiKey} </span></Typography>
             </AccordionSummary>
             <AccordionDetails className={classes.accordianDetails}>
                 <div className={classes.accordianDetailsItems}>
-                    <div className={classes.flexAround}>
-                        <Typography className={clsx(classes.brick, classes.uppercase)}>
-                            method
-                        </Typography>
-                        <Typography className={clsx(classes.brick, classes.uppercase)}>
-                            {method.toUpperCase()}
-                        </Typography>
-                    </div>
-                    <Divider />
-                    <div className={classes.flexAround}>
-                        <Typography className={clsx(classes.brick, classes.uppercase)}>
-                            description
-                        </Typography>
-                        <Typography className={clsx(classes.brick, classes.uppercase)}>
-                            {description.toUpperCase()}
-                        </Typography>
-                    </div>
-                    <Divider />
-                    <div style={{ marginTop: 9 }} className={clsx(classes.brick, classes.uppercase)}>
-                        <Typography >
-                            Fields
-                        </Typography>
-                        <div style={{ padding: 5 }}>
-                            {details.fields.map(field => (
-                                <Chip
-                                    style={{ margin: 5 }}
-                                    avatar={<Avatar>{field.substring(0, 1)}</Avatar>}
-                                    label={field}
-                                    color="primary"
-                                />
-                            ))}
-                        </div>
-                    </div>
-                    <Divider />
+
+                    <FlexItem property="method" value={method} />
+                    <FlexItem property="Api" value={query} />
+                    <FlexItem property="description" value={description} />
+
+
+                    <FieldsItem fieldName="common fields" fieldArray={details.fields} />
+                    {queryParams && <FieldsItem fieldName="query params" fieldArray={queryParams} />}
+                    <FieldsItem fieldName="posts fields" fieldArray={details.postField} icon="S" />
+
+                    <Button color="primary" size="large" variant="contained" style={{ marginTop: 15 }} onClick={() => fetch(apiKey)}>
+                        <IoMdPlay style={{ marginLeft: 2 }} />
+                        Fetch Data
+                    </Button>
+
 
                 </div>
-                <div className={classes.accordianDetailsItems}></div>
+                <div className={classes.accordianDetailsItems} style={{ overflow: "scroll" }}>
+                    {data && data.map((item, index) => (
+                        <p key={index} style={{ marginTop: 2, marginBottom: 1 }}>{item}</p>
+                    ))}
+                </div>
             </AccordionDetails>
         </Accordion >
     )

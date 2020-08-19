@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const styles = makeStyles((theme) => ({
     root: {
-        width: '80%',
+        width: '95%',
         margin: "30px auto"
     },
     heading: {
@@ -29,10 +29,10 @@ const styles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: 'space-around',
         alignItems: 'center',
-        height: 500,
-        backgroundColor: 'red',
+        height: '600px',
+        // backgroundColor: 'red',
         boxSizing: 'border-box',
-        padding: 20
+        padding: "5px 10px",
     },
 
     accordianDetailsItems: {
@@ -41,9 +41,11 @@ const styles = makeStyles((theme) => ({
         width: "48%",
         padding: 20,
         boxSizing: 'border-box',
-        backgroundColor: 'white'
+        backgroundColor: 'rgba(0,0,0,0.02)'
+
     },
     flexAround: {
+        marginTop: 4,
         marginBottom: 4,
         display: "flex",
         justifyContent: "space-between"

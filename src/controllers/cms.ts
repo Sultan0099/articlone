@@ -29,7 +29,7 @@ const cmsController: CmsControllerType = {
                 const currentPage = +page > totalPages ? totalPages : +page;
 
 
-                if (+page > totalPages) return next(createError(403, `There are no more pages then ${totalPages}`))
+                // if (+page > totalPages) return next(createError(403, `There are no more pages then ${totalPages}`))
 
                 return res.status(200).json({ success: true, data: { totalPages: +totalPages, currentPage: +currentPage, totalPost: +totalPost, postPerPage: +limit, posts } })
             } else {

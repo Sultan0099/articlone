@@ -23,7 +23,8 @@ const collectionReducer = (state = initialState, action) => {
         case SET_ACTIVE_COLLECTION_TYPE:
             return {
                 ...state,
-                active: action.payload
+                active: action.payload.collection,
+                apiKey: action.payload.apiKey
             }
         default:
             return state;

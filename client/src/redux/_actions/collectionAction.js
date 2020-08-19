@@ -34,7 +34,7 @@ export const getSingleCollection = (collectionId) => async dispatch => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        dispatch({ type: SET_ACTIVE_COLLECTION_TYPE, payload: res.data.data.collection })
+        dispatch({ type: SET_ACTIVE_COLLECTION_TYPE, payload: res.data.data })
     } catch (err) {
         console.log({ err })
     }
