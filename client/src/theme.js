@@ -1,11 +1,11 @@
 const assets = {
   logo: '/images/Logo.png',
   logoWhite: '/images/logo-white.png',
-  undraw:'/images/undraw.png',
-  undrawSingle:'/images/undrawsingle.png',
-  google:'/images/google.png',
-  undrawemail:'/images/undrawemail.svg',
-  new:'/images/new.png',
+  undraw: '/images/undraw.png',
+  undrawSingle: '/images/undrawsingle.png',
+  google: '/images/google.png',
+  undrawemail: '/images/undrawemail.svg',
+  new: '/images/new.png',
   facebook: '/images/facebook.png',
   loading: '/images/loading.png',
   notfound: '/images/notfound.png',
@@ -18,6 +18,7 @@ const assets = {
   model: '/images/model.png',
   user: '/images/user.jpg',
   wentwrong: '/images/wentwrong.png',
+  bannerImage: '/images/bannerImage.png',
 }
 const colors = {
   accent: "#F72B2B",
@@ -26,7 +27,7 @@ const colors = {
   tertiary: "#ED6004",
   black: "#000000",
   white: "#FFFFFF",
-  titleColor:'black',
+  titleColor: 'black',
   gray2: "#F6F5F5",
 };
 
