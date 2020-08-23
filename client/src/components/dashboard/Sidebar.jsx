@@ -47,13 +47,11 @@ export default ({ collection }) => {
             link: `/dashboard/${collection._id}/settings`,
             Icon: () => <RiSettings5Line style={{ fontSize: 34 }} />
         },
-
         {
             tooltip: "Profile",
-            link: `/dashboard/${collection._id}/profile`,
+            link: `/dashboard/${collection._id}/account`,
             Icon: () => <FaRegUserCircle style={{ fontSize: 28 }} />
         },
-
     ]
     return (
         <div className={classes.sideBar}>

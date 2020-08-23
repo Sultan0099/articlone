@@ -10,6 +10,8 @@ import CreateBlog from "../CreateBlog";
 import AllBlogs from "../AllBlogs";
 import EditBlogs from "../EditBlogs";
 import CMS from "../CMS";
+import Settings from '../Settings'
+import Account from '../Account'
 
 import Sidebar from "./Sidebar";
 
@@ -59,6 +61,8 @@ export default () => {
                     <AuthRoute path="/dashboard/:collectionId/blog/:filter" exact={true} Component={AllBlogs} />
                     <AuthRoute path="/dashboard/:collectionId/blog/edit/:postId" exact={true} Component={EditBlogs} />
                     <AuthRoute path="/dashboard/:collectionId/apis" exact={true} Component={CMS} />
+                    <AuthRoute path="/dashboard/:collectionId/settings" exact={true} Component={Settings} />
+                    <AuthRoute path="/dashboard/:collectionId/account" exact={true} Component={Account} />
                     <Route component={PageNotFound} />
 
                 </Switch>
