@@ -64,7 +64,7 @@ SECTION  logout User
 @req : null 
 @headers : { authorization }
 */
-router.post('/logout', authController.logout);
+router.post('/logout', passportJWT, authController.logout);
 
 /* 
 SECTION  Forget User

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AUTH_ERR_TYPE, REGISTER_USER_TYPE, SET_USER_TYPE } from "../_actionTypes"
+import { AUTH_ERR_TYPE, REGISTER_USER_TYPE, SET_USER_TYPE, SET_PROFILE_TYPE } from "../_actionTypes"
 
 
 const options = {
@@ -67,6 +67,7 @@ export const getUserByToken = (token) => async dispatch => {
         });
         localStorage.setItem('secret', res.data.data.jwtToken);
         await dispatch({ type: SET_USER_TYPE, payload: res.data.data })
+        await dispatch({ type: SET_PROFILE_TYPE, payload: res.data.data.profile })
     } catch (err) {
         console.log(err)
         localStorage.removeItem('secret');
@@ -85,3 +86,17 @@ export const verifyEmailToken = (token) => async dispatch => {
     }
 }
 
+export const userLogout = () => async dispatch => {
+    try {
+        const token = localStorage.getItem('secret');
+        const res = await axios.post('/api/v1/logout', {}, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        })
+
+        return res.data.data.msg ? true : false
+    } catch (err) {
+
+    }
+}

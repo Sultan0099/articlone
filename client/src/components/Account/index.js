@@ -13,10 +13,82 @@ import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from "@material-ui/core/colors";
 
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function PasswordReset() {
+import InputError from "../common/FormFieldError";
+
+import { createProfile, updateProfile, uploadProfileImg } from '../../redux/_actions/profileAction';
+import { userLogout } from '../../redux/_actions/authAction';
+import useForm from "../../hooks/useForm";
+import validate from "./validate";
+
+
+
+export default (props) => {
     const classes = useStyles();
 
+    const profile = useSelector(state => state.profile.profile);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [imgLoading, setImgLoading] = useState(profile && profile.profileImg ? true : false);
+    const [profileImgUrl, setProfileImgUrl] = useState(profile && profile.profileImg ? profile.profileImg : null);
+    const [isLogout, setIsLogout] = useState(false);
+
+    const imageRef = React.createRef();
+
+    const submit = () => handleProfile();
+
+
+    const { values, handleChange, handleSubmit, errors, isSubmitting } = useForm({
+        firstName: profile ? profile.firstName : "",
+        lastName: profile ? profile.lastName : "",
+        purposeToJoin: profile ? profile.purposeToJoin : "",
+    }, submit, validate)
+
+    const handleProfile = async () => {
+        if (profile) {
+            await dispatch(updateProfile(values))
+            return true;
+        } else {
+            await dispatch(createProfile(values))
+        }
+    }
+
+    const handleImgLoad = () => {
+        setImgLoading(false)
+    }
+
+    const handleUpload = () => {
+        imageRef.current.click();
+    }
+
+    const insertImage = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (
+            e.currentTarget &&
+            e.currentTarget.files &&
+            e.currentTarget.files.length > 0
+        ) {
+            const value = e.currentTarget.files[0];
+            let formData = new FormData();
+            formData.append("profile-img", value);
+            const profileImg = await dispatch(uploadProfileImg(formData));
+            setProfileImgUrl(profileImg);
+            setImgLoading(true)
+        }
+    }
+
+    const handleLogOut = async () => {
+        setIsLogout(true);
+        const ensureLogout = await dispatch(userLogout());
+        if (ensureLogout) {
+            localStorage.removeItem('secret');
+            history.push("/login");
+        }
+    }
     return (
         <div className={classes.root}>
             <Grid container direction="column" alignItems="center" >
@@ -30,21 +102,28 @@ export default function PasswordReset() {
                 <Grid item >
                     <div className={classes.papercard}>
                         <div className={classes.name}>
+
                             <div className={classes.paperfield1}>
+
                                 <TextField
                                     variant="filled"
                                     margin="normal"
                                     color='primary'
                                     className={classes.textfield1}
                                     required
-                                    // fullWidth
                                     size="small"
                                     label="First Name"
-                                    name="first name"
-                                    autoComplete="first name"
+                                    name="firstName"
+                                    autoComplete="firstName"
                                     autoFocus
+                                    error={errors.firstName ? true : false}
+                                    value={values.firstName}
+                                    onChange={handleChange}
                                 />
+
+                                {errors.firstName && <InputError errorText={errors.firstName} />}
                             </div>
+
                             <div className={classes.paperfield1}>
                                 <TextField
                                     variant="filled"
@@ -52,13 +131,15 @@ export default function PasswordReset() {
                                     color='primary'
                                     className={classes.textfield1}
                                     required
-                                    // fullWidth
                                     size="small"
                                     label="Last Name"
-                                    name="last name"
-                                    autoComplete="last name"
-                                    autoFocus
+                                    name="lastName"
+                                    autoComplete="lastName"
+                                    error={errors.lastName ? true : false}
+                                    value={values.lastName}
+                                    onChange={handleChange}
                                 />
+                                {errors.lastName && <InputError errorText={errors.lastName} />}
                             </div>
                         </div>
                         <div className={classes.paperfield}>
@@ -73,33 +154,48 @@ export default function PasswordReset() {
                                 fullWidth
                                 size="small"
                                 label="Describe your purpose"
-                                name="purpose"
-                                autoComplete="purpose"
+                                name="purposeToJoin"
+                                autoComplete="purposeToJoin"
+                                error={errors.purposeToJoin ? true : false}
+                                value={values.purposeToJoin}
+                                onChange={handleChange}
                             />
+                            {errors.purposeToJoin && <InputError errorText={errors.purposeToJoin} />}
                         </div>
+
                         <div className={classes.avatar}>
-                            <Avatar variant="rounded" className={classes.rounded}>
-                                <h2>Mh</h2>
-                            </Avatar>
-                            <div className={classes.uploadbtn}>
-                                <Button variant="contained" startIcon={<PhotoCamera />} color="primary" component="span">
+                            {profile && profile.profileImg ? (
+                                <img src={profileImgUrl} alt="articlone profile image" onLoad={handleImgLoad} />
+                            ) : (
+                                    <Avatar variant="rounded" className={classes.rounded}></Avatar>
+                                )}
+
+                            {imgLoading ? <CircularProgress /> : <div className={classes.uploadbtn}>
+                                <Button variant="contained"
+                                    startIcon={<PhotoCamera />}
+                                    color="primary"
+                                    component="span"
+                                    onClick={handleUpload}
+                                >
                                     Upload
                                 </Button>
-                            </div>
+                            </div>}
+
+
                         </div>
                         <div className={classes.wrapper}>
                             <Button
                                 type="button"
-                                // fullWidth
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                onClick={handleSubmit}
+                                disabled={isSubmitting}
                             >
                                 Save
                             </Button>
                             <Button
                                 type="button"
-                                // fullWidth
                                 variant="outlined"
                                 color="primary"
                                 className={classes.cancel}
@@ -107,23 +203,28 @@ export default function PasswordReset() {
                                 Cancel
                             </Button>
                         </div>
-                        {/* <Typography component="h2" className={classes.danger} variant="h3">
-                            Danger Zone
-                            </Typography> */}
+
                         <div className={classes.danger}>
                             <Button
                                 type="button"
-                                // fullWidth
                                 startIcon={<RiLogoutBoxLine />}
                                 variant="contained"
                                 color="primary"
                                 className={classes.delete}
+                                onClick={handleLogOut}
+                                disabled={isLogout}
                             >
                                 Log Out
                             </Button>
                         </div>
                     </div>
-
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref={imageRef}
+                        style={{ display: "none" }}
+                        onChange={insertImage}
+                    />
                 </Grid>
             </Grid>
         </div >
@@ -170,7 +271,7 @@ const useStyles = makeStyles((theme) => ({
     },
     name: {
         display: 'flex',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
     },
     papercard: {
         paddingLeft: '20px',
@@ -195,7 +296,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 1px 0px 0.1px #075A5D',
         boxSizing: 'border-box',
         paddingLeft: '0px',
-        width:'45%',
+        width: '45%',
         paddingRight: '0px',
         // marginTop: '30px',
         // width:'22vw',
@@ -206,12 +307,18 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '0px',
     },
     textfield1: {
-        width:'100%',
+        width: '100%',
         marginTop: '0px',
         marginBottom: '0px',
     },
     avatar: {
+        width: 200,
         marginBottom: '30px',
+
+
+        "&>img": {
+            width: "100%"
+        }
     },
     twobtn: {
         // display: 'flex',

@@ -126,9 +126,8 @@ const authController: AuthControllerType = {
     // SECTION Logout
     logout: async (req, res, next) => {
         try {
-            if (req.user) { req.logout(); }
 
-            const { userId } = req.body;
+            const { _id: userId } = req.user;
             if (!mongoose.isValidObjectId(userId)) return next(createError(400, 'Invalid UserId '))
 
             const user = await User.findOne({ _id: userId });
@@ -156,7 +155,7 @@ const authController: AuthControllerType = {
             if (user) {
                 const { email, username, isActive, _id, profile } = user;
                 const token = await encrypt.assignUserToken({ payload: _id })
-                return res.status(200).json({ success: true, data: { jwtToken: token, user: { email, username, isActive, _id, profile } } })
+                return res.status(200).json({ success: true, data: { jwtToken: token, user: { email, username, isActive, _id }, profile } })
             } else {
                 return next(createError(401, "Please Login"))
             }

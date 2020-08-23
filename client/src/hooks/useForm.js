@@ -10,7 +10,7 @@ const useForm = (formValues, callBack, validator = null) => {
     useEffect(() => {
         if (Object.keys(errors).length === 0 && isSubmitting) {
 
-            callBack(values).then(() => { })
+            callBack(values).then((d) => { if (d) setIsSubmitting(false) })
         } else {
             setIsSubmitting(false)
         }

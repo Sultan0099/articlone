@@ -107,82 +107,32 @@ export interface IProfile extends mongoose.Document {
     user: IUser | string;
     firstName: string;
     lastName: string;
-    gender: string;
     purposeToJoin: string;
-    business?: {
-        businessType: string,
-        businessName: string,
-        businessWebsite: string,
-    };
-    contactInfo: {
-        address: string,
-        city: string
-        zipOrPostal: number,
-        country: string,
-        phoneNo: string,
-    };
+    profileImg?: string;
 
 }
 
 export type ProfileType = {
-    user: string;
     firstName: string;
     lastName: string;
-    gender: string;
     purposeToJoin: string;
-    business?: {
-        businessType: string,
-        businessName: string,
-        businessWebsite: string,
-    };
-    contactInfo: {
-        address: string,
-        city: string
-        zipOrPostal: number,
-        country: string,
-        phoneNo: string,
-    };
-
 }
 
 export type ProfileErrType = {
-    user?: string;
+
     firstName?: string;
     lastName?: string;
-    gender?: string;
     purposeToJoin?: string;
-    business?: {
-        businessType?: string,
-        businessName?: string,
-        businessWebsite?: string,
-    };
-    contactInfo: {
-        address?: string,
-        city?: string
-        zipOrPostal?: number,
-        country?: string,
-        phoneNo?: string,
-    };
+    profileImg?: string;
 }
 
-export type BusinessErrType = {
 
-    businessType?: string,
-    businessName?: string,
-    businessWebsite?: string,
 
-}
-
-export type ContactErrType = {
-    address?: string,
-    city?: string
-    zipOrPostal?: number,
-    country?: string,
-    phoneNo?: string,
-}
 
 export type ProfileControllerType = {
-    create: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void
+    create: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    uploadProfileImg: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    update: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 };
 
 

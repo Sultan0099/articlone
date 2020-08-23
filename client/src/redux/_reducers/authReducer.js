@@ -4,7 +4,6 @@ const initialState = {
     accessToken: null,
     user: null,
     errors: {},
-    profile: null,
     isAuthenticated: false
 };
 
@@ -31,7 +30,7 @@ const authReducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 user: action.payload.user,
                 accessToken: action.payload.jwtToken,
-                profile: action.payload.user.profile ? action.payload.user.profile : null
+
             }
         default:
             return state;
