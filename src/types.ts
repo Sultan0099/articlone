@@ -105,9 +105,9 @@ export type JWOptions = {
 
 export interface IProfile extends mongoose.Document {
     user: IUser | string;
-    firstName: string;
-    lastName: string;
-    purposeToJoin: string;
+    firstName?: string;
+    lastName?: string;
+    purposeToJoin?: string;
     profileImg?: string;
 
 }
@@ -143,8 +143,9 @@ export type ProfileControllerType = {
 
 export interface ICollections extends mongoose.Document {
     user: IUser | string,
-    title: string,
-    description: string,
+    title?: string,
+    description?: string,
+    collectionImg?: string,
 }
 
 export type collectionType = {
@@ -168,6 +169,7 @@ export type collectionControllerType = {
     create: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     update: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    uploadCollectionImg: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
 
 // ******************************

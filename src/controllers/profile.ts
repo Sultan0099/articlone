@@ -36,11 +36,14 @@ const profileController: ProfileControllerType = {
 
             const profile = await Profile.findOne({ user: userId });
             if (!profile) return next(createError(404, "profile not found : Create new One"));
-
+            const userExist = await User.findOne({ _id: userId });
+            if (!userExist) return next(createError(404, "user not found"));
             const result = await profileValidator.profile.validateAsync(req.body);
 
-            await profile.updateOne(result);
+            userExist.profile = profile._id;
 
+            await userExist.updateOne(userExist)
+            await profile.updateOne(result);
             res.status(200).json({ success: true, data: { msg: "profile updated successfully" } })
 
         } catch (error) {

@@ -2,6 +2,7 @@ import { Router } from "express";
 import passport from 'passport';
 
 import "../config/passport";  //  importing passport configuration from config folder ;
+import upload from "../config/multer";
 
 import { collectionControllers } from "../controllers";
 
@@ -38,7 +39,7 @@ SECTION  Update Collections
 @res : {  title, description}
 */
 
-router.patch("/update", passportJWT, collectionControllers.update)
+router.patch("/update/:collectionId", passportJWT, collectionControllers.update)
 
 /* 
 SECTION  Get All  Collections
@@ -60,5 +61,15 @@ SECTION  Get Single Collection
 @res : {  title, description}
 */
 router.get('/getSingle/:collectionId', passportJWT, collectionControllers.getSingle)
+
+/* 
+SECTION  upload Collection Image
+@Des : upload collection Collection Route
+@method : POST
+@path : '/api/v1/collections/uploadCollectionImg'
+@req : null
+@res : {  collectionImg }
+*/
+router.post("/upload-collection-img/:collectionId", passportJWT, upload.single('collection-img'), collectionControllers.uploadCollectionImg)
 
 export default router;

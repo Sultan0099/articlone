@@ -38,7 +38,8 @@ export default () => {
 
     const createProject = async () => {
         await dispatch(createCollection({ title: values.title, description: values.description }))
-        setOpen(false)
+        setOpen(false);
+        return true;
     }
 
     const handleClose = () => { setOpen(false) }

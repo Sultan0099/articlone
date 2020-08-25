@@ -27,6 +27,7 @@ const useForm = (formValues, callBack, validator = null) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        console.log(name, value)
         setValues({
             ...values,
             [name]: value

@@ -12,17 +12,17 @@ const profileSchema = new Schema({
     },
     firstName: {
         type: String,
-        required: true
+        required: false
     },
     lastName: {
         type: String,
-        required: true
+        required: false
     },
 
 
     purposeToJoin: {
         type: String,
-        required: true
+        required: false
     },
 
     profileImg: {

@@ -12,9 +12,64 @@ import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from "@material-ui/core/colors";
 
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
+import { updateCollection, uploadCollectionImg } from "../../redux/_actions/collectionAction";
 
-export default function PasswordReset() {
+import InputError from "../common/FormFieldError";
+
+import useForm from "../../hooks/useForm";
+import validate from "./validate";
+
+export default () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const { collectionId } = useParams();
+    const activeCollection = useSelector(state => state.collections.active);
+    const [imgLoading, setImgLoading] = useState(activeCollection && activeCollection.collectionImg ? true : false);
+    const [collectionImgUrl, setCollectionImgUrl] = useState(activeCollection && activeCollection.collectionImg ? activeCollection.collectionImg : null);
+
+    const imageRef = React.createRef();
+
+    const submit = () => handleCollection();
+    const { values, handleChange, handleSubmit, errors, isSubmitting } = useForm({
+        title: activeCollection.title,
+        description: activeCollection.description
+    }, submit, validate)
+
+    const handleCollection = async () => {
+        console.log(values);
+        console.log(errors);
+        console.log(isSubmitting)
+        await dispatch(updateCollection(collectionId, values));
+        return true;
+    }
+    const handleImgLoad = () => {
+        setImgLoading(false)
+    }
+
+    const handleUpload = () => {
+        imageRef.current.click();
+    }
+
+    const insertImage = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (
+            e.currentTarget &&
+            e.currentTarget.files &&
+            e.currentTarget.files.length > 0
+        ) {
+
+            const value = e.currentTarget.files[0];
+            let formData = new FormData();
+            formData.append("collection-img", value);
+            const imgUrl = await dispatch(uploadCollectionImg(collectionId, formData));
+            setCollectionImgUrl(imgUrl);
+            setImgLoading(true)
+        }
+    }
+
 
     return (
         <div className={classes.root}>
@@ -38,11 +93,14 @@ export default function PasswordReset() {
                                 fullWidth
                                 size="small"
                                 label="Name"
-                                name="Name"
-                                autoComplete="Name"
-                                autoFocus
+                                name="title"
+                                value={values.title}
+                                onChange={handleChange}
+                                autoComplete="title"
+
                             />
                         </div>
+                        {errors.title && <InputError errorText={errors.title} />}
                         <div className={classes.paperfield}>
                             <TextField
                                 variant="filled"
@@ -55,20 +113,32 @@ export default function PasswordReset() {
                                 fullWidth
                                 size="small"
                                 label="Description"
-                                name="Description"
-                                autoComplete="Description"
-                                autoFocus
+                                name="description"
+                                value={values.description}
+                                onChange={handleChange}
+                                autoComplete="description"
+
                             />
                         </div>
+                        {errors.description && <InputError errorText={errors.description} />}
                         <div className={classes.avatar}>
-                            <Avatar variant="rounded" className={classes.rounded}>
-                                <h2>Pr</h2>
-                            </Avatar>
-                            <div className={classes.uploadbtn}>
-                                <Button variant="contained" startIcon={<PhotoCamera />} color="primary" component="span">
+                            {console.log(collectionImgUrl)}
+                            {activeCollection && activeCollection.collectionImg ? (
+                                <img src={collectionImgUrl} alt="articlone collection image" onLoad={handleImgLoad} />
+                            ) : (
+                                    <Avatar variant="rounded" className={classes.rounded}></Avatar>
+                                )}
+
+                            {imgLoading ? <CircularProgress /> : <div className={classes.uploadbtn}>
+                                <Button variant="contained"
+                                    startIcon={<PhotoCamera />}
+                                    color="primary"
+                                    component="span"
+                                    onClick={handleUpload}
+                                >
                                     Upload
                                 </Button>
-                            </div>
+                            </div>}
                         </div>
                         <div className={classes.wrapper}>
                             <Button
@@ -77,6 +147,8 @@ export default function PasswordReset() {
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
+                                disabled={isSubmitting}
+                                onClick={handleSubmit}
                             >
                                 Save
                             </Button>
@@ -106,6 +178,13 @@ export default function PasswordReset() {
                             </Button>
                         </div>
                     </div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref={imageRef}
+                        style={{ display: "none" }}
+                        onChange={insertImage}
+                    />
 
                 </Grid>
             </Grid>
@@ -124,7 +203,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         position: 'relative',
-        marginBottom:'30px',
+        marginBottom: '30px',
     },
     buttonProgress: {
         color: green[500],
@@ -168,14 +247,22 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: '0px',
         // marginTop: '30px',
         // width:'22vw',
-        marginBottom: '30px',
+        marginTop: '30px',
     },
     textfield: {
         marginTop: '0px',
         marginBottom: '0px',
     },
     avatar: {
+        marginTop: "30px",
         marginBottom: '30px',
+        width: 200,
+        marginBottom: '30px',
+
+
+        "&>img": {
+            width: "100%"
+        }
     },
     twobtn: {
         // display: 'flex',
@@ -200,10 +287,10 @@ const useStyles = makeStyles((theme) => ({
         // float: 'right'
     },
     title: {
-        fontWeight:'600',
+        fontWeight: '600',
     },
     danger: {
-        fontWeight:'600',
+        fontWeight: '600',
         marginBottom: '30px',
     },
     delete: {

@@ -14,6 +14,10 @@ const collectionsSchema = new Schema({
         type: String,
         required: true
     },
+    collectionImg: {
+        type: String,
+        default: null
+    }
 
 }, { timestamps: true });
 
