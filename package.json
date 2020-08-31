@@ -9,8 +9,10 @@
     "start": "SET NODE_ENV=production & node ./dist/index.js",
     "dev": "SET NODE_ENV=development & node ./dist/index.js",
     "watch": "tsc -w",
+    "cms-service": "npm run dev --prefix ./service-cms",
     "client": "npm start --prefix ./client",
-    "both": "concurrently \"npm run server\"  \"npm run client\" "
+    "both": "concurrently \"npm run server\"  \"npm run client\" ",
+    "all": "concurrently \"npm run server\" \"npm run cms-service\" \"npm run client\" "
   },
   "author": "Sultan Ali",
   "license": "ISC",

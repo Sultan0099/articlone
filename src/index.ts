@@ -54,7 +54,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 // SECTION : ROUTES 
+
+app.get("/", (req, res) => {
+    res.send("server is up and running");
+})
+
 app.use('/api/v1', routes.auth);
 app.use('/api/v1/profile', routes.profile);
 app.use('/api/v1/collections', routes.collections);
