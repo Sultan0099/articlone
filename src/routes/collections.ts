@@ -72,4 +72,15 @@ SECTION  upload Collection Image
 */
 router.post("/upload-collection-img/:collectionId", passportJWT, upload.single('collection-img'), collectionControllers.uploadCollectionImg)
 
+
+/* 
+SECTION  upload Collection Image
+@Des : upload collection Collection Route
+@method : POST
+@path : '/api/v1/collections/uploadCollectionImg'
+@req : null
+@res : {  collectionImg }
+*/
+
+router.get('/get-visited-users/:collectionId', passportJWT, collectionControllers.getVisitedUsers)
 export default router;

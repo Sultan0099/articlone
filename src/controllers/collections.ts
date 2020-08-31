@@ -2,7 +2,7 @@ import createError from "http-errors";
 import { v4 as uuidv4 } from 'uuid';
 
 import { collectionControllerType } from "../types";
-import { Collections, CMS, Posts } from "../models";
+import { Collections, CMS, Posts, CmsUser } from "../models";
 import { collectionsValidator } from "../utils";
 import { bucket } from "../config/firebase";
 
@@ -127,6 +127,21 @@ const collectionControllers: collectionControllerType = {
 
         } catch (error) {
 
+        }
+    },
+    getVisitedUsers: async (req, res, next) => {
+        try {
+            const { collectionId } = req.params;
+
+            const fieldsToRemove = {
+                "password": 0,
+                "__v": 0,
+            }
+            const cmsUsers = await CmsUser.find({ collectionId }).select(fieldsToRemove);
+
+            res.status(200).json({ success: true, data: { cmsUsers } })
+        } catch (err) {
+            next(createError(err))
         }
     }
 }

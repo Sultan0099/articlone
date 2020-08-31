@@ -8,6 +8,7 @@
     "server": "SET NODE_ENV=development & ts-node-dev  --transpileOnly  ./src/index.ts  ",
     "start": "SET NODE_ENV=production & node ./dist/index.js",
     "dev": "SET NODE_ENV=development & node ./dist/index.js",
+    "watch": "tsc -w",
     "client": "npm start --prefix ./client",
     "both": "concurrently \"npm run server\"  \"npm run client\" "
   },

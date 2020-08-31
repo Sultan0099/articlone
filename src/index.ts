@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import session from 'express-session';
 import passport from "passport";
 import connectMongo from "connect-mongo";
+import cors from "cors";
 
 import db from "./config/db";
 import keys from "./config/keys";
@@ -32,7 +33,7 @@ if (process.env.NODE_ENV != 'production') {
     app.use(morgan('dev'));
 }
 
-
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

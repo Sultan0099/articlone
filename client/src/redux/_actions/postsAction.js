@@ -17,7 +17,7 @@ export const getAllPosts = (collectionId) => async dispatch => {
 
         console.log(res);
     } catch (err) {
-        console.log(err)
+        console.log({ err })
     }
 }
 

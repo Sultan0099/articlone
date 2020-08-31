@@ -91,10 +91,11 @@ export const deleteCollection = (collectionId) => async dispatch => {
         })
 
         console.log(res);
-        dispatch({ type: DELETE_COLLECTION_TYPE, payload: collectionId })
+        return res;
+        // dispatch({ type: DELETE_COLLECTION_TYPE, payload: collectionId })
 
     } catch (error) {
-
+        console.log({ error })
     }
 }
 

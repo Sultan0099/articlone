@@ -7,4 +7,8 @@ const router = Router();
 
 router.get("/:apiKey/posts/:filter", cors(), cmsControllers.getPosts);
 
+router.post("/:apiKey/user/auth/login", cors(), cmsControllers.login);
+
+router.post("/:apiKey/user/auth/register", cors(), cmsControllers.register);
+
 export default router;

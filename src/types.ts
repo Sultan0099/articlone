@@ -170,6 +170,7 @@ export type collectionControllerType = {
     delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     update: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     uploadCollectionImg: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getVisitedUsers: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
 
 // ******************************
@@ -217,9 +218,28 @@ export interface ICMS extends mongoose.Document {
     apiKey: string
 }
 
+export interface ICmsUser extends mongoose.Document {
+    cmsId: string | ICMS;
+    collectionId: string | ICollections;
+    name: string;
+    email: string;
+    password: string;
+    isValidPassword: (password: string) => boolean;
+}
+
+export type CmsUserType = {
+    cmsId: string;
+    collectionId: string;
+    name: string;
+    email: string;
+    password: string;
+}
+
 export type CmsControllerType = {
     getPosts: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     getSinglePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     likePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     commentPost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    login: (req: ExpressRequest<CmsUserType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    register: (req: ExpressRequest<CmsUserType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }

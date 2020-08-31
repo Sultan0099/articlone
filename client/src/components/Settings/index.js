@@ -14,7 +14,7 @@ import { green } from "@material-ui/core/colors";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { updateCollection, uploadCollectionImg } from "../../redux/_actions/collectionAction";
+import { updateCollection, uploadCollectionImg, deleteCollection } from "../../redux/_actions/collectionAction";
 
 import InputError from "../common/FormFieldError";
 
@@ -25,9 +25,13 @@ export default () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { collectionId } = useParams();
+    const history = useHistory();
+
     const activeCollection = useSelector(state => state.collections.active);
+
     const [imgLoading, setImgLoading] = useState(activeCollection && activeCollection.collectionImg ? true : false);
     const [collectionImgUrl, setCollectionImgUrl] = useState(activeCollection && activeCollection.collectionImg ? activeCollection.collectionImg : null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const imageRef = React.createRef();
 
@@ -38,9 +42,6 @@ export default () => {
     }, submit, validate)
 
     const handleCollection = async () => {
-        console.log(values);
-        console.log(errors);
-        console.log(isSubmitting)
         await dispatch(updateCollection(collectionId, values));
         return true;
     }
@@ -67,6 +68,17 @@ export default () => {
             const imgUrl = await dispatch(uploadCollectionImg(collectionId, formData));
             setCollectionImgUrl(imgUrl);
             setImgLoading(true)
+        }
+    }
+
+    const handleDelete = async () => {
+        setIsDeleting(true)
+        const res = await dispatch(deleteCollection(collectionId));
+
+        if (res.status === 200) {
+            history.push("/collections");
+        } else {
+            setIsDeleting(false)
         }
     }
 
@@ -143,7 +155,6 @@ export default () => {
                         <div className={classes.wrapper}>
                             <Button
                                 type="button"
-                                // fullWidth
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
@@ -173,6 +184,8 @@ export default () => {
                                 variant="contained"
                                 color="primary"
                                 className={classes.delete}
+                                onClick={handleDelete}
+                                disabled={isDeleting}
                             >
                                 Delete Project
                             </Button>
