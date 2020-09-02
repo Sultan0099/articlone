@@ -1,7 +1,8 @@
 node_modules
-
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+/template
+/dist
+/uploads
+.vscode
 # dependencies
 client/.pnp
 client.pnp.js

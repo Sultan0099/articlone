@@ -1,0 +1,11 @@
+.logowhite{
+    width:100%;
+    /* text-align: left; */
+}
+.logowhite img{
+    margin-top:0px;
+    margin-left:3%;
+    width:150px;
+    /* float:right; */
+    height:44px;
+}
