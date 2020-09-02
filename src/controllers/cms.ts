@@ -71,7 +71,6 @@ const cmsController: CmsControllerType = {
             const { apiKey } = req.params;
             const { name, email, password } = req.body;
 
-            console.log(name, email, password)
             if (!apiKey) return next(createError(401, "Provide your api key"))
 
             const cms = await CMS.findOne({ apiKey });
