@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="179" height="53.051" viewBox="0 0 179 53.051">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.44;
+      }
+
+      .cls-2, .cls-4 {
+        fill: #075a5d;
+      }
+
+      .cls-3 {
+        fill: #3d797b;
+      }
+
+      .cls-4 {
+        font-size: 28px;
+        font-family: SegoeUI, Segoe UI;
+      }
+    </style>
+  </defs>
+  <g id="Logo" transform="translate(-505.469 705.195)">
+    <g id="logo-2" data-name="logo" transform="translate(-10 -6)">
+      <g id="logo_1" data-name="logo 1" class="cls-1" transform="translate(527.936 -681.292)">
+        <path id="Path_1" data-name="Path 1" class="cls-2" d="M2.658,0A2.038,2.038,0,0,1,4.765,2.066l-.48,28.2A2.21,2.21,0,0,1,2.107,32.4,2.038,2.038,0,0,1,0,30.339l.48-28.2A2.21,2.21,0,0,1,2.658,0Z" transform="translate(16.202 0) rotate(30)"/>
+        <path id="Path_2" data-name="Path 2" class="cls-2" d="M2.107,0A2.21,2.21,0,0,1,4.285,2.137l.48,28.2A2.038,2.038,0,0,1,2.658,32.4,2.21,2.21,0,0,1,.48,30.268L0,2.066A2.038,2.038,0,0,1,2.107,0Z" transform="translate(34.765 28.063) rotate(150)"/>
+      </g>
+      <g id="logo_1-2" data-name="logo 1" transform="translate(522.458 -689.177)">
+        <rect id="Rectangle_4" data-name="Rectangle 4" class="cls-3" width="4.531" height="44.017" rx="2.266" transform="translate(22.008 0) rotate(30)"/>
+        <rect id="Rectangle_5" data-name="Rectangle 5" class="cls-3" width="4.531" height="44.017" rx="2.266" transform="translate(45.999 38.12) rotate(150)"/>
+      </g>
+      <g id="logo_1-3" data-name="logo 1" transform="translate(515.469 -699.195)">
+        <rect id="Rectangle_4-2" data-name="Rectangle 4" class="cls-2" width="5.952" height="57.822" rx="2.976" transform="translate(28.911 0) rotate(30)"/>
+        <rect id="Rectangle_5-2" data-name="Rectangle 5" class="cls-2" width="5.952" height="57.822" rx="2.976" transform="translate(60.426 50.075) rotate(150)"/>
+      </g>
+    </g>
+    <text id="Articlone" class="cls-4" transform="translate(571.469 -698)"><tspan x="0" y="30">Articlone</tspan></text>
+  </g>
+</svg>

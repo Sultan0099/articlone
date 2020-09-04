@@ -21,20 +21,18 @@ import ServerError from "./pages/ServerError";
 import Loading from './pages/Loading';
 import WentWrong from './pages/WentWrong';
 import Collections from "./pages/Collections";
-
+import Documentation from './pages/Documentation'
 
 import AuthRoute from "./components/HOCs/AuthRoute";
 import GuestRoute from "./components/HOCs/GuestRoute";
 
 import { getUserByToken } from './redux/_actions/authAction';
 
-
-
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#075A5D',
-      dark: '#07485D',
+      dark: '#3D797B',
     },
     secondary: {
       main: '#87D4D6',
@@ -108,7 +106,6 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
-
     '@global': {
       ul: {
         color: "red"
@@ -159,6 +156,7 @@ function App(props) {
             <GuestRoute path="/password_reset" exact Component={PasswordReset} />
             <GuestRoute path="/reset-password/:token" exact Component={ResetLink} />
             <GuestRoute path="/verify-email/:token" exact Component={VerifyEmail} />
+            <GuestRoute path="/docs" Component={Documentation} />
 
             <AuthRoute path="/dashboard/:collectionId" exact={false} Component={Dashboard} />
             <AuthRoute path="/create-profile" exact Component={CreateProfile} />
@@ -167,7 +165,6 @@ function App(props) {
             <Route component={PageNotFound} />
             <Route path="/something-went-wrong" exact component={WentWrong} />
             <Route path="/server-error" component={ServerError} />
-            {/* <Route path="/loading" component={Loading} /> */}
           </Switch>
         }
 

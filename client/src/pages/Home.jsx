@@ -5,11 +5,12 @@ import Button from '@material-ui/core/Button';
 
 import AppBar from '../components/landing/AppBar'
 import Content from '../components/landing/Content'
+import Footer from '../components/landing/Footer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#EDF3F3',
   },
   appbar: {
     backgroundColor:'white',
@@ -29,6 +30,7 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar />
       <Content />
+      <Footer />
     </div>
   );
 }

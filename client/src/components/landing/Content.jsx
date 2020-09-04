@@ -112,6 +112,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import FirstBox from '../landing/FirstBox';
 import SecondBox from '../landing/SecondBox';
 import ThirdBox from '../landing/ThirdBox';
+import FourthBox from '../landing/FourthBox'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -127,6 +128,7 @@ export default function PersistentDrawerRight() {
     return (
         <div className={classes.root}>
             <FirstBox />
+            <FourthBox />
             <SecondBox />
             <ThirdBox />
         </div>

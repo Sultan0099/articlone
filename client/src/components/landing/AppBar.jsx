@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from 'react-router-dom'
+
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -6,11 +8,9 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     boxShadow: "none",
-    backgroundColor: "transparent",
+    backgroundColor: "#EDF3F3",
     height: "70px",
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     width: '180px',
     height: '54px',
+    [theme.breakpoints.down("xs")]: {
+      width: '150px',
+      height: '47px',
+    },
   },
   title: {
     flexGrow: 1
@@ -57,7 +61,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '5vw',
     [theme.breakpoints.up("md")]: {
       display: "none"
-    }
+    },
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: "6px",
+    },
   },
   hide: {
     display: "none",
@@ -67,11 +74,13 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
+    backgroundImage: "linear-gradient(#EDF3F3, #EDF3F3, #EDF3F3, #FFFFFF)",
     width: drawerWidth,
-    height: `calc(100vh - 70px)`
+    height: `calc(100vh - 70px)`,
+    paddingLeft: '7vw'
   },
   drawerHeader: {
     display: "flex",
@@ -111,13 +120,15 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       marginRight: '5vw',
     },
+    [theme.breakpoints.down("xs")]: {
+      display: 'none'
+    },
   },
   listItem: {
     "&:hover": {
       backgroundColor: "transparent"
     },
-    color: '#075A5D',
-    // color: '#30AFAB',
+    color: '#3D3D3D',
     padding: "0px",
     paddingLeft: '0px',
     paddingRight: '0px',
@@ -127,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PersistentDrawerRight() {
+export default function Header() {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -147,7 +158,6 @@ export default function PersistentDrawerRight() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        // position="fixed
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open
         })}
@@ -173,10 +183,12 @@ export default function PersistentDrawerRight() {
               </ListItem>
               <ListItem
                 button
+                component={Link}
+                to="/docs"
                 disableRipple={true}
                 className={classes.listItem}
               >
-                <ListItemText primary="FAQs" />
+                <ListItemText primary="Docs" />
               </ListItem>
               <ListItem
                 button
@@ -194,8 +206,8 @@ export default function PersistentDrawerRight() {
               </ListItem>
             </List>
           </div>
-          <Button color="primary" variant="contained" className={classes.login} >Login</Button>
-          <Button color="primary" variant="outlined" className={classes.signup} >Sign up</Button>
+          <Button color="primary" variant="contained" component={Link} to="/login" className={classes.login} >Login</Button>
+          <Button color="primary" variant="outlined" component={Link} to="/signup" className={classes.signup} >Sign up</Button>
           <div className={classes.menubtn}>
             <IconButton
               color="primary"
@@ -234,167 +246,7 @@ export default function PersistentDrawerRight() {
             </ListItem>
           ))}
         </List>
-        <Divider />
       </Drawer>
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import { Link } from 'react-router-dom'
-// import { makeStyles } from "@material-ui/core/styles";
-// import AppBar from "@material-ui/core/AppBar";
-// import Toolbar from "@material-ui/core/Toolbar";
-// import Typography from "@material-ui/core/Typography";
-// import Button from "@material-ui/core/Button";
-// // import IconButton from "@material-ui/core/IconButton";
-// // import MenuIcon from "@material-ui/icons/Menu";
-
-// import Logo from '../common/Logo';
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     flexGrow: 1
-//   },
-//   menuButton: {
-//     marginRight: theme.spacing(2)
-//   },
-//   appbar: {
-//     height:'80px',
-//     background: 'transparent',
-//     position:'fixed',
-//     // backgroundColor: "#EDF3F3",
-//     boxShadow: "none"
-//   },
-//   // title: {
-//   //   flexGrow: 1,
-//   //   float: "left",
-//   //   color: "#0A5846"
-//   // },
-//   list: {
-//     flexGrow: 1,
-//     float: "left"
-//   },
-//   login: {
-//     float: "right",
-//     textTransform: "initial"
-//   },
-//   signup: {
-//     marginLeft:'20px',
-//     marginRight: '40px',
-//     textTransform:'initial',
-//   },
-// }));
-
-// export default function ButtonAppBar() {
-//   const classes = useStyles();
-
-//   return (
-//     <div className={classes.root}>
-//       <AppBar
-//         direction="row"
-//         justify="space-between"
-//         position="static"
-//         className={classes.appbar}
-//       >
-//         <Toolbar>
-//           {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-//             <MenuIcon />
-//           </IconButton> */}
-//           <Logo />
-//           <div className={classes.list}>
-//             <ul
-//               style={{
-//                 listStyleType: "none",
-//                 float: "left"
-//               }}
-//             >
-//               <li style={{ float: "left" }}>
-//                 <a
-//                   class="active"
-//                   style={{ textDecoration: "none", color: "#404040" }}
-//                   href="#home"
-//                 >
-//                   Features
-//                 </a>
-//               </li>
-//               <li style={{ float: "left", marginLeft: "20px" }}>
-//                 <a
-//                   href="#news"
-//                   style={{ textDecoration: "none", color: "#404040" }}
-//                 >
-//                   FAQs
-//                 </a>
-//               </li>
-//               <li style={{ float: "left", marginLeft: "20px" }}>
-//                 <a
-//                   href="#contact"
-//                   style={{ textDecoration: "none", color: "#404040" }}
-//                 >
-//                   About us
-//                 </a>
-//               </li>
-//               <li style={{ float: "left", marginLeft: "20px" }}>
-//                 <a
-//                   href="#about"
-//                   style={{ textDecoration: "none", color: "#404040" }}
-//                 >
-//                   Contact us
-//                 </a>
-//               </li>
-//             </ul>
-//           </div>
-//           <Button color="primary" variant='contained' component={Link} to="/login" className={classes.login}>
-//             Login
-//           </Button>
-//           <Button color="primary" variant="outlined" className={classes.signup}>Sign up</Button>
-//         </Toolbar>
-//       </AppBar>
-//     </div>
-//   );
-// }

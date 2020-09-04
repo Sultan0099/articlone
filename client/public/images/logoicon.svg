@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="63" height="55.311" viewBox="0 0 63 55.311">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.44;
+      }
+
+      .cls-2 {
+        fill: #87d4d6;
+      }
+
+      .cls-3 {
+        fill: #94c2c4;
+      }
+
+      .cls-4 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="logoicon" transform="translate(-515.469 699.195)">
+    <g id="logo_1" data-name="logo 1" class="cls-1" transform="translate(528.467 -680.529)">
+      <path id="Path_1" data-name="Path 1" class="cls-2" d="M2.772,0a2.124,2.124,0,0,1,2.2,2.153l-.5,29.4A2.3,2.3,0,0,1,2.2,33.785,2.124,2.124,0,0,1,0,31.632l.5-29.4A2.3,2.3,0,0,1,2.772,0Z" transform="translate(16.893 0) rotate(30)"/>
+      <path id="Path_2" data-name="Path 2" class="cls-2" d="M2.2,0A2.3,2.3,0,0,1,4.467,2.228l.5,29.4a2.124,2.124,0,0,1-2.2,2.153A2.3,2.3,0,0,1,.5,31.557L0,2.153A2.124,2.124,0,0,1,2.2,0Z" transform="translate(36.246 29.259) rotate(150)"/>
+    </g>
+    <g id="logo_1-2" data-name="logo 1" transform="translate(522.755 -688.75)">
+      <rect id="Rectangle_4" data-name="Rectangle 4" class="cls-3" width="4.724" height="45.892" rx="2.362" transform="translate(22.946 0) rotate(30)"/>
+      <rect id="Rectangle_5" data-name="Rectangle 5" class="cls-3" width="4.724" height="45.892" rx="2.362" transform="translate(47.958 39.743) rotate(150)"/>
+    </g>
+    <g id="logo_1-3" data-name="logo 1" transform="translate(515.469 -699.195)">
+      <rect id="Rectangle_4-2" data-name="Rectangle 4" class="cls-4" width="6.206" height="60.285" rx="3.103" transform="translate(30.143 0) rotate(30)"/>
+      <rect id="Rectangle_5-2" data-name="Rectangle 5" class="cls-4" width="6.206" height="60.285" rx="3.103" transform="translate(63 52.208) rotate(150)"/>
+    </g>
+  </g>
+</svg>
