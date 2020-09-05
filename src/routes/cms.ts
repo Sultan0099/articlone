@@ -1,10 +1,13 @@
 import { Router } from "express";
-import cors from "cors";
 
 import { cmsControllers } from "../controllers";
 
 const router = Router();
 
-router.get("/:apiKey/posts/:filter", cors(), cmsControllers.getPosts);
+router.get("/:apiKey/posts/:filter", cmsControllers.getPosts);
+
+router.post("/:apiKey/user/auth/login", cmsControllers.login);
+
+router.post("/:apiKey/user/auth/register", cmsControllers.register);
 
 export default router;

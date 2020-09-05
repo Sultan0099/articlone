@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoMdListBox } from "react-icons/io";
 
 import styles from "./styles";

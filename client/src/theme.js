@@ -13,6 +13,7 @@ const assets = {
   save:'/images/save.png',
   working:'/images/working.svg',
   laptopworking:'/images/laptopworking.svg',
+
   facebook: '/images/facebook.png',
   loading: '/images/loading.png',
   backgroundimg: '/images/backgroundimg.svg',
@@ -35,6 +36,7 @@ const assets = {
   model: '/images/model.png',
   user: '/images/user.jpg',
   wentwrong: '/images/wentwrong.png',
+  bannerImage: '/images/bannerImage.png',
 }
 const colors = {
   accent: "#F72B2B",
@@ -43,7 +45,7 @@ const colors = {
   tertiary: "#ED6004",
   black: "#000000",
   white: "#FFFFFF",
-  titleColor:'black',
+  titleColor: 'black',
   gray2: "#F6F5F5",
 };
 

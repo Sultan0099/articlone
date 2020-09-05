@@ -38,7 +38,8 @@ export default () => {
 
     const createProject = async () => {
         await dispatch(createCollection({ title: values.title, description: values.description }))
-        setOpen(false)
+        setOpen(false);
+        return true;
     }
 
     const handleClose = () => { setOpen(false) }
@@ -58,8 +59,7 @@ export default () => {
                 <DialogTitle id="form-dialog-title">Create new project</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        To subscribe to this website, please enter your email address here. We will send updates
-                        occasionally.
+                        To Create a new project you need to fill all the fields here.
                     </DialogContentText>
                     {/* ! Form  */}
                     <CreateCollectionForm values={values} errors={errors} handleChange={handleChange} />

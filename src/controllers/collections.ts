@@ -2,9 +2,9 @@ import createError from "http-errors";
 import { v4 as uuidv4 } from 'uuid';
 
 import { collectionControllerType } from "../types";
-import { Collections, CMS } from "../models";
+import { Collections, CMS, Posts, CmsUser } from "../models";
 import { collectionsValidator } from "../utils";
-
+import { bucket } from "../config/firebase";
 
 const collectionControllers: collectionControllerType = {
     create: async (req, res, next) => {
@@ -12,7 +12,7 @@ const collectionControllers: collectionControllerType = {
             const userId = req.user._id;
             const { title, description } = req.body;
             const result = await collectionsValidator.collection.validateAsync({ user: userId.toString(), title, description });
-            console.log(result)
+
             if (result) {
 
                 const collection = await Collections.create({ user: result.user, title: result.title, description: result.description });
@@ -29,18 +29,22 @@ const collectionControllers: collectionControllerType = {
     },
     delete: async (req, res, next) => {
         try {
-            const postId = req.params.postId;
-            if (!postId) return next(createError(400, "postId is incorrect "))
+            const { _id: userId } = req.user;
+            const collectionId = req.params.collectionId;
 
-            const deletedCollection = await Collections.findOneAndDelete({ _id: postId });
+            const collection = await Collections.findOne({ _id: collectionId });
 
+            if (!collection) return next(createError(404, "collection not found"))
 
-            if (!deletedCollection) return next(createError(404, "Collection not Found : try create new one "));
-
-            if (req.user._id !== deletedCollection.user) {
-                return next(createError(401, 'your cannot delete other collections'))
+            if (userId.toString() !== collection.user.toString()) {
+                return next(createError(401, "you don't have permission to delete this"))
             }
-            return res.status(200).json({ success: true, data: { collection: { _id: deletedCollection._id } } })
+
+            await Posts.deleteMany({ collectionId });
+            await CMS.deleteMany({ collectionId })
+            await collection.deleteOne();
+
+            res.status(200).json({ success: true, data: { msg: 'collection deleted successfully' } });
 
         } catch (err) {
             next(createError(err))
@@ -49,17 +53,18 @@ const collectionControllers: collectionControllerType = {
     },
     update: async (req, res, next) => {
         try {
+            const { _id: userId } = req.user;
+            const collectionId = req.params.collectionId;
 
-            const collection = await Collections.findOne({ _id: req.body.id });
+            const collection = await Collections.findOne({ _id: collectionId });
             if (!collection) return next(createError(404, "collection not found "));
-            console.log(req.user._id)
-            if (req.user._id.toString() !== collection.user.toString()) {
+            if (userId.toString() !== collection.user.toString()) {
                 return next(createError(401, 'you cannot update other collections'))
             }
 
             // const updateCollection = await Collections.findByIdAndUpdate(req.body.id, req.body);
 
-            const updateCollection = await Collections.findOneAndUpdate({ _id: req.body.id }, req.body);
+            const updateCollection = await Collections.findOneAndUpdate({ _id: collectionId }, req.body);
 
             return res.status(200).json({ success: true, data: { collectionId: updateCollection!._id } })
 
@@ -88,6 +93,55 @@ const collectionControllers: collectionControllerType = {
             return res.status(200).json({ success: true, data: { collection, apiKey: cms!.apiKey } })
         } catch (err) {
             next(createError(err.status, err))
+        }
+    },
+    uploadCollectionImg: async (req, res, next) => {
+        try {
+            const { _id: userId } = req.user;
+            const collectionId = req.params.collectionId;
+            const { filename, path, mimetype } = req.file;
+
+
+            const collection = await Collections.findOne({ _id: collectionId })
+            if (!collection) return next(createError(404, "Collection not found"));
+
+            if (userId.toString() !== collection.user.toString()) {
+                return next(createError(401, 'you cannot upload img to others collections'))
+            }
+
+
+            await bucket.upload(path, {
+                resumable: false,
+                metadata: {
+                    metadata: {
+                        contentType: mimetype
+                    }
+                }
+            });
+
+            let collectionImgUrl = `https://firebasestorage.googleapis.com/v0/b/articlone.appspot.com/o/${filename}?alt=media`;
+            collection.collectionImg = collectionImgUrl;
+            await collection.updateOne(collection)
+
+            res.status(200).json({ success: true, data: { collectionImg: collectionImgUrl } })
+
+        } catch (error) {
+
+        }
+    },
+    getVisitedUsers: async (req, res, next) => {
+        try {
+            const { collectionId } = req.params;
+
+            const fieldsToRemove = {
+                "password": 0,
+                "__v": 0,
+            }
+            const cmsUsers = await CmsUser.find({ collectionId }).select(fieldsToRemove);
+
+            res.status(200).json({ success: true, data: { cmsUsers } })
+        } catch (err) {
+            next(createError(err))
         }
     }
 }

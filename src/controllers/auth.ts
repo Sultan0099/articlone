@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import passport from "passport";
 
-import { User, Token } from "../models";
+import { User, Token, Profile } from "../models";
 import { AuthControllerType } from "../types";
 import { authValidator, EmailService, encrypt } from "../utils";
 import "../config/passport";  //  importing passport configuration from config folder ;
@@ -55,14 +55,16 @@ const authController: AuthControllerType = {
             if (!user) return next(createError(404, 'user not found : Register first'));
 
             if (user.isVerified) return next(createError(403, "Your email is already verified : Try Login"));
+            const profile = await Profile.create({ user: user._id });
 
             user.isVerified = true;
             user.isActive = true;
+            user.profile = profile._id;
             await user.updateOne(user);
-
             await tokenData.deleteOne()
 
-            const jwtToken = await encrypt.assignUserToken({ payload: user._id })
+            const jwtToken = await encrypt.assignUserToken({ payload: user._id });
+
 
             res.status(200).json({ success: true, data: { jwtToken, user: { email: user.email, username: user.username, _id: user.id, isActive: user.isActive } } })
 
@@ -126,9 +128,8 @@ const authController: AuthControllerType = {
     // SECTION Logout
     logout: async (req, res, next) => {
         try {
-            if (req.user) { req.logout(); }
 
-            const { userId } = req.body;
+            const { _id: userId } = req.user;
             if (!mongoose.isValidObjectId(userId)) return next(createError(400, 'Invalid UserId '))
 
             const user = await User.findOne({ _id: userId });
@@ -156,7 +157,7 @@ const authController: AuthControllerType = {
             if (user) {
                 const { email, username, isActive, _id, profile } = user;
                 const token = await encrypt.assignUserToken({ payload: _id })
-                return res.status(200).json({ success: true, data: { jwtToken: token, user: { email, username, isActive, _id, profile } } })
+                return res.status(200).json({ success: true, data: { jwtToken: token, user: { email, username, isActive, _id }, profile } })
             } else {
                 return next(createError(401, "Please Login"))
             }

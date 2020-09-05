@@ -10,7 +10,8 @@ const cmsSchema = new Schema({
     apiKey: {
         type: String,
         required: true
-    }
+    },
+
 });
 
 const CMS = model<ICMS>("CMS", cmsSchema, 'cms');

@@ -60,7 +60,11 @@ export default ({ collection }) => {
                     <Avatar size="large" variant="rounded" style={{
                         color: "#fff",
                         backgroundColor: "#075A5D"
-                    }}> {collection.title.substring(0, 2).toUpperCase()}</Avatar>
+                    }}>
+                        {collection.collectionImg ? (
+                            <img src={collection.collectionImg} alt='articlone collection avatar' style={{ width: "100%", height: "100%" }} />
+                        ) : collection.title.substring(0, 2).toUpperCase()}
+                    </Avatar>
                 </Link>
 
                 <div className={classes.links}>

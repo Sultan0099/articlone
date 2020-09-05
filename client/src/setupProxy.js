@@ -9,11 +9,5 @@ module.exports = function (app) {
         })
     );
 
-    app.use(
-        '/cms*',
-        createProxyMiddleware({
-            target: 'http://localhost:3001',
-            changeOrigin: true,
-        })
-    );
+
 };

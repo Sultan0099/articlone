@@ -105,84 +105,34 @@ export type JWOptions = {
 
 export interface IProfile extends mongoose.Document {
     user: IUser | string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    purposeToJoin: string;
-    business?: {
-        businessType: string,
-        businessName: string,
-        businessWebsite: string,
-    };
-    contactInfo: {
-        address: string,
-        city: string
-        zipOrPostal: number,
-        country: string,
-        phoneNo: string,
-    };
+    firstName?: string;
+    lastName?: string;
+    purposeToJoin?: string;
+    profileImg?: string;
 
 }
 
 export type ProfileType = {
-    user: string;
     firstName: string;
     lastName: string;
-    gender: string;
     purposeToJoin: string;
-    business?: {
-        businessType: string,
-        businessName: string,
-        businessWebsite: string,
-    };
-    contactInfo: {
-        address: string,
-        city: string
-        zipOrPostal: number,
-        country: string,
-        phoneNo: string,
-    };
-
 }
 
 export type ProfileErrType = {
-    user?: string;
+
     firstName?: string;
     lastName?: string;
-    gender?: string;
     purposeToJoin?: string;
-    business?: {
-        businessType?: string,
-        businessName?: string,
-        businessWebsite?: string,
-    };
-    contactInfo: {
-        address?: string,
-        city?: string
-        zipOrPostal?: number,
-        country?: string,
-        phoneNo?: string,
-    };
+    profileImg?: string;
 }
 
-export type BusinessErrType = {
 
-    businessType?: string,
-    businessName?: string,
-    businessWebsite?: string,
 
-}
-
-export type ContactErrType = {
-    address?: string,
-    city?: string
-    zipOrPostal?: number,
-    country?: string,
-    phoneNo?: string,
-}
 
 export type ProfileControllerType = {
-    create: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void
+    create: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    uploadProfileImg: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    update: (req: ExpressRequest<ProfileType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 };
 
 
@@ -193,8 +143,9 @@ export type ProfileControllerType = {
 
 export interface ICollections extends mongoose.Document {
     user: IUser | string,
-    title: string,
-    description: string,
+    title?: string,
+    description?: string,
+    collectionImg?: string,
 }
 
 export type collectionType = {
@@ -218,6 +169,8 @@ export type collectionControllerType = {
     create: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     delete: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
     update: (req: ExpressRequest<collectionType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    uploadCollectionImg: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    getVisitedUsers: (req: ExpressRequest<null>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
 
 // ******************************
@@ -265,9 +218,28 @@ export interface ICMS extends mongoose.Document {
     apiKey: string
 }
 
+export interface ICmsUser extends mongoose.Document {
+    cmsId: string | ICMS;
+    collectionId: string | ICollections;
+    name: string;
+    email: string;
+    password: string;
+    isValidPassword: (password: string) => boolean;
+}
+
+export type CmsUserType = {
+    cmsId: string;
+    collectionId: string;
+    name: string;
+    email: string;
+    password: string;
+}
+
 export type CmsControllerType = {
     getPosts: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     getSinglePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     likePost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
     commentPost: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    login: (req: ExpressRequest<CmsUserType>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    register: (req: ExpressRequest<CmsUserType>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }

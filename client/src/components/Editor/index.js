@@ -21,6 +21,9 @@ const Editor = ({ getEditorData, editorState }) => {
                 {
                     ckfinder: {
                         uploadUrl: "/api/v1/posts/upload-content"
+                    },
+                    mediaEmbed: {
+                        previewsInData: true
                     }
                 }
             }

@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import session from 'express-session';
 import passport from "passport";
 import connectMongo from "connect-mongo";
+import cors from "cors";
 
 import db from "./config/db";
 import keys from "./config/keys";
@@ -32,7 +33,6 @@ if (process.env.NODE_ENV != 'production') {
     app.use(morgan('dev'));
 }
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -53,12 +53,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 // SECTION : ROUTES 
+
+app.get("/", (req, res) => {
+    res.send("server is up and running");
+})
+
 app.use('/api/v1', routes.auth);
 app.use('/api/v1/profile', routes.profile);
 app.use('/api/v1/collections', routes.collections);
 app.use('/api/v1/posts', routes.posts);
-app.use('/cms', routes.cms);
+app.use('/cms', cors(), routes.cms);
 
 // SECTION Error handler
 app.use((err: ExpressError, req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => {
