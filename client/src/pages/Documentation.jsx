@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Documentation() {
+export default function Documentation( props ) {
     const classes = useStyles();
 
     return (
-        <Router>
+        <div style = {{ position : 'relative'}}>
             <AppBar />
             <Switch>
                 <Route path="/docs/" exact component={DocsHome} />
@@ -42,6 +42,6 @@ export default function Documentation() {
                 <Route path="/docs/articlone-cms" exact component={ArticloneCMS} />
                 <Route path="/docs/Features" exact component={Features} />
             </Switch>
-        </Router>
+         </div>
     );
 }

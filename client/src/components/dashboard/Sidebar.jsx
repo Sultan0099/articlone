@@ -37,11 +37,11 @@ export default ({ collection }) => {
     ]
 
     const navItems2 = [
-        {
-            tooltip: "Docs",
-            link: `/dashboard/${collection._id}/Docs`,
-            Icon: () => <AiOutlineFileText style={{ fontSize: 32 }} />
-        },
+        // {
+        //     tooltip: "Docs",
+        //     link: `/dashboard/${collection._id}/docs`,
+        //     Icon: () => <AiOutlineFileText style={{ fontSize: 32 }} />
+        // },
         {
             tooltip: "Settings",
             link: `/dashboard/${collection._id}/settings`,
@@ -77,6 +77,11 @@ export default ({ collection }) => {
             <div className={classes.navBox}>
 
                 <div className={classes.links}>
+                    <Tooltip title={"Docs"} arrow placement="right" className={classes.tooltip}>
+                        <a href="/docs" target="_blank" >
+                            <AiOutlineFileText style={{ fontSize: 32 }} />
+                        </a>
+                    </Tooltip>
                     {navItems2.map(({ tooltip, Icon, link }) => (
                         <Tooltip title={tooltip} arrow placement="right" key={tooltip} className={classes.tooltip}>
                             < NavLink to={link} activeClassName={classes.navActive} >

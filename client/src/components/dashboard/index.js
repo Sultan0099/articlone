@@ -13,6 +13,8 @@ import CMS from "../CMS";
 import Settings from '../Settings'
 import Account from '../Account'
 
+import Docs from "../../pages/Documentation";
+
 import Sidebar from "./Sidebar";
 
 
@@ -63,6 +65,7 @@ export default () => {
                     <AuthRoute path="/dashboard/:collectionId/apis" exact={true} Component={CMS} />
                     <AuthRoute path="/dashboard/:collectionId/settings" exact={true} Component={Settings} />
                     <AuthRoute path="/dashboard/:collectionId/account" exact={true} Component={Account} />
+                    <AuthRoute path="/dashboard/:collectionId/docs" exact={false} Component={Docs} />
                     <Route component={PageNotFound} />
 
                 </Switch>
