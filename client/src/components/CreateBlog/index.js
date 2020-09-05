@@ -52,7 +52,7 @@ export default () => {
     return (
         <>
             <Header collectionId={collectionId} />
-            <Container style={{ width: 750, marginTop: 30 }}>
+            <Container style={{ width: "60%", marginTop: 30 }}>
                 <Form values={values} handleChange={handleChange} errors={errors} />
                 <Editor getEditorData={handleGetEditorData} editorState={body} />
 

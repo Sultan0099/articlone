@@ -7,7 +7,7 @@ import { Link, NavLink } from "react-router-dom";
 
 import { BsPencilSquare } from "react-icons/bs";
 import { IoIosApps } from "react-icons/io";
-import { FiPlay } from "react-icons/fi";
+import { FiPlay, FiUsers } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiSettings5Line } from "react-icons/ri";
 import { AiOutlineFileText } from "react-icons/ai";
@@ -28,6 +28,11 @@ export default ({ collection }) => {
             tooltip: "Create Blogs",
             link: `/dashboard/${collection._id}/blog/create`,
             Icon: () => <BsPencilSquare style={{ fontSize: 25 }} />
+        },
+        {
+            tooltip: "Users Details",
+            link: `/dashboard/${collection._id}/user-details`,
+            Icon: () => <FiUsers style={{ fontSize: 25 }} />
         },
         {
             tooltip: "Your Api",

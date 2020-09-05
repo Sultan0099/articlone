@@ -42,26 +42,43 @@ export default (props) => {
                 <div className={classes.accordianDetailsItems}>
 
                     <FlexItem property="method" value={method} />
+                    <FlexItem property="Api Key" value={apiKey} />
                     <FlexItem property="Api" value={query} />
                     <FlexItem property="description" value={description} />
 
+                    {method === 'get' ? (
+                        <>
+                            <FieldsItem fieldName="common fields" fieldArray={details.fields} />
+                            {queryParams && <FieldsItem fieldName="query params" fieldArray={queryParams} />}
+                            <FieldsItem fieldName="posts fields" fieldArray={details.postField} icon="S" />
+                        </>
+                    ) : (
+                            <>
+                                <FieldsItem fieldName="Input Fields" fieldArray={details.inputFields} icon="S" />
+                                <FieldsItem fieldName="user Fields" fieldArray={details.userFields} icon="S" />
+                            </>
+                        )}
 
-                    <FieldsItem fieldName="common fields" fieldArray={details.fields} />
-                    {queryParams && <FieldsItem fieldName="query params" fieldArray={queryParams} />}
-                    <FieldsItem fieldName="posts fields" fieldArray={details.postField} icon="S" />
 
-                    <Button color="primary" size="large" variant="contained" style={{ marginTop: 15 }} onClick={() => fetch(apiKey)}>
+                    {fetch !== null && <Button color="primary" size="large" variant="contained" style={{ marginTop: 15 }} onClick={() => fetch(apiKey)}>
                         <IoMdPlay style={{ marginLeft: 2 }} />
                         Fetch Data
-                    </Button>
+                    </Button>}
 
 
                 </div>
-                <div className={classes.accordianDetailsItems} style={{ overflow: "scroll" }}>
-                    {data && data.map((item, index) => (
-                        <p key={index} style={{ marginTop: 2, marginBottom: 1 }}>{item}</p>
-                    ))}
-                </div>
+                {method.toLowerCase() === "post" ? (
+                    <div className={classes.accordianDetailsItems} style={{ overflow: "hidden" }}>
+                        <Typography variant="subtitle1"> Your cannot fetch data in POST method</Typography>
+                    </div>) : (
+                        <div className={classes.accordianDetailsItems} style={{ overflow: "scroll" }}>
+                            {data && data.map((item, index) => (
+                                <p key={index} style={{ marginTop: 2, marginBottom: 1 }}>{item},</p>
+                            ))}
+                        </div>
+                    )
+                }
+
             </AccordionDetails>
         </Accordion >
     )

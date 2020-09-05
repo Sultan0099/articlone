@@ -1,4 +1,5 @@
 import createError from "http-errors";
+import mongoose from "mongoose";
 
 import { CMS, Posts, CmsUser } from "../models";
 
@@ -91,9 +92,28 @@ const cmsController: CmsControllerType = {
     },
     getSinglePost: async (req, res, next) => {
         try {
-            res.status(200).send("get single post")
+            const { apiKey, postId } = req.params;
+
+            if (!apiKey) return next(createError(401, "Provide your api key"))
+
+            if (!postId) return next(createError(401, "Provide post id"));
+
+            if (!mongoose.isValidObjectId(postId)) return next(createError(401, "invalid post id"))
+
+            const cms = await CMS.findOne({ apiKey });
+
+            if (!cms) return next(createError(401, "Api key is in valid"));
+            const fieldsToRemove = {
+                "collectionId": 0,
+                "__v": 0,
+                "handler": 0,
+            }
+            const post = await Posts.findOne({ _id: postId }).select(fieldsToRemove);
+
+            res.status(200).json({ success: true, data: { post: !post ? null : post } })
         } catch (error) {
             console.log(error)
+            next(createError(error))
         }
 
     },

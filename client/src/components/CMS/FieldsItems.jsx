@@ -24,7 +24,7 @@ export default ({ fieldName, fieldArray, icon }) => {
                         <Chip
                             key={field}
                             style={{ margin: 5 }}
-                            avatar={<Avatar> {icon ? icon : <AiOutlineNumber />}</Avatar>}
+                            avatar={<Avatar> {typeof fieldName === 'string' ? 'S' : <AiOutlineNumber />}</Avatar>}
 
                             label={field}
                             color="primary"

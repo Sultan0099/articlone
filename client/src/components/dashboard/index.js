@@ -12,6 +12,7 @@ import EditBlogs from "../EditBlogs";
 import CMS from "../CMS";
 import Settings from '../Settings'
 import Account from '../Account'
+import UserDetails from "../UserDetails";
 
 import Sidebar from "./Sidebar";
 
@@ -19,10 +20,11 @@ import Sidebar from "./Sidebar";
 
 
 import Loading from "../../pages/Loading";
-import { getSingleCollection } from "../../redux/_actions/collectionAction"
 import styles from "./styles";
 import FrontPage from "./FrontPage"
 import PageNotFound from "../../pages/PageNotFound";
+
+import { getSingleCollection } from "../../redux/_actions/collectionAction"
 
 export default () => {
     const classes = styles();
@@ -63,6 +65,7 @@ export default () => {
                     <AuthRoute path="/dashboard/:collectionId/apis" exact={true} Component={CMS} />
                     <AuthRoute path="/dashboard/:collectionId/settings" exact={true} Component={Settings} />
                     <AuthRoute path="/dashboard/:collectionId/account" exact={true} Component={Account} />
+                    <AuthRoute path="/dashboard/:collectionId/user-details" exact={true} Component={UserDetails} />
                     <Route component={PageNotFound} />
 
                 </Switch>
