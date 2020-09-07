@@ -35,7 +35,7 @@ export default function Documentation( props ) {
             <AppBar />
             <Switch>
                 <Route path="/docs/" exact component={DocsHome} />
-                <Route path="/docs/getting-started" exact component={GettingStarted} />
+                <Route path="/docs/getting-started" component={GettingStarted} />
                 <Route path="/docs/key-concepts" exact component={Concepts} />
                 <Route path="/docs/api-ref" exact component={ApiRef} />
                 <Route path="/docs/contact-us" exact component={Contact} />

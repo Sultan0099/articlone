@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: theme.mixins.toolbar,
   contentpaper: {
+    backgroundColor: '#ffffff',
     padding: theme.spacing(2),
     textAlign: 'left',
     height: 'auto',
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: '0px',
     },
     [theme.breakpoints.down("850")]: {
-      width: '100%',
+      width: '100vw',
     },
   },
   mainheading: {
@@ -98,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
       width: '85%',
       marginRight: '5vw',
     },
-    width: '100%',
+    width: '90%',
   },
   createblog: {
     marginTop: '5vh',
@@ -109,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
       width: '85%',
       marginRight: '5vw',
     },
-    width: '100%',
+    width: '90%',
   },
   getapi: {
     marginTop: '5vh',
@@ -120,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
       width: '85%',
       marginRight: '5vw',
     },
-    width: '100%',
+    width: '90%',
   },
   save: {
     marginTop: '5vh',
@@ -131,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
       width: '85%',
       marginRight: '5vw',
     },
-    width: '100%',
+    width: '90%',
   },
   projectsetting: {
     marginTop: '5vh',
@@ -142,7 +143,7 @@ const useStyles = makeStyles((theme) => ({
       width: '85%',
       marginRight: '5vw',
     },
-    width: '100%',
+    width: '90%',
   },
   form: {
     width: '100%',
@@ -235,12 +236,12 @@ export default function GettingStarted() {
             <Typography paragraph className={classes.paragraph} >
               Once logged in, you will see a list of any projects you create or have been invited to.
             </Typography>
-            <Typography paragraph className={classes.list} >
-              <ul className={classes.lista} >
-                {}<li> First, select "Create a new project" to create your first project.</li>
-                {}<li> Next, give your project a name, and pick a region for where you want content to be located.</li>
-                {}<li> Now pick an applicable plan for your needs. The free plan will work with steps outlined in this guide.</li>
-              </ul>
+            <Typography paragraph className={classes.lista} >
+              {/* <ul  > */}
+                <li> First, select "Create a new project" to create your first project.</li>
+                <li> Next, give your project a name, and pick a region for where you want content to be located.</li>
+                <li> Now pick an applicable plan for your needs. The free plan will work with steps outlined in this guide.</li>
+              {/* </ul> */}
             </Typography>
             <img src={assets.createproject} alt="Sorry!" className={classes.createproject} />
             <Typography component='h1' variant='h1' className={classes.heading} >

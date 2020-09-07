@@ -173,7 +173,7 @@ function Header(props) {
             </div>
             <List >
                 <ListItem button component={Link} to='/docs/getting-started' className={classes.listitem} >
-                    <ListItemText primary="Getting Started" />
+                    <ListItemText primary="Get Started" />
                 </ListItem>
                 <ListItem button component={Link} to='/docs/key-concepts' className={classes.listitem} >
                     <ListItemText primary="Key Concepts" />

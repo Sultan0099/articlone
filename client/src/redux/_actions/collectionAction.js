@@ -116,3 +116,19 @@ export const updateCollection = (collectionId, data) => async dispatch => {
         console.log(error)
     }
 }
+
+export const getVisitedUser = async (collectionId) => {
+    try {
+        const token = localStorage.getItem('secret');
+        const res = await axios.get(ORIGIN(`/get-visited-users/${collectionId}`), {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        });
+        console.log(res);
+
+        return res.data.data.cmsUsers
+    } catch (err) {
+        console.log(err)
+    }
+}

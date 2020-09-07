@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import axios from "axios";
+
+import Typography from "@material-ui/core/Typography";
 
 import AcordianItem from "./AcordianItem";
-
+import { postData, userData } from "./data";
 
 import styles from "./styles";
 
@@ -16,14 +17,15 @@ export default () => {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const details = {
+    const postArray = postData(setData);
+
+    const postDetails = {
 
         fields: [
             "totalPages",
             "currentPage",
             "totalPosts",
             'postPerPage',
-
         ],
         postField: [
             'state',
@@ -36,97 +38,47 @@ export default () => {
         ]
     };
 
-    const accordianData = [
+
+
+    const userDetails = {
+        inputFields: [
+            "name",
+            "email",
+            "password"
+        ],
+
+        userFields: [
+            "name",
+            "email",
+        ]
+    }
+
+    const userAccordianData = [
         {
-            type: "Get All Posts",
-            method: 'get',
+            type: "Register User",
+            method: 'Post',
             queryParams: null,
-            query: "http://localhost:3001/cms/{Your apikey}/posts/all",
-            description: "This api is used to fetch first 10 all posts ",
-            fetch: async (apiKey) => {
-                const res = await axios.get(`http://localhost:3001/cms/${apiKey}/posts/all`);
-                let stringData = JSON.stringify(res.data.data);
-                let splitData = stringData.split(",");
-
-                setData(splitData);
-            }
+            query: "http://localhost:3001/cms/{Your apikey}/user/auth/register",
+            description: "You use this api to register user on you site or application",
+            fetch: null
         },
         {
-            type: "Get Published Posts",
-            method: 'get',
+            type: "Login User",
+            method: 'Post',
             queryParams: null,
-            query: "http://localhost:3001/cms/{Your apikey}/posts/published",
-            description: "This api is used to fetch first 10 published posts ",
-            fetch: async (apiKey) => {
-                const res = await axios.get(`http://localhost:3001/cms/${apiKey}/posts/published`);
-                let stringData = JSON.stringify(res.data.data);
-                let splitData = stringData.split(",");
-
-                setData(splitData);
-            }
+            query: "http://localhost:3001/cms/{Your apikey}/user/auth/login",
+            description: "You use this api to register user on you site or application",
+            fetch: null
         },
-        {
-            type: "Get Un Published Posts",
-            method: 'get',
-            queryParams: null,
-            query: "http://localhost:3001/cms/{Your apikey}/posts/unpublished",
-            description: "This api is used to fetch first 10 unpublished posts ",
-            fetch: async (apiKey) => {
-                const res = await axios.get(`http://localhost:3001/cms/${apiKey}/posts/unpublished`);
-                let stringData = JSON.stringify(res.data.data);
-                let splitData = stringData.split(",");
-
-                setData(splitData);
-            }
-        },
-        {
-            type: "next or previous all posts",
-            method: 'get',
-            queryParams: ['page', 'limit'],
-            query: "http://localhost:3001/cms/{Your apikey}/posts/all?page={number}&limit={number}",
-            description: "This api is used to get next or previous all posts , you can change limit and page as you want",
-            fetch: async (apiKey) => {
-                const res = await axios.get(`http://localhost:3001/cms/${apiKey}/posts/all?page=1&limit=10`);
-                let stringData = JSON.stringify(res.data.data);
-                let splitData = stringData.split(",");
-
-                setData(splitData);
-            }
-        },
-        {
-            type: "next or previous published posts",
-            method: 'get',
-            queryParams: ['page', 'limit'],
-            query: "http://localhost:3001/cms/{Your apikey}/posts/published?page={number}&limit={number}",
-            description: "This api is used to get next or previous published posts , you can change limit and page as you want",
-            fetch: async (apiKey) => {
-                const res = await axios.get(`http://localhost:3001/cms/${apiKey}/posts/published?page=1&limit=10`);
-                let stringData = JSON.stringify(res.data.data);
-                let splitData = stringData.split(",");
-
-                setData(splitData);
-            }
-        },
-        {
-            type: "next or previous Un Published posts",
-            method: 'get',
-            queryParams: ['page', 'limit'],
-            query: "http://localhost:3001/cms/{Your apikey}/posts/unpublished?page={number}&limit={number}",
-            description: "This api is used to get next or previous un-published posts , you can change limit and page as you want",
-            fetch: async (apiKey) => {
-                const res = await axios.get(`http://localhost:3001/cms/${apiKey}/posts/unpublished?page=1&limit=10`);
-                let stringData = JSON.stringify(res.data.data);
-                let splitData = stringData.split(",");
-
-                setData(splitData);
-            }
-        }
     ]
+
 
     return (
         <div className={classes.root}>
+            <Typography component="h1" variant="h2"> Posts Apis </Typography>
             {
-                accordianData.map((d, i) => (
+
+                postArray.map((d, i) => (
                     <AcordianItem
                         key={i}
                         type={d.type}
@@ -134,7 +86,28 @@ export default () => {
                         query={d.query}
                         method={d.method}
                         description={d.description}
-                        details={details}
+                        details={postDetails}
+                        fetch={d.fetch}
+                        expanded={expanded}
+                        handleChange={handleChange}
+                        data={data}
+                    />
+
+                ))
+            }
+
+            <Typography component="h1" variant="h2" style={{ marginTop: 5 }}> Users Apis </Typography>
+            {
+
+                userData().map((d, i) => (
+                    <AcordianItem
+                        key={i}
+                        type={d.type}
+                        queryParams={d.queryParams}
+                        query={d.query}
+                        method={d.method}
+                        description={d.description}
+                        details={userDetails}
                         fetch={d.fetch}
                         expanded={expanded}
                         handleChange={handleChange}
