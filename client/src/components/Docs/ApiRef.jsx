@@ -76,10 +76,16 @@ export default function ApiRef() {
                             API Reference
                         </Typography>
                         <Typography paragraph className={classes.paragraph} >
-                            In API Reference you will get to know which API you need to select for your site or what isthe purpose of every API. You just need to add API key in link.
+                            In API Reference you will get to know which API you need to select for your site or what is the purpose of every API. You just need to add API key in link.
                         </Typography>
                         <Typography paragraph className={classes.paragraph} >
-                            There are several available APIs when working with Articlone.
+                            There are two main types of API's which are Posts API and User API and they have further several available APIs when working with Articlone.
+                        </Typography>
+                        <Typography component='h1' variant='h1' className={classes.heading} >
+                            Post API's
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            Post API's is for posts that you created.
                         </Typography>
                         <Typography component='h1' variant='h1' className={classes.heading} >
                             GET ALL POSTS
@@ -140,6 +146,33 @@ export default function ApiRef() {
                         </Typography>
                         <Typography paragraph className={classes.paragraph} >
                             The NEXT OR PREVIOUS ALL API is for managing large ammount of articles and you need api's for only specific pages unpublished articles. So, this API solves this problem of user by just adding adding page numbers you want. Remember, It is just for published articles.
+                        </Typography>
+                        <Typography component='h1' variant='h1' className={classes.heading} >
+                            User API's
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            User API's is for users that has been registered or logged in on your site.
+                        </Typography>
+                        <Typography component='h1' variant='h1' className={classes.heading} >
+                            Register User
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            The Articlone Register User API provides the API of user which can be used to register user on your personal site. Now, you also don't need to create API's for registering user in your site.
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            You just need to follow th instructions how to use these API's in your site.
+                        </Typography>
+                        <Typography component='h1' variant='h1' className={classes.heading} >
+                            Login user
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            The Articlone Login User API provides the API of user which can be used to login user on your personal site. Now, you also don't need to create API's for logging in user in your site.
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            You just need to follow th instructions how to use these API's in your site.
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            To learn, how to use these API's in your site, checkout Articlone CMS.
                         </Typography>
                     </div>
                 </Grid>

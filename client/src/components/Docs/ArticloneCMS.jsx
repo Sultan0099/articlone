@@ -153,6 +153,34 @@ export default function ArticloneCMS() {
                         <Typography paragraph className={classes.paragraph} >
                             Remember, This api is used to get next or previous unpublished posts , you can change limit the pages as you want.
                         </Typography>
+                        <Typography component='h1' variant='h1' className={classes.heading} >
+                            7. Register User
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            To use this API in your site. Copy the API link and add it in your site coding where you want to add this.
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            You also need to copy the API KEY which is above in header, copy it and replace with the "your apikey".
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            Remember, It will fetch of Register User api's.
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            All the users which have been registered through your site. To see all the user which have been registered through your site using our API's navigate to USER tab.
+                        </Typography>
+                        <Typography component='h1' variant='h1' className={classes.heading} >
+                            8. Login User
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            To use this API in your site. Copy the API link and add it in your site coding where you want to add this.
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            You also need to copy the API KEY which is above in header, copy it and replace with the "your apikey".
+                        </Typography>
+                        <Typography paragraph className={classes.paragraph} >
+                            Remember, It will fetch of Login User api's.
+                        </Typography>
+
                     </div>
                 </Grid>
             </Grid>
