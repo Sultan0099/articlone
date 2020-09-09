@@ -72,8 +72,7 @@ export default () => {
           </TableBody>
       ))}
         </Table>
-      </TableContainer>
-      
+      </TableContainer>    
     </div>
   )
 }
