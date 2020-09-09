@@ -55,7 +55,6 @@ export default () => {
               <TableCell align="right">User _id</TableCell>
               <TableCell align="right">Email</TableCell>
               <TableCell align="right">Created At</TableCell>
-              {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
             </TableRow>
           </TableHead>
       {users.map(d => (
@@ -68,7 +67,6 @@ export default () => {
                 <TableCell align="right" >{d._id}</TableCell>
                 <TableCell align="right">{d.email}</TableCell>
                 <TableCell align="right">{d.createdAt}</TableCell>
-                {/* <TableCell align="right">{d.name}</TableCell> */}
               </TableRow>
             ))}
           </TableBody>
