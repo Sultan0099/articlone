@@ -87,7 +87,12 @@ export default () => {
                     Upload Title Img
                 </Button>
 
-                {titleImg && <img style={{ height: "250px" }} src={titleImg} onLoad={() => setImgLoading(false)} />}
+                {titleImg && (
+                    <>
+                        <br />
+                        <img style={{ width: "300px" }} src={titleImg} onLoad={() => setImgLoading(false)} />
+                    </>
+                )}
 
                 <Editor getEditorData={handleGetEditorData} editorState={body} />
 
