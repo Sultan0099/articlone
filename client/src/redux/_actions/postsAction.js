@@ -88,10 +88,10 @@ export const unPublishPosts = (postId) => async dispatch => {
     }
 }
 
-export const createPost = ({ title, description, body, collectionId }) => async dispatch => {
+export const createPost = ({ title, description, body, collectionId, titleImg }) => async dispatch => {
     try {
         const token = localStorage.getItem('secret');
-        await axios.post(ORIGIN('/create'), { title, description, body, collectionId }, {
+        await axios.post(ORIGIN('/create'), { title, description, body, collectionId, titleImg }, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -128,4 +128,26 @@ export const getSinglePost = (postId) => async dispatch => {
     } catch (err) {
         console.log(err)
     }
+}
+
+export const uploadTitleImg = (data) => async dispatch => {
+
+    try {
+        const opt = {
+            headers: {
+                "content-type": "multipart/form-data",
+                "Authorization": "Bearer " + localStorage.getItem("secret"),
+            },
+        };
+
+        const res = await axios.post(ORIGIN(`/upload-title-img`), data, opt);
+
+        console.log(res)
+        // await dispatch({ type: SET_PROFILE_TYPE, payload: res.data.data });
+        return res.data.url
+
+    } catch (error) {
+        console.log({ error })
+    }
+
 }

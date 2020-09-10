@@ -14,7 +14,7 @@ const postControllers: PostControllerType = {
     create: async (req, res, next) => {
         try {
             const userId = req.user._id;
-            const { collectionId, description, title, body } = req.body;
+            const { collectionId, description, title, body, titleImg } = req.body;
 
             const collection = await Collections.findOne({ _id: collectionId });
 
@@ -25,7 +25,7 @@ const postControllers: PostControllerType = {
                 return next(createError(401, "This collection is not handle by this user"));
             }
 
-            const newPost = await Posts.create({ collectionId, title, description, body, handler: userId });
+            const newPost = await Posts.create({ collectionId, title, description, body, handler: userId, titleImg });
 
             return res.status(200).json({ success: true, data: { post: newPost } })
         } catch (err) {
@@ -163,6 +163,29 @@ const postControllers: PostControllerType = {
             res.status(200).json({ uploaded: true, url: imageUrl })
         } catch (err) {
             console.log(err)
+            next(createError(err))
+        }
+    },
+    uploadTitleImg: async (req, res, next) => {
+        try {
+            const { filename, path, mimetype } = req.file;
+
+            await bucket.upload(path, {
+                resumable: false,
+                metadata: {
+                    metadata: {
+                        contentType: mimetype
+                    }
+                }
+            });
+
+            let imageUrl = `https://firebasestorage.googleapis.com/v0/b/articlone.appspot.com/o/${filename}?alt=media`;
+
+            res.status(200).json({ uploaded: true, url: imageUrl })
+
+
+        } catch (err) {
+            console.log(err);
             next(createError(err))
         }
     }

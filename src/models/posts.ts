@@ -24,6 +24,10 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Collections",
     },
+    titleImg: {
+        type: String,
+        default: null
+    },
     state: {
         type: String,
         enum: ["published", "unpublished"],

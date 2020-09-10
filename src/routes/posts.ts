@@ -78,5 +78,12 @@ SECTION  Upload content images Post
 @path : '/api/v1/posts/upload-content'
 */
 router.post("/upload-content", upload.single('upload'), postControllers.uploadContentImgs)
+/* 
+SECTION  Upload content images Post
+@Des : upload title img 
+@method : post
+@path : '/api/v1/posts/upload-title-img'
+*/
+router.post("/upload-title-img", upload.single('title-img'), postControllers.uploadTitleImg)
 
 export default router;

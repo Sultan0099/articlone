@@ -72,12 +72,12 @@ export default (props) => {
             e.currentTarget.files &&
             e.currentTarget.files.length > 0
         ) {
+            setImgLoading(true);
             const value = e.currentTarget.files[0];
             let formData = new FormData();
             formData.append("profile-img", value);
             const profileImg = await dispatch(uploadProfileImg(formData));
             setProfileImgUrl(profileImg);
-            setImgLoading(true)
         }
     }
 

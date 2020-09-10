@@ -184,6 +184,7 @@ export interface IPost extends mongoose.Document {
     description: string;
     body: string;
     handler: string | IUser;
+    titleImg?: string;
     state?: string;
 
 }
@@ -197,6 +198,7 @@ export type PostType = {
     description: string;
     body: string;
     state: string;
+    titleImg: string;
 }
 
 export type PostControllerType = {
@@ -207,6 +209,7 @@ export type PostControllerType = {
     update: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     pagination: (req: ExpressRequest<PostType>, res: ExpressResponse, next: ExpressNextFunction) => void;
     uploadContentImgs: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
+    uploadTitleImg: (req: ExpressRequest<any>, res: ExpressResponse, next: ExpressNextFunction) => void;
 }
 
 // ******************************

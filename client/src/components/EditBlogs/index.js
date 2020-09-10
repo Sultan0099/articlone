@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import Editor from "../Editor";
 import Form from "./Form";
 
-import { updatePosts, getSinglePost } from "../../redux/_actions/postsAction";
+import { updatePosts, getSinglePost, uploadTitleImg } from "../../redux/_actions/postsAction";
 
 import CircularIndicator from "../common/CircularIndicator";
 
@@ -30,6 +30,13 @@ export default () => {
     const [loading, setLoading] = useState(true)
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { collectionId, postId } = useParams();
+    const [titleImg, setTitleImg] = useState("");
+    const [imgLoading, setImgLoading] = useState(false);
+
+
+    const imageRef = React.createRef();
+
+
 
 
 
@@ -37,9 +44,9 @@ export default () => {
         const fetchSinglePost = async () => {
             const post = await dispatch(getSinglePost(postId));
             if (post) {
-
                 setBody(post.body);
-                setValues({ title: post.title, description: post.description })
+                setValues({ title: post.title, description: post.description });
+                setTitleImg(post.titleImg)
                 setLoading(false)
             }
         }
@@ -56,7 +63,23 @@ export default () => {
         })
     }
 
-
+    const insertImage = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (
+            e.currentTarget &&
+            e.currentTarget.files &&
+            e.currentTarget.files.length > 0
+        ) {
+            setImgLoading(true);
+            const value = e.currentTarget.files[0];
+            let formData = new FormData();
+            formData.append("title-img", value);
+            const titleImgRes = await dispatch(uploadTitleImg(formData));
+            setTitleImg(titleImgRes);
+            // setImgLoading(false);
+        }
+    }
 
 
     const handleGetEditorData = (data) => {
@@ -66,7 +89,7 @@ export default () => {
     const savePosts = async () => {
         setIsSubmitting(true)
         const { title, description } = values;
-        await dispatch(updatePosts({ title, description, body, collectionId }, postId));
+        await dispatch(updatePosts({ title, description, body, collectionId, titleImg }, postId));
 
         history.push(`/dashboard/${collectionId}/blog/posts`)
     }
@@ -78,6 +101,25 @@ export default () => {
     return (
         <Container style={{ width: 750, marginTop: 30 }}>
             <Form values={values} handleChange={handleChange} />
+
+            <Button
+                type="button"
+                color="primary"
+                variant="contained"
+                disabled={imgLoading}
+                style={{ marginBottom: 10 }}
+                onClick={() => imageRef.current.click()}>
+                Upload Title Img
+            </Button>
+
+            {titleImg && (
+                <>
+                    <br />
+                    <img style={{ width: "300px" }} src={titleImg} onLoad={() => setImgLoading(false)} />
+                </>
+            )}
+
+
             <Editor getEditorData={handleGetEditorData} editorState={body} />
 
             <div className={classes.wrapper}>
@@ -94,6 +136,13 @@ export default () => {
                </Button>
                 {isSubmitting && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>
+            <input
+                type="file"
+                accept="image/*"
+                ref={imageRef}
+                style={{ display: "none" }}
+                onChange={insertImage}
+            />
         </Container>
     )
 }
