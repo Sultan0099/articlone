@@ -2,7 +2,7 @@ import { IProfile } from "./src/types";
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            NODE_ENV: 'development' | 'production';
+            NODE_ENV: 'development' | 'production' | 'test';
             MAILGUN_API_KEY: string,
             MAILGUN_DOMAIN: string,
             MONGO_URI: string,

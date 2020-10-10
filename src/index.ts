@@ -1,5 +1,3 @@
-import * as dotenv from 'dotenv';
-
 import express, { Application } from 'express';
 import bodyParser from "body-parser";
 import morgan from 'morgan';
@@ -13,9 +11,6 @@ import keys from "./config/keys";
 import { ExpressRequest, ExpressResponse, ExpressError, ExpressNextFunction } from "./types";
 import "./config/passport";
 import * as routes from './routes';
-
-
-dotenv.config();
 
 
 const app: Application = express();
@@ -72,4 +67,4 @@ app.use((err: ExpressError, req: ExpressRequest<any>, res: ExpressResponse, next
 })
 
 
-app.listen(PORT, () => console.log(`server is up and running at :\nhttp://localhost:${PORT}\n${process.env.NODE_ENV}`));
+app.listen(PORT, () => console.log(`server is up and running at :\nhttp://localhost:${PORT}\nenvironment = ${process.env.NODE_ENV}`));
