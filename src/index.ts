@@ -14,9 +14,9 @@ import { ExpressRequest, ExpressResponse, ExpressError, ExpressNextFunction } fr
 import "./config/passport";
 import * as routes from './routes';
 
-if (process.env.NODE_ENV != "production") {
-    dotenv.config();
-}
+
+dotenv.config();
+
 
 const app: Application = express();
 const PORT = 3001 || process.env.PORT;

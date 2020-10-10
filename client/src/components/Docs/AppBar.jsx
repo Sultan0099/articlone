@@ -20,6 +20,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 
+import { useSelector } from "react-redux";
+
 import { assets } from '../../theme'
 
 const drawerWidth = 240;
@@ -130,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     login: {
         boxShadow: 'none',
         textTransform: 'initial',
-        "&:hover" : {
+        "&:hover": {
             boxShadow: 'none',
         },
     },
@@ -154,6 +156,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
     const { window } = props;
+    const user = useSelector(state => state.auth.user);
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -211,7 +214,9 @@ function Header(props) {
                         <MenuIcon />
                     </IconButton>
                     <div className={classes.logoicon}>
-                        <img src={assets.whiteLogo} alt="sorry!" className={classes.logo} />
+                        <Link to="/">
+                            <img src={assets.whiteLogo} alt="articlone icon" className={classes.logo} />
+                        </Link>
                     </div>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
@@ -227,8 +232,13 @@ function Header(props) {
                         />
                     </div>
                     <div className="btn">
-                        <Button color="primary" variant="contained" component={Link} to="/login" className={classes.login} >Login</Button>
-                        <Button color="secondary" variant="outlined" component={Link} to="/signup" className={classes.signup} >Sign up</Button>
+                        {!user && (
+                            <>
+                                <Button color="primary" variant="contained" component={Link} to="/login" className={classes.login} >Login</Button>
+                                <Button color="secondary" variant="outlined" component={Link} to="/signup" className={classes.signup} >Sign up</Button>
+                            </>
+                        )}
+
                     </div>
                 </Toolbar>
             </AppBar>

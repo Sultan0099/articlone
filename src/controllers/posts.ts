@@ -72,7 +72,7 @@ const postControllers: PostControllerType = {
             next(createError(err))
         }
     },
-    getAllPost: async (req, res, next) => {
+    getAllPost: async (req, res, next) => { // this is only for test purpose while developing
         try {
             const userId = req.user._id;
             const { collectionId } = req.params;
@@ -133,6 +133,7 @@ const postControllers: PostControllerType = {
             const totalPost = await Posts.countDocuments(query);
             const totalPages = Math.ceil(totalPost / +limit);
             const currentPage = +page > totalPages ? totalPages : +page;
+
             return res.status(200).json({ success: true, data: { allPosts, totalPages: +totalPages, currentPage: +currentPage, totalPosts: +totalPost, postPerPage: +limit, posts } })
 
         } catch (err) {

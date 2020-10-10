@@ -20,7 +20,9 @@ export interface ExpressError extends ErrorRequestHandler {
 
 }
 
-// SECTION : Mongoose models types 👇
+// ******************************
+// Auth types 👇
+// ******************************
 export interface IUser extends mongoose.Document {
     username: string;
     email: string;
@@ -45,7 +47,6 @@ export type UserType = {
     password: string,
 }
 
-// SECTION : Auth Controller types 👇
 
 export type RegisterType = {
     username: string,
@@ -100,9 +101,9 @@ export type JWOptions = {
     audience?: string,
 }
 
-
-// SECTION : Profile Controller types 👇
-
+// ******************************
+// Profile types 👇
+// ******************************
 export interface IProfile extends mongoose.Document {
     user: IUser | string;
     firstName?: string;
@@ -137,7 +138,7 @@ export type ProfileControllerType = {
 
 
 // ******************************
-// Section Collection types 👇
+// Collection types 👇
 // ******************************
 
 
@@ -174,7 +175,7 @@ export type collectionControllerType = {
 }
 
 // ******************************
-// Section Posts types 👇
+// Posts types 👇
 // ******************************
 
 export interface IPost extends mongoose.Document {
@@ -213,7 +214,7 @@ export type PostControllerType = {
 }
 
 // ******************************
-// Section cms types 👇
+// cms types 👇
 // ******************************
 
 export interface ICMS extends mongoose.Document {
