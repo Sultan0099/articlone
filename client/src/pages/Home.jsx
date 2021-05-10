@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-import AppBar from '../components/landing/AppBar'
-import Content from '../components/landing/Content'
-import Footer from '../components/landing/Footer'
+import AppBar from '../components/Landing/AppBar'
+import Content from '../components/Landing/Content'
+import Footer from '../components/Landing/Footer'
 
 const useStyles = makeStyles((theme) => ({
   root: {

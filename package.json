@@ -6,7 +6,7 @@
   "scripts": {
     "start": "SET NODE_ENV=production & node ./dist/index.js",
     "build": "tsc",
-    "server": "SET NODE_ENV=development & ts-node-dev  --transpileOnly  ./src/index.ts  ",
+    "server": "NODE_ENV=development & ts-node-dev  --transpileOnly  ./src/index.ts  ",
     "test": "SET NODE_ENV=test & ts-node-dev  --transpileOnly -r dotenv/config  ./src/index.ts",
     "test-dist": "SET NODE_ENV=test &  node -r dotenv/config ./dist/index.js",
     "prod": "SET NODE_ENV=production & node ./dist/index.js",

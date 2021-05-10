@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 
 import keys from '../config/keys';
 
-
 async function assignUserToken(payload: string | object) {
     try {
         return await jwt.sign(payload, keys.JWT_SECRET, {
